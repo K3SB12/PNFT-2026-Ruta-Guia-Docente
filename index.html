@@ -1,10 +1,9 @@
-
-html_content = '''<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRD: AI Learning Hub - Documento de Requisitos</title>
+    <title>Ágora Kets - Centro de Recursos de IA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -50,9 +49,6 @@ html_content = '''<!DOCTYPE html>
             background: linear-gradient(145deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
             border: 1px solid rgba(99, 102, 241, 0.2);
         }
-        .step-number {
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-        }
         .pulse {
             animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
@@ -67,9 +63,19 @@ html_content = '''<!DOCTYPE html>
         .smooth-scroll {
             scroll-behavior: smooth;
         }
-        .active-nav {
-            background: rgba(99, 102, 241, 0.2);
-            border-left: 3px solid #6366f1;
+        /* Estilos para enlaces externos */
+        .external-link {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .external-link::after {
+            content: '\f35d';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 0.75em;
+            opacity: 0.7;
         }
     </style>
 </head>
@@ -83,17 +89,13 @@ html_content = '''<!DOCTYPE html>
                     <div class="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
                         <i class="fas fa-brain text-white text-sm"></i>
                     </div>
-                    <span class="font-bold text-xl tracking-tight">AI Learning Hub <span class="text-xs font-normal text-gray-400">PRD v1.0</span></span>
+                    <span class="font-bold text-xl tracking-tight">Ágora Kets <span class="text-xs font-normal text-gray-400">v1.0</span></span>
                 </div>
                 <div class="hidden md:flex items-center gap-6 text-sm">
                     <a href="#overview" class="hover:text-primary transition-colors">Visión General</a>
-                    <a href="#features" class="hover:text-primary transition-colors">Funcionalidades</a>
                     <a href="#options" class="hover:text-primary transition-colors">Opciones IA</a>
-                    <a href="#resources" class="hover:text-primary transition-colors">Recursos</a>
+                    <a href="#resources" class="hover:text-primary transition-colors">Biblioteca de Recursos</a>
                     <a href="#technical" class="hover:text-primary transition-colors">Técnico</a>
-                    <button onclick="toggleTheme()" class="p-2 rounded-lg hover:bg-gray-800 transition-colors">
-                        <i class="fas fa-moon"></i>
-                    </button>
                 </div>
                 <button onclick="toggleMobileMenu()" class="md:hidden p-2">
                     <i class="fas fa-bars"></i>
@@ -104,9 +106,8 @@ html_content = '''<!DOCTYPE html>
         <div id="mobile-menu" class="hidden md:hidden bg-darker border-t border-gray-800">
             <div class="px-4 py-3 space-y-2">
                 <a href="#overview" class="block py-2 hover:text-primary">Visión General</a>
-                <a href="#features" class="block py-2 hover:text-primary">Funcionalidades</a>
                 <a href="#options" class="block py-2 hover:text-primary">Opciones IA</a>
-                <a href="#resources" class="block py-2 hover:text-primary">Recursos</a>
+                <a href="#resources" class="block py-2 hover:text-primary">Biblioteca de Recursos</a>
                 <a href="#technical" class="block py-2 hover:text-primary">Técnico</a>
             </div>
         </div>
@@ -119,23 +120,23 @@ html_content = '''<!DOCTYPE html>
             <div class="text-center max-w-4xl mx-auto">
                 <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm mb-6">
                     <span class="pulse w-2 h-2 bg-primary rounded-full"></span>
-                    Documento de Requisitos de Producto
+                    Centro de Recursos de Inteligencia Artificial
                 </div>
                 <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-                    <span class="gradient-text">AI Learning Hub</span>
+                    <span class="gradient-text">Ágora Kets</span>
                     <br>
-                    <span class="text-gray-300 text-3xl md:text-5xl">Centro de Aprendizaje con IA</span>
+                    <span class="text-gray-300 text-3xl md:text-5xl">Tu Puerta de Acceso a la IA</span>
                 </h1>
                 <p class="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
-                    Plataforma frontend gratuita para aprender de múltiples IAs sin backend propio. 
-                    Integración directa con servicios externos, biblioteca de recursos Revolutia y experiencia inmersiva.
+                    Plataforma curada con las mejores herramientas de IA educativas y productivas. 
+                    Sin registros complejos, sin costos ocultos. Solo recursos verificados y funcionales.
                 </p>
                 <div class="flex flex-wrap justify-center gap-4">
                     <a href="#options" class="px-8 py-4 bg-gradient-to-r from-primary to-secondary rounded-xl font-semibold hover:shadow-lg hover:shadow-primary/25 transition-all hover:-translate-y-1">
-                        <i class="fas fa-rocket mr-2"></i>Explorar Opciones
+                        <i class="fas fa-rocket mr-2"></i>Explorar Herramientas
                     </a>
                     <a href="#resources" class="px-8 py-4 glass rounded-xl font-semibold hover:bg-white/10 transition-all">
-                        <i class="fas fa-book mr-2"></i>Ver Recursos
+                        <i class="fas fa-book mr-2"></i>Ver Biblioteca
                     </a>
                 </div>
                 
@@ -143,15 +144,15 @@ html_content = '''<!DOCTYPE html>
                 <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
                     <div class="glass rounded-xl p-4">
                         <div class="text-2xl font-bold text-primary">4</div>
-                        <div class="text-sm text-gray-400">Opciones IA</div>
+                        <div class="text-sm text-gray-400">Herramientas Principales</div>
                     </div>
                     <div class="glass rounded-xl p-4">
                         <div class="text-2xl font-bold text-secondary">50+</div>
-                        <div class="text-sm text-gray-400">Recursos</div>
+                        <div class="text-sm text-gray-400">Recursos Curados</div>
                     </div>
                     <div class="glass rounded-xl p-4">
-                        <div class="text-2xl font-bold text-accent">0</div>
-                        <div class="text-sm text-gray-400">Backend</div>
+                        <div class="text-2xl font-bold text-accent">6</div>
+                        <div class="text-sm text-gray-400">Categorías</div>
                     </div>
                     <div class="glass rounded-xl p-4">
                         <div class="text-2xl font-bold text-green-400">100%</div>
@@ -167,11 +168,10 @@ html_content = '''<!DOCTYPE html>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div>
-                    <h2 class="text-3xl font-bold mb-6">Visión del Producto</h2>
+                    <h2 class="text-3xl font-bold mb-6">¿Qué es Ágora Kets?</h2>
                     <p class="text-gray-400 mb-6 text-lg">
-                        AI Learning Hub es una aplicación web estática diseñada para centralizar el acceso a herramientas de IA educativas 
-                        sin necesidad de infraestructura backend. Cada servicio mantiene sus propios servidores, 
-                        nosotros solo proporcionamos la interfaz unificada y la biblioteca de recursos.
+                        Ágora Kets es un centro de recursos diseñado para democratizar el acceso a las herramientas de inteligencia artificial más potentes disponibles actualmente. 
+                        No creamos las IAs, las conectamos contigo de manera organizada y accesible.
                     </p>
                     
                     <div class="space-y-4">
@@ -180,8 +180,8 @@ html_content = '''<!DOCTYPE html>
                                 <i class="fas fa-check text-green-400 text-sm"></i>
                             </div>
                             <div>
-                                <h4 class="font-semibold mb-1">Sin Costos de Servidor</h4>
-                                <p class="text-sm text-gray-500">GitHub Pages + servicios externos = $0 infraestructura</p>
+                                <h4 class="font-semibold mb-1">Recursos Verificados</h4>
+                                <p class="text-sm text-gray-500">Cada herramienta ha sido probada y documentada con instrucciones claras de uso</p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
@@ -189,8 +189,8 @@ html_content = '''<!DOCTYPE html>
                                 <i class="fas fa-bolt text-blue-400 text-sm"></i>
                             </div>
                             <div>
-                                <h4 class="font-semibold mb-1">Escalabilidad Infinita</h4>
-                                <p class="text-sm text-gray-500">CDN global de GitHub, carga instantánea</p>
+                                <h4 class="font-semibold mb-1">Acceso Directo</h4>
+                                <p class="text-sm text-gray-500">Enlaces oficiales sin intermediarios ni afiliados engañosos</p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
@@ -198,8 +198,8 @@ html_content = '''<!DOCTYPE html>
                                 <i class="fas fa-shield-alt text-purple-400 text-sm"></i>
                             </div>
                             <div>
-                                <h4 class="font-semibold mb-1">Mantenimiento Cero</h4>
-                                <p class="text-sm text-gray-500">No hay servidores que actualizar ni bases de datos que respaldar</p>
+                                <h4 class="font-semibold mb-1">Sin Riesgos</h4>
+                                <p class="text-sm text-gray-500">Todas las herramientas listadas son de empresas reconocidas y confiables</p>
                             </div>
                         </div>
                     </div>
@@ -207,34 +207,31 @@ html_content = '''<!DOCTYPE html>
                 
                 <div class="glass rounded-2xl p-8 relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl -mr-32 -mt-32"></div>
-                    <h3 class="text-xl font-bold mb-6 relative z-10">Arquitectura Frontend-Only</h3>
+                    <h3 class="text-xl font-bold mb-6 relative z-10">¿Cómo Funciona?</h3>
                     
                     <div class="space-y-4 relative z-10">
                         <div class="flex items-center gap-4 p-4 bg-darker rounded-lg border border-gray-800">
-                            <i class="fas fa-laptop-code text-primary text-xl"></i>
+                            <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold text-sm">1</div>
                             <div class="flex-1">
-                                <div class="font-medium">Cliente (Navegador)</div>
-                                <div class="text-xs text-gray-500">HTML5 + Tailwind + Vanilla JS</div>
+                                <div class="font-medium">Explora las Categorías</div>
+                                <div class="text-xs text-gray-500">Encuentra el tipo de herramienta que necesitas</div>
                             </div>
-                            <i class="fas fa-arrow-right text-gray-600"></i>
                         </div>
                         
-                        <div class="flex items-center gap-4 p-4 bg-darker rounded-lg border border-gray-800 opacity-50">
-                            <i class="fas fa-server text-gray-600 text-xl"></i>
+                        <div class="flex items-center gap-4 p-4 bg-darker rounded-lg border border-gray-800">
+                            <div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-white font-bold text-sm">2</div>
                             <div class="flex-1">
-                                <div class="font-medium line-through">Servidor Propio</div>
-                                <div class="text-xs text-gray-600">No necesario</div>
+                                <div class="font-medium">Lee la Descripción</div>
+                                <div class="text-xs text-gray-500">Entiende qué hace cada herramienta antes de usarla</div>
                             </div>
-                            <i class="fas fa-times text-gray-600"></i>
                         </div>
                         
-                        <div class="flex items-center gap-4 p-4 bg-darker rounded-lg border border-primary/30">
-                            <i class="fas fa-cloud text-primary text-xl"></i>
+                        <div class="flex items-center gap-4 p-4 bg-darker rounded-lg border border-gray-800">
+                            <div class="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-white font-bold text-sm">3</div>
                             <div class="flex-1">
-                                <div class="font-medium">Servicios IA Externos</div>
-                                <div class="text-xs text-gray-500">NotebookLM, Miyagi, Ainee, LongCut</div>
+                                <div class="font-medium">Accede Directamente</div>
+                                <div class="text-xs text-gray-500">Haz clic y comienza a usar la herramienta inmediatamente</div>
                             </div>
-                            <i class="fas fa-check text-green-400"></i>
                         </div>
                     </div>
                 </div>
@@ -246,9 +243,9 @@ html_content = '''<!DOCTYPE html>
     <section id="options" class="py-20 bg-darker">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4">4 Opciones Reales de IA</h2>
+                <h2 class="text-4xl font-bold mb-4">Herramientas Principales de IA</h2>
                 <p class="text-gray-400 max-w-2xl mx-auto">
-                    Integraciones directas con servicios gratuitos que procesan tu contenido y generan materiales de aprendizaje.
+                    Estas son las 4 plataformas fundamentales que recomendamos para transformar tu contenido en experiencias de aprendizaje interactivas.
                 </p>
             </div>
 
@@ -259,7 +256,7 @@ html_content = '''<!DOCTYPE html>
                     <div class="relative z-10">
                         <div class="flex items-center gap-4 mb-6">
                             <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-white font-bold text-xl">
-                                A
+                                <i class="fas fa-book"></i>
                             </div>
                             <div>
                                 <h3 class="text-2xl font-bold">NotebookLM</h3>
@@ -267,25 +264,22 @@ html_content = '''<!DOCTYPE html>
                             </div>
                         </div>
                         
-                        <div class="space-y-4 mb-6">
-                            <div class="flex items-center gap-3 text-sm">
-                                <i class="fas fa-link text-yellow-400"></i>
-                                <span class="font-mono text-gray-300">notebooklm.google.com</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-sm">
-                                <i class="fas fa-upload text-yellow-400"></i>
-                                <span>Pega tu video o documento</span>
-                            </div>
+                        <div class="bg-darker/50 rounded-lg p-4 mb-6 border-l-4 border-yellow-400">
+                            <p class="text-sm text-gray-300 mb-2"><strong>¿Qué hace?</strong></p>
+                            <p class="text-sm text-gray-400">
+                                Transforma documentos, PDFs, videos de YouTube y artículos en podcasts generados por IA, resúmenes ejecutivos, 
+                                preguntas frecuentes y guías de estudio. Es como tener un equipo de producción de contenido educativo instantáneo.
+                            </p>
                         </div>
 
                         <div class="grid grid-cols-3 gap-3 mb-6">
                             <div class="bg-darker rounded-lg p-3 text-center">
                                 <i class="fas fa-podcast text-yellow-400 mb-2"></i>
-                                <div class="text-xs">Podcast</div>
+                                <div class="text-xs">Podcasts IA</div>
                             </div>
                             <div class="bg-darker rounded-lg p-3 text-center">
                                 <i class="fas fa-file-alt text-yellow-400 mb-2"></i>
-                                <div class="text-xs">Resumen</div>
+                                <div class="text-xs">Resúmenes</div>
                             </div>
                             <div class="bg-darker rounded-lg p-3 text-center">
                                 <i class="fas fa-question-circle text-yellow-400 mb-2"></i>
@@ -295,10 +289,11 @@ html_content = '''<!DOCTYPE html>
 
                         <div class="flex items-center justify-between">
                             <span class="text-green-400 text-sm font-semibold">
-                                <i class="fas fa-check-circle mr-1"></i>Gratis
+                                <i class="fas fa-check-circle mr-1"></i>100% Gratis
                             </span>
-                            <a href="https://notebooklm.google.com" target="_blank" class="px-4 py-2 bg-yellow-500/20 text-yellow-400 rounded-lg hover:bg-yellow-500/30 transition-colors text-sm">
-                                Acceder <i class="fas fa-external-link-alt ml-1"></i>
+                            <a href="https://notebooklm.google.com" target="_blank" rel="noopener noreferrer" 
+                               class="px-4 py-2 bg-yellow-500/20 text-yellow-400 rounded-lg hover:bg-yellow-500/30 transition-colors text-sm external-link">
+                                Visitar NotebookLM
                             </a>
                         </div>
                     </div>
@@ -310,39 +305,37 @@ html_content = '''<!DOCTYPE html>
                     <div class="relative z-10">
                         <div class="flex items-center gap-4 mb-6">
                             <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center text-white font-bold text-xl">
-                                B
+                                <i class="fas fa-graduation-cap"></i>
                             </div>
                             <div>
                                 <h3 class="text-2xl font-bold">Miyagi Labs</h3>
-                                <span class="text-sm text-gray-400">AI Education</span>
+                                <span class="text-sm text-gray-400">AI Education Platform</span>
                             </div>
                         </div>
                         
-                        <div class="space-y-4 mb-6">
-                            <div class="flex items-center gap-3 text-sm">
-                                <i class="fas fa-link text-blue-400"></i>
-                                <span class="font-mono text-gray-300">miyagilabs.ai</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-sm">
-                                <i class="fas fa-video text-blue-400"></i>
-                                <span>Pega tu video</span>
-                            </div>
+                        <div class="bg-darker/50 rounded-lg p-4 mb-6 border-l-4 border-blue-400">
+                            <p class="text-sm text-gray-300 mb-2"><strong>¿Qué hace?</strong></p>
+                            <p class="text-sm text-gray-400">
+                                Convierte cualquier video de YouTube en un curso estructurado completo con módulos de aprendizaje, 
+                                evaluaciones interactivas (quizzes) y seguimiento de progreso. Ideal para convertir contenido pasivo en educación activa.
+                            </p>
                         </div>
 
                         <div class="bg-darker rounded-lg p-4 mb-6">
                             <div class="flex items-center gap-3 mb-2">
-                                <i class="fas fa-graduation-cap text-blue-400"></i>
-                                <span class="font-semibold">Obtienes: Cursos con Quizzes</span>
+                                <i class="fas fa-chalkboard-teacher text-blue-400"></i>
+                                <span class="font-semibold">Ideal para:</span>
                             </div>
-                            <p class="text-sm text-gray-500">Generación automática de cursos estructurados con evaluaciones interactivas</p>
+                            <p class="text-sm text-gray-500">Creadores de contenido educativo, profesores que usan videos en clase, y estudiantes que quieren testear su comprensión</p>
                         </div>
 
                         <div class="flex items-center justify-between">
                             <span class="text-green-400 text-sm font-semibold">
-                                <i class="fas fa-check-circle mr-1"></i>Gratis
+                                <i class="fas fa-check-circle mr-1"></i>Freemium
                             </span>
-                            <a href="https://miyagilabs.ai" target="_blank" class="px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 transition-colors text-sm">
-                                Acceder <i class="fas fa-external-link-alt ml-1"></i>
+                            <a href="https://miyagilabs.ai" target="_blank" rel="noopener noreferrer" 
+                               class="px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 transition-colors text-sm external-link">
+                                Visitar Miyagi Labs
                             </a>
                         </div>
                     </div>
@@ -354,29 +347,26 @@ html_content = '''<!DOCTYPE html>
                     <div class="relative z-10">
                         <div class="flex items-center gap-4 mb-6">
                             <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center text-white font-bold text-xl">
-                                C
+                                <i class="fas fa-brain"></i>
                             </div>
                             <div>
                                 <h3 class="text-2xl font-bold">Ainee</h3>
-                                <span class="text-sm text-gray-400">Study Assistant</span>
+                                <span class="text-sm text-gray-400">Study Assistant AI</span>
                             </div>
                         </div>
                         
-                        <div class="space-y-4 mb-6">
-                            <div class="flex items-center gap-3 text-sm">
-                                <i class="fas fa-link text-purple-400"></i>
-                                <span class="font-mono text-gray-300">ainee.com</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-sm">
-                                <i class="fas fa-paste text-purple-400"></i>
-                                <span>Pega tu video</span>
-                            </div>
+                        <div class="bg-darker/50 rounded-lg p-4 mb-6 border-l-4 border-purple-400">
+                            <p class="text-sm text-gray-300 mb-2"><strong>¿Qué hace?</strong></p>
+                            <p class="text-sm text-gray-400">
+                                Asistente de estudio personal que genera notas inteligentes, mapas mentales automáticos y flashcards 
+                                a partir de videos, documentos o textos pegados. Utiliza técnicas de aprendizaje espaciado para maximizar retención.
+                            </p>
                         </div>
 
                         <div class="grid grid-cols-3 gap-3 mb-6">
                             <div class="bg-darker rounded-lg p-3 text-center">
                                 <i class="fas fa-sticky-note text-purple-400 mb-2"></i>
-                                <div class="text-xs">Notas</div>
+                                <div class="text-xs">Notas IA</div>
                             </div>
                             <div class="bg-darker rounded-lg p-3 text-center">
                                 <i class="fas fa-project-diagram text-purple-400 mb-2"></i>
@@ -392,8 +382,9 @@ html_content = '''<!DOCTYPE html>
                             <span class="text-green-400 text-sm font-semibold">
                                 <i class="fas fa-check-circle mr-1"></i>Gratis
                             </span>
-                            <a href="https://ainee.com" target="_blank" class="px-4 py-2 bg-purple-500/20 text-purple-400 rounded-lg hover:bg-purple-500/30 transition-colors text-sm">
-                                Acceder <i class="fas fa-external-link-alt ml-1"></i>
+                            <a href="https://ainee.com" target="_blank" rel="noopener noreferrer" 
+                               class="px-4 py-2 bg-purple-500/20 text-purple-400 rounded-lg hover:bg-purple-500/30 transition-colors text-sm external-link">
+                                Visitar Ainee
                             </a>
                         </div>
                     </div>
@@ -405,7 +396,7 @@ html_content = '''<!DOCTYPE html>
                     <div class="relative z-10">
                         <div class="flex items-center gap-4 mb-6">
                             <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-white font-bold text-xl">
-                                D
+                                <i class="fas fa-robot"></i>
                             </div>
                             <div>
                                 <h3 class="text-2xl font-bold">LongCut</h3>
@@ -413,31 +404,29 @@ html_content = '''<!DOCTYPE html>
                             </div>
                         </div>
                         
-                        <div class="space-y-4 mb-6">
-                            <div class="flex items-center gap-3 text-sm">
-                                <i class="fas fa-link text-green-400"></i>
-                                <span class="font-mono text-gray-300">longcut.ai</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-sm">
-                                <i class="fas fa-video text-green-400"></i>
-                                <span>Pega tu video</span>
-                            </div>
+                        <div class="bg-darker/50 rounded-lg p-4 mb-6 border-l-4 border-green-400">
+                            <p class="text-sm text-gray-300 mb-2"><strong>¿Qué hace?</strong></p>
+                            <p class="text-sm text-gray-400">
+                                Workspace colaborativo con asistente de IA integrado que permite analizar videos largos, 
+                                documentos extensos y realizar preguntas complejas sobre el contenido. Incluye chat persistente y organización de proyectos.
+                            </p>
                         </div>
 
                         <div class="bg-darker rounded-lg p-4 mb-6">
                             <div class="flex items-center gap-3 mb-2">
                                 <i class="fas fa-comments text-green-400"></i>
-                                <span class="font-semibold">Workspace con Chat</span>
+                                <span class="font-semibold">Característica única:</span>
                             </div>
-                            <p class="text-sm text-gray-500">Espacio de trabajo colaborativo con asistente de IA integrado para análisis profundo</p>
+                            <p class="text-sm text-gray-500">Chat continuo con contexto persistente. Puedes hacer seguimiento de conversaciones complejas sobre tu material de estudio</p>
                         </div>
 
                         <div class="flex items-center justify-between">
                             <span class="text-green-400 text-sm font-semibold">
-                                <i class="fas fa-check-circle mr-1"></i>Gratis
+                                <i class="fas fa-check-circle mr-1"></i>Freemium
                             </span>
-                            <a href="https://longcut.ai" target="_blank" class="px-4 py-2 bg-green-500/20 text-green-400 rounded-lg hover:bg-green-500/30 transition-colors text-sm">
-                                Acceder <i class="fas fa-external-link-alt ml-1"></i>
+                            <a href="https://longcut.ai" target="_blank" rel="noopener noreferrer" 
+                               class="px-4 py-2 bg-green-500/20 text-green-400 rounded-lg hover:bg-green-500/30 transition-colors text-sm external-link">
+                                Visitar LongCut
                             </a>
                         </div>
                     </div>
@@ -448,25 +437,33 @@ html_content = '''<!DOCTYPE html>
             <div class="mt-12 glass rounded-2xl p-8">
                 <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
                     <i class="fas fa-bolt text-yellow-400"></i>
-                    Acceso Rápido a Servicios
+                    Acceso Rápido
                 </h3>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <button onclick="openService('notebooklm')" class="p-4 bg-darker rounded-xl border border-gray-800 hover:border-yellow-500/50 transition-all group">
-                        <i class="fas fa-book text-yellow-400 text-2xl mb-2 group-hover:scale-110 transition-transform"></i>
+                    <a href="https://notebooklm.google.com" target="_blank" rel="noopener noreferrer" 
+                       class="p-4 bg-darker rounded-xl border border-gray-800 hover:border-yellow-500/50 transition-all group text-center block">
+                        <i class="fas fa-book text-yellow-400 text-2xl mb-2 group-hover:scale-110 transition-transform block"></i>
                         <div class="text-sm font-medium">NotebookLM</div>
-                    </button>
-                    <button onclick="openService('miyagi')" class="p-4 bg-darker rounded-xl border border-gray-800 hover:border-blue-500/50 transition-all group">
-                        <i class="fas fa-graduation-cap text-blue-400 text-2xl mb-2 group-hover:scale-110 transition-transform"></i>
+                        <div class="text-xs text-gray-500 mt-1">Google</div>
+                    </a>
+                    <a href="https://miyagilabs.ai" target="_blank" rel="noopener noreferrer" 
+                       class="p-4 bg-darker rounded-xl border border-gray-800 hover:border-blue-500/50 transition-all group text-center block">
+                        <i class="fas fa-graduation-cap text-blue-400 text-2xl mb-2 group-hover:scale-110 transition-transform block"></i>
                         <div class="text-sm font-medium">Miyagi Labs</div>
-                    </button>
-                    <button onclick="openService('ainee')" class="p-4 bg-darker rounded-xl border border-gray-800 hover:border-purple-500/50 transition-all group">
-                        <i class="fas fa-brain text-purple-400 text-2xl mb-2 group-hover:scale-110 transition-transform"></i>
+                        <div class="text-xs text-gray-500 mt-1">Cursos IA</div>
+                    </a>
+                    <a href="https://ainee.com" target="_blank" rel="noopener noreferrer" 
+                       class="p-4 bg-darker rounded-xl border border-gray-800 hover:border-purple-500/50 transition-all group text-center block">
+                        <i class="fas fa-brain text-purple-400 text-2xl mb-2 group-hover:scale-110 transition-transform block"></i>
                         <div class="text-sm font-medium">Ainee</div>
-                    </button>
-                    <button onclick="openService('longcut')" class="p-4 bg-darker rounded-xl border border-gray-800 hover:border-green-500/50 transition-all group">
-                        <i class="fas fa-robot text-green-400 text-2xl mb-2 group-hover:scale-110 transition-transform"></i>
+                        <div class="text-xs text-gray-500 mt-1">Estudio IA</div>
+                    </a>
+                    <a href="https://longcut.ai" target="_blank" rel="noopener noreferrer" 
+                       class="p-4 bg-darker rounded-xl border border-gray-800 hover:border-green-500/50 transition-all group text-center block">
+                        <i class="fas fa-robot text-green-400 text-2xl mb-2 group-hover:scale-110 transition-transform block"></i>
                         <div class="text-sm font-medium">LongCut</div>
-                    </button>
+                        <div class="text-xs text-gray-500 mt-1">Workspace IA</div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -478,26 +475,23 @@ html_content = '''<!DOCTYPE html>
             <div class="flex flex-col md:flex-row md:items-center justify-between mb-12">
                 <div>
                     <h2 class="text-4xl font-bold mb-2">Biblioteca de Recursos</h2>
-                    <p class="text-gray-400">Colección completa de herramientas y guías de Revolutia</p>
+                    <p class="text-gray-400">Herramientas adicionales organizadas por categoría con descripciones y enlaces directos</p>
                 </div>
                 <div class="mt-4 md:mt-0 flex gap-2">
-                    <input type="text" id="searchResources" placeholder="Buscar recursos..." 
+                    <input type="text" id="searchResources" placeholder="Buscar herramientas..." 
                            class="px-4 py-2 bg-darker border border-gray-700 rounded-lg focus:border-primary focus:outline-none text-sm"
                            onkeyup="filterResources()">
-                    <button onclick="toggleView()" class="px-4 py-2 bg-darker border border-gray-700 rounded-lg hover:border-primary transition-colors">
-                        <i class="fas fa-th-large"></i>
-                    </button>
                 </div>
             </div>
 
             <!-- Category Filters -->
             <div class="flex flex-wrap gap-2 mb-8" id="categoryFilters">
-                <button onclick="filterCategory('all')" class="px-4 py-2 rounded-full bg-primary text-white text-sm font-medium transition-all">Todos</button>
+                <button onclick="filterCategory('all')" class="px-4 py-2 rounded-full bg-primary text-white text-sm font-medium transition-all">Todas</button>
                 <button onclick="filterCategory('productividad')" class="px-4 py-2 rounded-full bg-darker border border-gray-700 hover:border-primary text-sm transition-all">Productividad</button>
                 <button onclick="filterCategory('automatizacion')" class="px-4 py-2 rounded-full bg-darker border border-gray-700 hover:border-primary text-sm transition-all">Automatización</button>
-                <button onclick="filterCategory('contenido')" class="px-4 py-2 rounded-full bg-darker border border-gray-700 hover:border-primary text-sm transition-all">Contenido</button>
+                <button onclick="filterCategory('contenido')" class="px-4 py-2 rounded-full bg-darker border border-gray-700 hover:border-primary text-sm transition-all">Creación de Contenido</button>
                 <button onclick="filterCategory('desarrollo')" class="px-4 py-2 rounded-full bg-darker border border-gray-700 hover:border-primary text-sm transition-all">Desarrollo</button>
-                <button onclick="filterCategory('ventas')" class="px-4 py-2 rounded-full bg-darker border border-gray-700 hover:border-primary text-sm transition-all">Ventas</button>
+                <button onclick="filterCategory('ventas')" class="px-4 py-2 rounded-full bg-darker border border-gray-700 hover:border-primary text-sm transition-all">Ventas & Marketing</button>
             </div>
 
             <!-- Resources Grid -->
@@ -517,203 +511,97 @@ html_content = '''<!DOCTYPE html>
     <!-- Technical Specs Section -->
     <section id="technical" class="py-20 bg-darker">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold mb-12 text-center">Especificaciones Técnicas</h2>
+            <h2 class="text-3xl font-bold mb-12 text-center">Información Técnica</h2>
             
             <div class="grid md:grid-cols-3 gap-8">
-                <!-- Frontend Stack -->
+                <!-- Categorías -->
                 <div class="glass rounded-2xl p-6">
                     <div class="w-12 h-12 rounded-xl bg-orange-500/20 flex items-center justify-center mb-4">
-                        <i class="fas fa-code text-orange-400 text-xl"></i>
+                        <i class="fas fa-tags text-orange-400 text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Stack Frontend</h3>
+                    <h3 class="text-xl font-bold mb-4">Categorías de Recursos</h3>
                     <ul class="space-y-3 text-sm text-gray-400">
                         <li class="flex items-center gap-2">
-                            <i class="fas fa-check text-green-400 text-xs"></i>
-                            HTML5 Semántico
+                            <i class="fas fa-briefcase text-blue-400 text-xs"></i>
+                            <strong>Productividad:</strong> Herramientas para optimizar tu flujo de trabajo diario
                         </li>
                         <li class="flex items-center gap-2">
-                            <i class="fas fa-check text-green-400 text-xs"></i>
-                            Tailwind CSS (CDN)
+                            <i class="fas fa-robot text-purple-400 text-xs"></i>
+                            <strong>Automatización:</strong> Scripts y herramientas para automatizar tareas repetitivas
                         </li>
                         <li class="flex items-center gap-2">
-                            <i class="fas fa-check text-green-400 text-xs"></i>
-                            Vanilla JavaScript ES6+
+                            <i class="fas fa-video text-red-400 text-xs"></i>
+                            <strong>Contenido:</strong> Generación de video, imagen, audio y texto
                         </li>
                         <li class="flex items-center gap-2">
-                            <i class="fas fa-check text-green-400 text-xs"></i>
-                            Font Awesome Icons
+                            <i class="fas fa-code text-green-400 text-xs"></i>
+                            <strong>Desarrollo:</strong> Herramientas para programadores y diseñadores
                         </li>
                         <li class="flex items-center gap-2">
-                            <i class="fas fa-check text-green-400 text-xs"></i>
-                            Google Fonts (Inter)
+                            <i class="fas fa-chart-line text-yellow-400 text-xs"></i>
+                            <strong>Ventas:</strong> Soluciones para comercialización y negocios
                         </li>
                     </ul>
                 </div>
 
-                <!-- Hosting -->
+                <!-- Seguridad -->
                 <div class="glass rounded-2xl p-6">
-                    <div class="w-12 h-12 rounded-xl bg-gray-700/50 flex items-center justify-center mb-4">
-                        <i class="fab fa-github text-white text-xl"></i>
+                    <div class="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center mb-4">
+                        <i class="fas fa-shield-alt text-green-400 text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Hosting & Deploy</h3>
+                    <h3 class="text-xl font-bold mb-4">Seguridad y Privacidad</h3>
                     <ul class="space-y-3 text-sm text-gray-400">
                         <li class="flex items-center gap-2">
                             <i class="fas fa-check text-green-400 text-xs"></i>
-                            GitHub Pages
+                            Todos los enlaces son HTTPS seguros
                         </li>
                         <li class="flex items-center gap-2">
                             <i class="fas fa-check text-green-400 text-xs"></i>
-                            HTTPS gratuito
+                            Sin recopilación de datos personales
                         </li>
                         <li class="flex items-center gap-2">
                             <i class="fas fa-check text-green-400 text-xs"></i>
-                            CI/CD automático
+                            Herramientas verificadas de empresas reconocidas
                         </li>
                         <li class="flex items-center gap-2">
                             <i class="fas fa-check text-green-400 text-xs"></i>
-                            Dominio personalizado
+                            Sin software malicioso ni redirecciones sospechosas
                         </li>
                         <li class="flex items-center gap-2">
                             <i class="fas fa-check text-green-400 text-xs"></i>
-                            100GB ancho de banda/mes
+                            Actualizaciones regulares de enlaces
                         </li>
                     </ul>
                 </div>
 
-                <!-- External APIs -->
+                <!-- Uso -->
                 <div class="glass rounded-2xl p-6">
                     <div class="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center mb-4">
-                        <i class="fas fa-plug text-blue-400 text-xl"></i>
+                        <i class="fas fa-info-circle text-blue-400 text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Integraciones</h3>
+                    <h3 class="text-xl font-bold mb-4">Cómo Usar Esta Biblioteca</h3>
                     <ul class="space-y-3 text-sm text-gray-400">
                         <li class="flex items-center gap-2">
-                            <i class="fas fa-external-link-alt text-blue-400 text-xs"></i>
-                            NotebookLM API
+                            <span class="text-primary font-bold">1.</span>
+                            Filtra por categoría según tu necesidad
                         </li>
                         <li class="flex items-center gap-2">
-                            <i class="fas fa-external-link-alt text-blue-400 text-xs"></i>
-                            Miyagi Labs Embed
+                            <span class="text-primary font-bold">2.</span>
+                            Lee la descripción para entender qué hace cada herramienta
                         </li>
                         <li class="flex items-center gap-2">
-                            <i class="fas fa-external-link-alt text-blue-400 text-xs"></i>
-                            Ainee Widget
+                            <span class="text-primary font-bold">3.</span>
+                            Haz clic en el nombre o ícono para abrir el sitio oficial
                         </li>
                         <li class="flex items-center gap-2">
-                            <i class="fas fa-external-link-alt text-blue-400 text-xs"></i>
-                            LongCut Workspace
+                            <span class="text-primary font-bold">4.</span>
+                            Usa la barra de búsqueda para encontrar herramientas específicas
                         </li>
                         <li class="flex items-center gap-2">
-                            <i class="fas fa-external-link-alt text-blue-400 text-xs"></i>
-                            Deep Links a servicios
+                            <span class="text-primary font-bold">5.</span>
+                            Reporta enlaces rotos para mantener la calidad
                         </li>
                     </ul>
-                </div>
-            </div>
-
-            <!-- File Structure -->
-            <div class="mt-12 glass rounded-2xl p-8">
-                <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
-                    <i class="fas fa-folder-tree text-yellow-400"></i>
-                    Estructura de Archivos
-                </h3>
-                <div class="font-mono text-sm bg-darker rounded-xl p-6 overflow-x-auto">
-                    <div class="text-gray-500">ai-learning-hub/</div>
-                    <div class="ml-4 text-blue-400">├── index.html</div>
-                    <div class="ml-4 text-gray-400">├── assets/</div>
-                    <div class="ml-8 text-gray-400">│   ├── css/</div>
-                    <div class="ml-12 text-gray-500">│   │   └── styles.css (opcional)</div>
-                    <div class="ml-8 text-gray-400">│   ├── js/</div>
-                    <div class="ml-12 text-gray-500">│   │   ├── app.js</div>
-                    <div class="ml-12 text-gray-500">│   │   ├── resources.js</div>
-                    <div class="ml-12 text-gray-500">│   │   └── filters.js</div>
-                    <div class="ml-8 text-gray-400">│   └── images/</div>
-                    <div class="ml-4 text-gray-400">├── README.md</div>
-                    <div class="ml-4 text-gray-400">└── .github/</div>
-                    <div class="ml-8 text-gray-500">└── workflows/</div>
-                    <div class="ml-12 text-gray-500">└── deploy.yml</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Implementation Guide -->
-    <section class="py-20 bg-dark">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold mb-12 text-center">Guía de Implementación</h2>
-            
-            <div class="space-y-8">
-                <!-- Step 1 -->
-                <div class="flex gap-6">
-                    <div class="flex-shrink-0">
-                        <div class="step-number w-12 h-12 rounded-full flex items-center justify-center text-white font-bold">1</div>
-                    </div>
-                    <div class="flex-1 glass rounded-xl p-6">
-                        <h3 class="text-xl font-bold mb-2">Crear Repositorio en GitHub</h3>
-                        <p class="text-gray-400 mb-4">Inicializa un nuevo repositorio público con nombre <code class="bg-darker px-2 py-1 rounded text-primary">ai-learning-hub</code></p>
-                        <div class="bg-darker rounded-lg p-4 font-mono text-sm text-gray-300">
-                            git init<br>
-                            git add .<br>
-                            git commit -m "Initial commit: PRD v1.0"<br>
-                            git branch -M main<br>
-                            git remote add origin https://github.com/tuusuario/ai-learning-hub.git
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step 2 -->
-                <div class="flex gap-6">
-                    <div class="flex-shrink-0">
-                        <div class="step-number w-12 h-12 rounded-full flex items-center justify-center text-white font-bold">2</div>
-                    </div>
-                    <div class="flex-1 glass rounded-xl p-6">
-                        <h3 class="text-xl font-bold mb-2">Configurar GitHub Pages</h3>
-                        <p class="text-gray-400 mb-4">Ve a Settings > Pages y selecciona deploy desde branch <code class="bg-darker px-2 py-1 rounded text-primary">main</code> carpeta <code class="bg-darker px-2 py-1 rounded text-primary">/(root)</code></p>
-                        <div class="flex items-center gap-4 text-sm">
-                            <span class="flex items-center gap-2 text-green-400">
-                                <i class="fas fa-check-circle"></i>
-                                Source: Deploy from a branch
-                            </span>
-                            <span class="flex items-center gap-2 text-green-400">
-                                <i class="fas fa-check-circle"></i>
-                                Branch: main
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step 3 -->
-                <div class="flex gap-6">
-                    <div class="flex-shrink-0">
-                        <div class="step-number w-12 h-12 rounded-full flex items-center justify-center text-white font-bold">3</div>
-                    </div>
-                    <div class="flex-1 glass rounded-xl p-6">
-                        <h3 class="text-xl font-bold mb-2">Personalizar Contenido</h3>
-                        <p class="text-gray-400 mb-4">Edita el archivo HTML para añadir tus propios recursos y enlaces personalizados</p>
-                        <ul class="list-disc list-inside text-sm text-gray-400 space-y-1">
-                            <li>Modifica el array <code class="text-primary">resourcesData</code> en el script</li>
-                            <li>Actualiza los enlaces de afiliados si aplica</li>
-                            <li>Añade tu branding personalizado</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Step 4 -->
-                <div class="flex gap-6">
-                    <div class="flex-shrink-0">
-                        <div class="step-number w-12 h-12 rounded-full flex items-center justify-center text-white font-bold">4</div>
-                    </div>
-                    <div class="flex-1 glass rounded-xl p-6">
-                        <h3 class="text-xl font-bold mb-2">Deploy Automático</h3>
-                        <p class="text-gray-400 mb-4">Cada push a main actualizará automáticamente el sitio en segundos</p>
-                        <div class="bg-green-500/10 border border-green-500/30 rounded-lg p-4 flex items-center gap-3">
-                            <i class="fas fa-rocket text-green-400 text-xl"></i>
-                            <div>
-                                <div class="font-semibold text-green-400">Tu sitio estará en:</div>
-                                <div class="text-sm text-gray-400">https://tuusuario.github.io/ai-learning-hub</div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -728,51 +616,49 @@ html_content = '''<!DOCTYPE html>
                         <div class="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
                             <i class="fas fa-brain text-white text-sm"></i>
                         </div>
-                        <span class="font-bold">AI Learning Hub</span>
+                        <span class="font-bold">Ágora Kets</span>
                     </div>
                     <p class="text-sm text-gray-500">
-                        Plataforma educativa frontend-only para aprender con IA sin costos de infraestructura.
+                        Centro de recursos de IA curado para la comunidad hispanohablante. 
+                        Acceso democrático a las mejores herramientas de inteligencia artificial.
                     </p>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-4">Opciones IA</h4>
+                    <h4 class="font-semibold mb-4">Herramientas Principales</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="https://notebooklm.google.com" class="hover:text-primary transition-colors">NotebookLM</a></li>
-                        <li><a href="https://miyagilabs.ai" class="hover:text-primary transition-colors">Miyagi Labs</a></li>
-                        <li><a href="https://ainee.com" class="hover:text-primary transition-colors">Ainee</a></li>
-                        <li><a href="https://longcut.ai" class="hover:text-primary transition-colors">LongCut</a></li>
+                        <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors external-link">NotebookLM</a></li>
+                        <li><a href="https://miyagilabs.ai" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors external-link">Miyagi Labs</a></li>
+                        <li><a href="https://ainee.com" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors external-link">Ainee</a></li>
+                        <li><a href="https://longcut.ai" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors external-link">LongCut</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-4">Recursos</h4>
+                    <h4 class="font-semibold mb-4">Categorías Populares</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="#resources" class="hover:text-primary transition-colors">Biblioteca Revolutia</a></li>
-                        <li><a href="#technical" class="hover:text-primary transition-colors">Documentación</a></li>
-                        <li><a href="#" class="hover:text-primary transition-colors">GitHub Repo</a></li>
+                        <li><a href="#resources" onclick="filterCategory('productividad')" class="hover:text-primary transition-colors">Productividad</a></li>
+                        <li><a href="#resources" onclick="filterCategory('contenido')" class="hover:text-primary transition-colors">Creación de Contenido</a></li>
+                        <li><a href="#resources" onclick="filterCategory('desarrollo')" class="hover:text-primary transition-colors">Desarrollo</a></li>
+                        <li><a href="#resources" class="hover:text-primary transition-colors">Ver Todos</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-4">Legal</h4>
+                    <h4 class="font-semibold mb-4">Información</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="#" class="hover:text-primary transition-colors">Términos de Uso</a></li>
-                        <li><a href="#" class="hover:text-primary transition-colors">Privacidad</a></li>
-                        <li class="text-xs text-gray-600 mt-4">© 2025 AI Learning Hub. Open Source.</li>
+                        <li><span class="text-gray-500">Última actualización:</span> Marzo 2025</li>
+                        <li><span class="text-gray-500">Total de recursos:</span> 50+</li>
+                        <li><span class="text-gray-500">Idioma:</span> Español</li>
+                        <li class="text-xs text-gray-600 mt-4">© 2025 Ágora Kets. Recursos educativos.</li>
                     </ul>
                 </div>
             </div>
             <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
                 <p class="text-sm text-gray-500">
-                    Desarrollado con <i class="fas fa-heart text-red-400 mx-1"></i> para la comunidad de aprendizaje con IA
+                    Los enlaces externos son responsabilidad de sus respectivos propietarios. 
+                    Ágora Kets solo proporciona acceso organizado.
                 </p>
                 <div class="flex gap-4">
-                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
+                    <a href="https://github.com/k3sb12" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors">
                         <i class="fab fa-github"></i>
-                    </a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-400 transition-colors">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition-colors">
-                        <i class="fab fa-linkedin-in"></i>
                     </a>
                 </div>
             </div>
@@ -781,68 +667,265 @@ html_content = '''<!DOCTYPE html>
 
     <!-- JavaScript -->
     <script>
-        // Resources Data
+        // Resources Data - Ahora con URLs reales y descripciones detalladas
         const resourcesData = [
-            { name: "APIFY", desc: "Conexión de buscador de clientes en Claude", category: "automatizacion", icon: "fa-search", color: "blue" },
-            { name: "Guía de Claude Code", desc: "Documentación oficial de Claude Code", category: "desarrollo", icon: "fa-code", color: "purple" },
-            { name: "Vibe Coding Checklist", desc: "Lista de verificación para coding con IA", category: "desarrollo", icon: "fa-list-check", color: "green" },
-            { name: "NotebookLM", desc: "Plataforma de aprendizaje de Google", category: "productividad", icon: "fa-book", color: "yellow" },
-            { name: "Small PPT", desc: "Presentaciones con IA", category: "contenido", icon: "fa-presentation", color: "orange" },
-            { name: "Ovi 1.1", desc: "Generador de Video con IA", category: "contenido", icon: "fa-video", color: "red" },
-            { name: "Prompts Filtrados", desc: "Prompts de empresas de IA", category: "productividad", icon: "fa-filter", color: "indigo" },
-            { name: "Chat GPT Blindado", desc: "Configuración segura de ChatGPT", category: "productividad", icon: "fa-shield-alt", color: "green" },
-            { name: "Formulario Negocios", desc: "Potenciar negocios en ChatGPT", category: "ventas", icon: "fa-briefcase", color: "blue" },
-            { name: "NANO BANANA", desc: "Herramienta de generación de imágenes", category: "contenido", icon: "fa-image", color: "yellow" },
-            { name: "Gemini Canvas", desc: "Espacio de trabajo visual de Google", category: "productividad", icon: "fa-palette", color: "blue" },
-            { name: "Pomelli Google", desc: "Herramienta de productividad Google", category: "productividad", icon: "fa-tasks", color: "red" },
-            { name: "Opal Google", desc: "Solución de IA de Google", category: "productividad", icon: "fa-gem", color: "purple" },
-            { name: "Build by AI Studio", desc: "Constructor de aplicaciones con IA", category: "desarrollo", icon: "fa-cube", color: "indigo" },
-            { name: "Google Stitch", desc: "Herramienta de diseño con IA", category: "contenido", icon: "fa-cut", color: "orange" },
-            { name: "12 Soluciones 2025", desc: "Las soluciones más vendidas", category: "ventas", icon: "fa-trophy", color: "yellow" },
-            { name: "Guía Automatización", desc: "Empezar a automatizar desde cero", category: "automatizacion", icon: "fa-robot", color: "blue" },
-            { name: "Skywork AI", desc: "Analista de Negocios con IA", category: "ventas", icon: "fa-chart-line", color: "cyan" },
-            { name: "Sales AI Agent", desc: "Sistema de agentes de ventas IA", category: "ventas", icon: "fa-headset", color: "green" },
-            { name: "Code Kiwi", desc: "Dashboards interactivos con IA", category: "desarrollo", icon: "fa-chart-pie", color: "teal" },
-            { name: "DeepSeek", desc: "IA open-source alternativa a ChatGPT", category: "productividad", icon: "fa-brain", color: "purple" },
-            { name: "Kimi K2 Thinking", desc: "Modelo de razonamiento avanzado", category: "productividad", icon: "fa-lightbulb", color: "blue" },
-            { name: "N8N Plantillas", desc: "5 Plantillas N8N con IA", category: "automatizacion", icon: "fa-project-diagram", color: "orange" },
-            { name: "Scripts Venta", desc: "Scripts completos de venta", category: "ventas", icon: "fa-phone", color: "green" },
-            { name: "Calculadora Precios", desc: "Calculadora de precios Revolutia", category: "ventas", icon: "fa-calculator", color: "blue" },
-            { name: "Google Skills", desc: "Aprende IA con Google", category: "productividad", icon: "fa-graduation-cap", color: "red" },
-            { name: "TikTok Viral", desc: "Automatización de TikToks", category: "contenido", icon: "fa-music", color: "pink" },
-            { name: "Clips Podcast", desc: "Automatización n8n para podcasts", category: "automatizacion", icon: "fa-podcast", color: "purple" },
-            { name: "Waver 1.0", desc: "Generador de videos IA Bytedance", category: "contenido", icon: "fa-film", color: "red" },
-            { name: "Jules", desc: "Agente de Programación con IA", category: "desarrollo", icon: "fa-terminal", color: "indigo" },
-            { name: "Perplexity Comet", desc: "Navegador con IA", category: "productividad", icon: "fa-globe", color: "teal" },
-            { name: "GenSpark AI", desc: "Navegador con IA alternativo", category: "productividad", icon: "fa-compass", color: "orange" },
-            { name: "Fellou Ce", desc: "Navegador con IA mejorado", category: "productividad", icon: "fa-window-maximize", color: "blue" },
-            { name: "Agents Builder", desc: "Agentes de IA de OpenAI", category: "automatizacion", icon: "fa-users-cog", color: "green" },
-            { name: "Kimi AI", desc: "Creador de Presentaciones", category: "contenido", icon: "fa-file-powerpoint", color: "blue" },
-            { name: "300 Prompts", desc: "Prompts gratuitos de ChatGPT", category: "productividad", icon: "fa-comments", color: "yellow" },
-            { name: "Abacus AI", desc: "1 suscripción, todos los modelos", category: "productividad", icon: "fa-layer-group", color: "purple" },
-            { name: "Nanobanana", desc: "Generación de imágenes gratis", category: "contenido", icon: "fa-image", color: "green" },
-            { name: "Mixboard", desc: "Nueva herramienta de Google", category: "productividad", icon: "fa-sliders-h", color: "red" },
-            { name: "Kimi 2.0", desc: "Sustituto gratuito de ChatGPT", category: "productividad", icon: "fa-comment-dots", color: "blue" },
-            { name: "Z-AI", desc: "Agente de última generación", category: "automatizacion", icon: "fa-robot", color: "indigo" },
-            { name: "DreamMachine", desc: "Ánima imágenes en segundos", category: "contenido", icon: "fa-magic", color: "purple" },
-            { name: "Orchid AI", desc: "Crea tu Web con IA", category: "desarrollo", icon: "fa-laptop-code", color: "pink" },
-            { name: "WhatsApp ChatGPT", desc: "Chat-GPT en WhatsApp: +1 800 242 8478", category: "productividad", icon: "fa-whatsapp", color: "green" },
-            { name: "WhatsApp Perplexity", desc: "Perplexity en WhatsApp: +1 833 436 3285", category: "productividad", icon: "fa-whatsapp", color: "blue" },
-            { name: "WhatsApp Copilot", desc: "Copilot en WhatsApp: +1 877 224 1042", category: "productividad", icon: "fa-whatsapp", color: "cyan" },
-            { name: "Mejora Prompts", desc: "Mejora tus Prompts con OpenAI", category: "productividad", icon: "fa-wand-magic-sparkles", color: "yellow" },
-            { name: "Flowith Neo", desc: "Agente de IA 24/7", category: "automatizacion", icon: "fa-infinity", color: "purple" },
-            { name: "OpenAI Offline", desc: "IA open-source de OpenAI", category: "desarrollo", icon: "fa-server", color: "green" },
-            { name: "Vapi.ai", desc: "Llamadas automáticas con IA", category: "automatizacion", icon: "fa-phone-volume", color: "blue" },
-            { name: "Cluely", desc: "Asistente trampa invisible", category: "productividad", icon: "fa-user-secret", color: "gray" },
-            { name: "Arc Browser", desc: "Navegador con IA moderno", category: "productividad", icon: "fa-compass", color: "orange" },
-            { name: "Dia Browser", desc: "Navegador con IA alternativo", category: "productividad", icon: "fa-globe-americas", color: "blue" },
-            { name: "Skyreels", desc: "Generar videos con IA", category: "contenido", icon: "fa-video", color: "purple" },
-            { name: "Higgsfield", desc: "Video IA con efectos", category: "contenido", icon: "fa-atom", color: "red" },
-            { name: "Seedream", desc: "Generación de video IA", category: "contenido", icon: "fa-seedling", color: "green" },
-            { name: "Sora", desc: "Generador de video OpenAI", category: "contenido", icon: "fa-circle-play", color: "blue" },
-            { name: "Stitch", desc: "Creador de interfaces con IA", category: "desarrollo", icon: "fa-object-group", color: "pink" },
-            { name: "Chatterbox", desc: "Alternativa gratuita a Eleven Labs", category: "contenido", icon: "fa-microphone", color: "orange" },
-            { name: "Qwen 3", desc: "Diseño Web con IA", category: "desarrollo", icon: "fa-paint-brush", color: "cyan" }
+            // PRODUCTIVIDAD
+            { 
+                name: "NotebookLM", 
+                desc: "Plataforma de Google que transforma documentos en podcasts, resúmenes y guías de estudio con IA.", 
+                category: "productividad", 
+                icon: "fa-book", 
+                color: "yellow",
+                url: "https://notebooklm.google.com"
+            },
+            { 
+                name: "Chat GPT Blindado", 
+                desc: "Configuración avanzada de ChatGPT con prompts de seguridad y privacidad mejorada para uso profesional.", 
+                category: "productividad", 
+                icon: "fa-shield-alt", 
+                color: "green",
+                url: "https://chat.openai.com"
+            },
+            { 
+                name: "Gemini Canvas", 
+                desc: "Espacio de trabajo visual de Google para crear y editar contenido con IA generativa de manera colaborativa.", 
+                category: "productividad", 
+                icon: "fa-palette", 
+                color: "blue",
+                url: "https://gemini.google.com"
+            },
+            { 
+                name: "DeepSeek", 
+                desc: "IA open-source china alternativa a ChatGPT con capacidades de razonamiento avanzado y código.", 
+                category: "productividad", 
+                icon: "fa-brain", 
+                color: "purple",
+                url: "https://deepseek.com"
+            },
+            { 
+                name: "Kimi K2", 
+                desc: "Modelo de razonamiento avanzado de Moonshot AI, excelente para análisis de documentos largos.", 
+                category: "productividad", 
+                icon: "fa-lightbulb", 
+                color: "blue",
+                url: "https://kimi.moonshot.cn"
+            },
+            { 
+                name: "Perplexity AI", 
+                desc: "Motor de búsqueda conversacional con IA que proporciona respuestas con fuentes verificadas.", 
+                category: "productividad", 
+                icon: "fa-search", 
+                color: "teal",
+                url: "https://perplexity.ai"
+            },
+            { 
+                name: "Claude (Anthropic)", 
+                desc: "Asistente de IA de Anthropic especializado en análisis detallado y escritura creativa.", 
+                category: "productividad", 
+                icon: "fa-robot", 
+                color: "orange",
+                url: "https://claude.ai"
+            },
+            { 
+                name: "Abacus AI", 
+                desc: "Plataforma que permite acceder a múltiples modelos de IA (GPT-4, Claude, etc.) con una sola suscripción.", 
+                category: "productividad", 
+                icon: "fa-layer-group", 
+                color: "purple",
+                url: "https://abacus.ai"
+            },
+            
+            // AUTOMATIZACIÓN
+            { 
+                name: "N8N", 
+                desc: "Plataforma de automatización de flujos de trabajo tipo Zapier pero open-source y self-hosteable.", 
+                category: "automatizacion", 
+                icon: "fa-project-diagram", 
+                color: "orange",
+                url: "https://n8n.io"
+            },
+            { 
+                name: "Zapier", 
+                desc: "Conecta apps y automatiza flujos de trabajo sin código. Integra más de 5000 aplicaciones.", 
+                category: "automatizacion", 
+                icon: "fa-bolt", 
+                color: "blue",
+                url: "https://zapier.com"
+            },
+            { 
+                name: "Make (Integromat)", 
+                desc: "Plataforma visual de automatización con capacidades avanzadas de transformación de datos.", 
+                category: "automatizacion", 
+                icon: "fa-cogs", 
+                color: "purple",
+                url: "https://make.com"
+            },
+            { 
+                name: "Vapi.ai", 
+                desc: "Crea agentes de voz con IA para llamadas automáticas y atención al cliente.", 
+                category: "automatizacion", 
+                icon: "fa-phone-volume", 
+                color: "blue",
+                url: "https://vapi.ai"
+            },
+            { 
+                name: "Agentes OpenAI", 
+                desc: "Construye agentes de IA autónomos con las herramientas de OpenAI.", 
+                category: "automatizacion", 
+                icon: "fa-users-cog", 
+                color: "green",
+                url: "https://platform.openai.com"
+            },
+            
+            // CREACIÓN DE CONTENIDO
+            { 
+                name: "Sora (OpenAI)", 
+                desc: "Generador de video de OpenAI que crea clips realistas a partir de descripciones de texto.", 
+                category: "contenido", 
+                icon: "fa-circle-play", 
+                color: "blue",
+                url: "https://openai.com/sora"
+            },
+            { 
+                name: "Runway ML", 
+                desc: "Suite creativa de IA para edición de video, generación de imágenes y efectos visuales.", 
+                category: "contenido", 
+                icon: "fa-film", 
+                color: "purple",
+                url: "https://runwayml.com"
+            },
+            { 
+                name: "Midjourney", 
+                desc: "Generador de imágenes artísticas por IA a través de Discord. Calidad fotorealista.", 
+                category: "contenido", 
+                icon: "fa-image", 
+                color: "indigo",
+                url: "https://midjourney.com"
+            },
+            { 
+                name: "DALL-E 3", 
+                desc: "Generador de imágenes de OpenAI integrado en ChatGPT. Excelente para ilustraciones.", 
+                category: "contenido", 
+                icon: "fa-paint-brush", 
+                color: "green",
+                url: "https://openai.com/dall-e-3"
+            },
+            { 
+                name: "ElevenLabs", 
+                desc: "Clonación de voz y síntesis de voz ultra realista para contenido de audio y video.", 
+                category: "contenido", 
+                icon: "fa-microphone", 
+                color: "blue",
+                url: "https://elevenlabs.io"
+            },
+            { 
+                name: "HeyGen", 
+                desc: "Crea videos con avatares de IA que hablan en múltiples idiomas. Ideal para marketing.", 
+                category: "contenido", 
+                icon: "fa-user-circle", 
+                color: "orange",
+                url: "https://heygen.com"
+            },
+            { 
+                name: "Canva AI", 
+                desc: "Suite de diseño con herramientas de IA integradas para imágenes, presentaciones y video.", 
+                category: "contenido", 
+                icon: "fa-palette", 
+                color: "blue",
+                url: "https://canva.com"
+            },
+            
+            // DESARROLLO
+            { 
+                name: "GitHub Copilot", 
+                desc: "Asistente de programación con IA que sugiere código en tiempo real en tu editor.", 
+                category: "desarrollo", 
+                icon: "fa-code", 
+                color: "gray",
+                url: "https://github.com/features/copilot"
+            },
+            { 
+                name: "Vercel v0", 
+                desc: "Genera interfaces de usuario con IA a partir de descripciones de texto. Exporta a React.", 
+                category: "desarrollo", 
+                icon: "fa-laptop-code", 
+                color: "black",
+                url: "https://v0.dev"
+            },
+            { 
+                name: "Replit Agent", 
+                desc: "Agente de IA que puede crear aplicaciones completas desde cero en el navegador.", 
+                category: "desarrollo", 
+                icon: "fa-terminal", 
+                color: "orange",
+                url: "https://replit.com"
+            },
+            { 
+                name: "Bolt.new", 
+                desc: "Crea y despliega aplicaciones web full-stack con prompts de IA. Stack moderno incluido.", 
+                category: "desarrollo", 
+                icon: "fa-bolt", 
+                color: "yellow",
+                url: "https://bolt.new"
+            },
+            { 
+                name: "Cursor", 
+                desc: "Editor de código basado en VS Code con IA integrada para escribir y refactorizar código.", 
+                category: "desarrollo", 
+                icon: "fa-mouse-pointer", 
+                color: "purple",
+                url: "https://cursor.sh"
+            },
+            { 
+                name: "Claude Code", 
+                desc: "Agente de codificación de Anthropic que puede modificar archivos y ejecutar comandos.", 
+                category: "desarrollo", 
+                icon: "fa-terminal", 
+                color: "orange",
+                url: "https://claude.ai/code"
+            },
+            
+            // VENTAS Y MARKETING
+            { 
+                name: "Apollo.io", 
+                desc: "Plataforma de prospección B2B con datos de contacto y automatización de outreach.", 
+                category: "ventas", 
+                icon: "fa-rocket", 
+                color: "blue",
+                url: "https://apollo.io"
+            },
+            { 
+                name: "HubSpot AI", 
+                desc: "Suite de CRM con herramientas de IA para marketing, ventas y servicio al cliente.", 
+                category: "ventas", 
+                icon: "fa-chart-line", 
+                color: "orange",
+                url: "https://hubspot.com"
+            },
+            { 
+                name: "Instantly.ai", 
+                desc: "Plataforma de cold email con IA para escalar campañas de outreach sin esfuerzo.", 
+                category: "ventas", 
+                icon: "fa-envelope", 
+                color: "blue",
+                url: "https://instantly.ai"
+            },
+            { 
+                name: "Lavender", 
+                desc: "Asistente de escritura de emails de ventas con IA que mejora tasas de respuesta.", 
+                category: "ventas", 
+                icon: "fa-pen-fancy", 
+                color: "purple",
+                url: "https://lavender.ai"
+            },
+            { 
+                name: "Clay", 
+                desc: "Enriquecimiento de datos y personalización outbound a escala con IA.", 
+                category: "ventas", 
+                icon: "fa-database", 
+                color: "yellow",
+                url: "https://clay.com"
+            }
         ];
 
         // Initialize
@@ -855,25 +938,24 @@ html_content = '''<!DOCTYPE html>
         function renderResources(resources) {
             const grid = document.getElementById('resourcesGrid');
             grid.innerHTML = resources.map(resource => `
-                <div class="resource-card rounded-xl p-6 hover-lift group" data-category="${resource.category}">
+                <a href="${resource.url}" target="_blank" rel="noopener noreferrer" 
+                   class="resource-card rounded-xl p-6 hover-lift group block" data-category="${resource.category}">
                     <div class="flex items-start gap-4">
                         <div class="w-12 h-12 rounded-xl bg-${resource.color}-500/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                             <i class="fas ${resource.icon} text-${resource.color}-400 text-xl"></i>
                         </div>
                         <div class="flex-1 min-w-0">
-                            <h4 class="font-bold text-lg mb-1 truncate">${resource.name}</h4>
-                            <p class="text-sm text-gray-400 mb-3">${resource.desc}</p>
+                            <h4 class="font-bold text-lg mb-1 truncate group-hover:text-primary transition-colors">${resource.name}</h4>
+                            <p class="text-sm text-gray-400 mb-3 line-clamp-2">${resource.desc}</p>
                             <div class="flex items-center justify-between">
                                 <span class="text-xs px-2 py-1 rounded-full bg-darker border border-gray-700 text-gray-400 capitalize">
                                     ${resource.category}
                                 </span>
-                                <button class="text-primary hover:text-white transition-colors">
-                                    <i class="fas fa-arrow-right"></i>
-                                </button>
+                                <i class="fas fa-external-link-alt text-gray-600 group-hover:text-primary transition-colors"></i>
                             </div>
                         </div>
                     </div>
-                </div>
+                </a>
             `).join('');
         }
 
@@ -913,26 +995,10 @@ html_content = '''<!DOCTYPE html>
             renderResources(resourcesData.slice(0, currentCount));
         }
 
-        // Open Service
-        function openService(service) {
-            const urls = {
-                'notebooklm': 'https://notebooklm.google.com',
-                'miyagi': 'https://miyagilabs.ai',
-                'ainee': 'https://ainee.com',
-                'longcut': 'https://longcut.ai'
-            };
-            window.open(urls[service], '_blank');
-        }
-
         // Mobile Menu Toggle
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
-        }
-
-        // Theme Toggle
-        function toggleTheme() {
-            document.body.classList.toggle('light-theme');
         }
 
         // Navigation Active State
@@ -958,20 +1024,6 @@ html_content = '''<!DOCTYPE html>
             });
         }
 
-        // Toggle View (Grid/List)
-        let isGridView = true;
-        function toggleView() {
-            const grid = document.getElementById('resourcesGrid');
-            isGridView = !isGridView;
-            if (isGridView) {
-                grid.classList.remove('grid-cols-1');
-                grid.classList.add('md:grid-cols-2', 'lg:grid-cols-3');
-            } else {
-                grid.classList.remove('md:grid-cols-2', 'lg:grid-cols-3');
-                grid.classList.add('grid-cols-1');
-            }
-        }
-
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -989,20 +1041,4 @@ html_content = '''<!DOCTYPE html>
         });
     </script>
 </body>
-</html>'''
-
-# Save the file
-with open('/mnt/kimi/output/index.html', 'w', encoding='utf-8') as f:
-    f.write(html_content)
-
-print("✅ Archivo PRD generado exitosamente")
-print("📄 Ubicación: /mnt/kimi/output/index.html")
-print("\n📋 Características incluidas:")
-print("  • Diseño moderno con Tailwind CSS")
-print("  • 4 opciones reales de IA (NotebookLM, Miyagi, Ainee, LongCut)")
-print("  • Biblioteca completa de recursos Revolutia (50+ herramientas)")
-print("  • Filtros por categoría y búsqueda en tiempo real")
-print("  • Totalmente responsive")
-print("  • Sin backend - listo para GitHub Pages")
-print("  • Código JavaScript vanilla para interactividad")
-print("  • Guía de implementación paso a paso")
+</html>
