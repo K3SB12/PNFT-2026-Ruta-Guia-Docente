@@ -868,6 +868,7 @@
       cargarSaberes();
       modSelect.addEventListener('change', (e) => { selectedModulo = e.target.value; guardarProgreso(); cargarSaberes(); });
     }
+    // ---------- FUNCIONES DE CURRÍCULO (VERSIÓN CORREGIDA Y SIMPLIFICADA) ----------
     function cargarSaberes() {
       const data = DATA[selectedNivel]?.[selectedModulo] || {};
       const filtro = document.getElementById('areaFiltro')?.value || 'todas';
@@ -876,16 +877,15 @@
         if (filtro !== 'todas' && filtro !== area) continue;
         html += `<div style="margin-top:15px;"><strong>${area}</strong> <button style="margin-left:10px;" onclick="seleccionarArea('${area}')">Seleccionar área</button></div>`;
         data[area].saberes.forEach(s => {
-          const selected = saberesSeleccionados.has(s.id);
-          const clase = selected ? 'selected' : '';
-          // No agregamos el ✓ manualmente; el CSS lo hará
+          const estaSeleccionado = saberesSeleccionados.has(s.id);
+          const clase = estaSeleccionado ? 'selected' : '';
           html += `<span class="saber-tag ${clase}" data-area="${area}" onclick="toggleSaber('${s.id}')">${s.nombre}</span>`;
         });
       }
       document.getElementById('saberesContainer').innerHTML = html;
       document.getElementById('contador').innerText = saberesSeleccionados.size;
     }
-    // ---------- FUNCIONES DE INTERACCIÓN CON SABERES (ASEGURADAS EN WINDOW) ----------
+    
     window.toggleSaber = (id) => {
       if (saberesSeleccionados.has(id)) {
         saberesSeleccionados.delete(id);
@@ -893,16 +893,18 @@
         saberesSeleccionados.add(id);
       }
       guardarProgreso();
-      cargarSaberes();
+      cargarSaberes(); // Refresca la vista
     };
     
     window.seleccionarArea = (area) => {
       const data = DATA[selectedNivel]?.[selectedModulo] || {};
       if (!data[area]) return;
-      // Solo los saberes de ESTA área
+      
+      // Añadimos SOLO los saberes de esta área al Set
       data[area].saberes.forEach(s => saberesSeleccionados.add(s.id));
+      
       guardarProgreso();
-      cargarSaberes();
+      cargarSaberes(); // Refresca la vista
     };
     
     window.seleccionarTodosSaberes = () => {
@@ -920,14 +922,6 @@
       saberesSeleccionados.clear();
       guardarProgreso();
       cargarSaberes();
-      // Forzar actualización visual extra
-      setTimeout(() => {
-        document.querySelectorAll('.saber-tag').forEach(el => {
-          el.classList.remove('selected');
-          // El pseudo-elemento ::after se encarga del check, no es necesario manipular innerHTML
-        });
-        document.getElementById('contador').innerText = '0';
-      }, 10);
     };
     
 // ---------- IA: GENERACIÓN DE PROMPT + EDITOR EDITABLE (VERSIÓN CORREGIDA) ----------
