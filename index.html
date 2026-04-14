@@ -838,7 +838,7 @@
     };
     window.limpiarSeleccion = () => { saberesSeleccionados.clear(); guardarProgreso(); cargarSaberes(); };
 
-// ---------- IA: GENERACIÓN DE PROMPT + EDITOR EDITABLE ----------
+// ---------- IA: GENERACIÓN DE PROMPT + EDITOR EDITABLE (VERSIÓN CORREGIDA) ----------
 function renderIA(container) {
   if (!currentUser) { container.innerHTML = '<div class="card">Inicia sesión</div>'; return; }
   const metodologiaSugerida = sugerirMetodologia(selectedNivel);
@@ -856,8 +856,8 @@ function renderIA(container) {
           <option>Con tecnología</option>
           <option>Sin tecnología</option>
         </select>
-        <button onclick="generarPrompt()"><i class="fas fa-file-alt"></i> Generar Prompt</button>
-        <button onclick="copiarPrompt()"><i class="fas fa-copy"></i> Copiar Prompt</button>
+        <button id="btnGenerarPrompt"><i class="fas fa-file-alt"></i> Generar Prompt</button>
+        <button id="btnCopiarPrompt"><i class="fas fa-copy"></i> Copiar Prompt</button>
       </div>
       
       <!-- Accesos directos a IAs -->
@@ -887,131 +887,137 @@ function renderIA(container) {
       "></div>
       
       <div class="flex-row" style="margin-top:15px;">
-        <button onclick="copiarContenidoEditor()"><i class="fas fa-copy"></i> Copiar texto del editor</button>
-        <button onclick="exportarEditorTXT()"><i class="fas fa-download"></i> Descargar TXT</button>
-        <button onclick="exportarEditorHTML()"><i class="fas fa-print"></i> Imprimir HTML</button>
-        <button onclick="exportarEditorWord()"><i class="fas fa-file-word"></i> Word</button>
+        <button id="btnCopiarEditor"><i class="fas fa-copy"></i> Copiar texto del editor</button>
+        <button id="btnExportTXT"><i class="fas fa-download"></i> Descargar TXT</button>
+        <button id="btnExportHTML"><i class="fas fa-print"></i> Imprimir HTML</button>
+        <button id="btnExportWord"><i class="fas fa-file-word"></i> Word</button>
       </div>
     </div>
   `;
+
+  // Asignar eventos a los botones (usamos addEventListener para evitar conflictos)
+  document.getElementById('btnGenerarPrompt').addEventListener('click', generarPrompt);
+  document.getElementById('btnCopiarPrompt').addEventListener('click', copiarPrompt);
+  document.getElementById('btnCopiarEditor').addEventListener('click', copiarContenidoEditor);
+  document.getElementById('btnExportTXT').addEventListener('click', exportarEditorTXT);
+  document.getElementById('btnExportHTML').addEventListener('click', exportarEditorHTML);
+  document.getElementById('btnExportWord').addEventListener('click', exportarEditorWord);
 }
 
-// Función que genera el prompt profesional (multi-IA)
-window.generarPrompt = () => {
-  if (saberesSeleccionados.size === 0) {
-    alert('Selecciona al menos un saber para generar el prompt.');
-    return;
+// Función que genera el prompt profesional (ahora declarada con function para que sea hoisted)
+  function generarPrompt() {
+    if (saberesSeleccionados.size === 0) {
+      alert('Selecciona al menos un saber para generar el prompt.');
+      return;
+    }
+    
+    const metodologia = document.getElementById('metodologia').value;
+    const contexto = document.getElementById('contexto').value;
+    const ciclo = obtenerCiclo(selectedNivel);
+    const rda = RDA[ciclo]?.['Apropiación tecnológica y Digital'] || 'RdA no definido';
+    const detalleSaberes = obtenerSaberesDetallados(Array.from(saberesSeleccionados));
+    
+    if (!detalleSaberes) {
+      alert('No se pudieron obtener los detalles de los saberes. Verifica la base de datos.');
+      return;
+    }
+    
+    const prompt = `Actúa como especialista en mediación pedagógica del MEP Costa Rica bajo el enfoque PNFT 2026.
+  
+  Contexto:
+  - Nivel educativo: ${selectedNivel}
+  - Ciclo: ${ciclo}
+  - Saberes seleccionados:
+  ${detalleSaberes}
+  - Resultado de Aprendizaje (RdA):
+  ${rda}
+  - Metodología: ${metodologia}
+  - Contexto de aula: ${contexto}
+  
+  Instrucciones:
+  Diseña una estrategia de mediación pedagógica completa, clara, aplicable y alineada al PNFT 2026. Debe estar redactada para uso docente en Costa Rica.
+  
+  La respuesta DEBE cumplir estas condiciones:
+  - Lenguaje claro, práctico y aplicable en aula
+  - Actividades detalladas paso a paso
+  - Coherencia entre saberes, actividades e indicadores
+  - Enfoque inclusivo (DUA)
+  - Evaluación formativa
+  
+  Estructura obligatoria:
+  1. Título de la estrategia
+  2. Propósito de aprendizaje
+  3. Actividad de mediación pedagógica dividida en:
+     - Focalización (inicio)
+     - Exploración (desarrollo guiado)
+     - Aplicación (práctica significativa)
+     - Reflexión (cierre metacognitivo)
+  4. Actividades detalladas (con tiempos aproximados)
+  5. Ejemplo contextualizado en Costa Rica
+  6. Recursos (con y sin tecnología)
+  7. Rúbrica analítica en formato tabla:
+     - Niveles: Inicial | Intermedio | Avanzado
+     - Criterios claros y observables
+  8. Estrategias DUA:
+     - Representación
+     - Acción y expresión
+     - Motivación
+  9. Evidencias de aprendizaje
+  10. Indicadores de logro alineados a los saberes
+  
+  Formato de salida:
+  - Usa encabezados claros
+  - Usa listas cuando sea necesario
+  - La rúbrica debe estar en tabla
+  - NO usar texto genérico ni relleno
+  - NO resumir
+  
+  Genera una propuesta completa lista para aplicar en clase.`;
+    
+    document.getElementById('promptGenerado').value = prompt;
   }
   
-  const metodologia = document.getElementById('metodologia').value;
-  const contexto = document.getElementById('contexto').value;
-  const ciclo = obtenerCiclo(selectedNivel);
-  const rda = RDA[ciclo]?.['Apropiación tecnológica y Digital'] || 'RdA no definido';
-  const detalleSaberes = obtenerSaberesDetallados(Array.from(saberesSeleccionados));
+  function copiarPrompt() {
+    const promptText = document.getElementById('promptGenerado').value;
+    if (!promptText) { alert('Primero genera el prompt'); return; }
+    navigator.clipboard.writeText(promptText).then(() => alert('Prompt copiado al portapapeles. Pégalo en tu IA favorita.'));
+  }
   
-  const prompt = `Actúa como especialista en mediación pedagógica del MEP Costa Rica bajo el enfoque PNFT 2026.
-
-Contexto:
-- Nivel educativo: ${selectedNivel}
-- Ciclo: ${ciclo}
-- Área(s) involucrada(s): Apropiación tecnológica y Digital (y otras según saberes)
-- Saberes seleccionados:
-${detalleSaberes}
-- Resultado de Aprendizaje (RdA):
-${rda}
-- Metodología: ${metodologia} (ABJ, ABR o Design Thinking)
-- Contexto de aula: ${contexto}
-
-Instrucciones:
-Diseña una estrategia de mediación pedagógica completa, clara, aplicable y alineada al PNFT 2026. Debe estar redactada para uso docente en Costa Rica.
-
-La respuesta DEBE cumplir estas condiciones:
-- Lenguaje claro, práctico y aplicable en aula
-- Actividades detalladas paso a paso
-- Coherencia entre saberes, actividades e indicadores
-- Enfoque inclusivo (DUA)
-- Evaluación formativa
-
-Estructura obligatoria:
-1. Título de la estrategia
-2. Propósito de aprendizaje
-3. Actividad de mediación pedagógica dividida en:
-   - Focalización (inicio)
-   - Exploración (desarrollo guiado)
-   - Aplicación (práctica significativa)
-   - Reflexión (cierre metacognitivo)
-4. Actividades detalladas (con tiempos aproximados)
-5. Ejemplo contextualizado en Costa Rica
-6. Recursos (con y sin tecnología)
-7. Rúbrica analítica en formato tabla:
-   - Niveles: Inicial | Intermedio | Avanzado
-   - Criterios claros y observables
-8. Estrategias DUA:
-   - Representación
-   - Acción y expresión
-   - Motivación
-9. Evidencias de aprendizaje
-10. Indicadores de logro alineados a los saberes
-
-Formato de salida:
-- Usa encabezados claros
-- Usa listas cuando sea necesario
-- La rúbrica debe estar en tabla
-- NO usar texto genérico ni relleno
-- NO resumir
-
-Genera una propuesta completa lista para aplicar en clase.`;
+  function copiarContenidoEditor() {
+    const editor = document.getElementById('editorRespuesta');
+    navigator.clipboard.writeText(editor.innerText).then(() => alert('Contenido copiado'));
+  }
   
-  document.getElementById('promptGenerado').value = prompt;
-};
-
-// Copiar el prompt al portapapeles
-window.copiarPrompt = () => {
-  const promptText = document.getElementById('promptGenerado').value;
-  if (!promptText) { alert('Primero genera el prompt'); return; }
-  navigator.clipboard.writeText(promptText).then(() => alert('Prompt copiado al portapapeles. Pégalo en tu IA favorita.'));
-};
-
-// Funciones de exportación desde el editor
-window.copiarContenidoEditor = () => {
-  const editor = document.getElementById('editorRespuesta');
-  navigator.clipboard.writeText(editor.innerText).then(() => alert('Contenido copiado'));
-};
-
-window.exportarEditorTXT = () => {
-  const contenido = document.getElementById('editorRespuesta').innerText;
-  const blob = new Blob([contenido], {type: 'text/plain'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `estrategia_${selectedNivel}.txt`;
-  a.click();
-};
-
-window.exportarEditorHTML = () => {
-  const contenido = document.getElementById('editorRespuesta').innerHTML;
-  const ventana = window.open('', '_blank');
-  ventana.document.write(`
-    <html><head><title>Estrategia PNFT</title>
-    <style>body{font-family:Arial;padding:30px;background:#fff;color:#000;}</style>
-    </head><body>${contenido}</body></html>
-  `);
-  ventana.document.close();
-  ventana.print();
-};
-
-window.exportarEditorWord = () => {
-  const contenido = document.getElementById('editorRespuesta').innerHTML;
-  const html = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'><body>${contenido}</body></html>`;
-  const blob = new Blob(['\ufeff', html], {type: 'application/msword'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `estrategia_${selectedNivel}.doc`;
-  a.click();
-};
-    window.copiarResultado = () => {
-      const c=document.getElementById('resultadoEstrategia')?.innerText;
-      if(c) navigator.clipboard.writeText(c).then(()=>alert('Copiado al portapapeles'));
-    };
+  function exportarEditorTXT() {
+    const contenido = document.getElementById('editorRespuesta').innerText;
+    const blob = new Blob([contenido], {type: 'text/plain'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `estrategia_${selectedNivel}.txt`;
+    a.click();
+  }
+  
+  function exportarEditorHTML() {
+    const contenido = document.getElementById('editorRespuesta').innerHTML;
+    const ventana = window.open('', '_blank');
+    ventana.document.write(`
+      <html><head><title>Estrategia PNFT</title>
+      <style>body{font-family:Arial;padding:30px;background:#fff;color:#000;}</style>
+      </head><body>${contenido}</body></html>
+    `);
+    ventana.document.close();
+    ventana.print();
+  }
+  
+  function exportarEditorWord() {
+    const contenido = document.getElementById('editorRespuesta').innerHTML;
+    const html = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'><body>${contenido}</body></html>`;
+    const blob = new Blob(['\ufeff', html], {type: 'application/msword'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `estrategia_${selectedNivel}.doc`;
+    a.click();
+  }
 
     // ---------- DASHBOARD ----------
     function renderDashboard(container) {
