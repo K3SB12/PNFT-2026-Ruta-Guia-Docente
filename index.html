@@ -76,9 +76,17 @@
     .saber-tag[data-area="Ciencia de datos e Inteligencia artificial"] { background: #6a4e6b; }
     
     .saber-tag.selected {
-      border: 2px solid #ffd966 !important;
-      box-shadow: 0 0 8px #ffd96680;
+      border: 3px solid #ffd966 !important;
+      box-shadow: 0 0 12px #ffd966cc;
       transform: scale(1.02);
+      font-weight: 600;
+      position: relative;
+    }
+    .saber-tag.selected::after {
+      content: " ✓";
+      font-weight: bold;
+      color: #ffd966;
+      margin-left: 6px;
     }
   </style>
 </head>
@@ -851,7 +859,7 @@
       cargarSaberes();
       modSelect.addEventListener('change', (e) => { selectedModulo = e.target.value; guardarProgreso(); cargarSaberes(); });
     }
-   function cargarSaberes() {
+     function cargarSaberes() {
       const data = DATA[selectedNivel]?.[selectedModulo] || {};
       const filtro = document.getElementById('areaFiltro')?.value || 'todas';
       let html = '';
@@ -859,8 +867,10 @@
         if (filtro !== 'todas' && filtro !== area) continue;
         html += `<div style="margin-top:15px;"><strong>${area}</strong> <button style="margin-left:10px;" onclick="seleccionarArea('${area}')">Seleccionar área</button></div>`;
         data[area].saberes.forEach(s => {
-          const selected = saberesSeleccionados.has(s.id) ? 'selected' : '';
-          html += `<span class="saber-tag ${selected}" data-area="${area}" onclick="toggleSaber('${s.id}')">${s.nombre}</span>`;
+          const selected = saberesSeleccionados.has(s.id);
+          const clase = selected ? 'selected' : '';
+          const texto = selected ? `✓ ${s.nombre}` : s.nombre;
+          html += `<span class="saber-tag ${clase}" data-area="${area}" onclick="toggleSaber('${s.id}')">${texto}</span>`;
         });
       }
       document.getElementById('saberesContainer').innerHTML = html;
