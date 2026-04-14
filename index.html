@@ -700,6 +700,39 @@
       if (!exists) { currentUser = null; Storage.clearSession(); }
     }
 
+    // ---------- FUNCIONES AUXILIARES (asegurar que estén definidas) ----------
+    function obtenerCiclo(nivel) {
+      if (nivel === '0°') return 'Preescolar';
+      const grado = parseInt(nivel);
+      if (grado <= 3) return 'I Ciclo';
+      if (grado <= 6) return 'II Ciclo';
+      return 'III Ciclo';
+    }
+    
+    function obtenerSaberesDetallados(ids) {
+      const detalles = [];
+      for (let nivel in DATA) {
+        for (let mod in DATA[nivel]) {
+          for (let area in DATA[nivel][mod]) {
+            DATA[nivel][mod][area].saberes.forEach(s => {
+              if (ids.includes(s.id)) {
+                detalles.push(`- ${s.nombre}: ${s.indicadores.join(' ')}`);
+              }
+            });
+          }
+        }
+      }
+      return detalles.join('\n');
+    }
+    
+    function sugerirMetodologia(nivel) {
+      if (nivel === '0°') return 'ABJ';
+      const g = parseInt(nivel);
+      if (g <= 3) return 'ABJ';
+      if (g <= 6) return 'ABR';
+      return 'Design Thinking';
+    }
+
     // ---------- AUTENTICACIÓN ----------
     function renderAuth() {
       const authDiv = document.getElementById('authArea');
