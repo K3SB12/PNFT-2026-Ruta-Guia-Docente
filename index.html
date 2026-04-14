@@ -866,6 +866,42 @@
       document.getElementById('saberesContainer').innerHTML = html;
       document.getElementById('contador').innerText = saberesSeleccionados.size;
     }
+    // ---------- FUNCIONES DE INTERACCIÓN CON SABERES (ASEGURADAS EN WINDOW) ----------
+    window.toggleSaber = (id) => {
+      if (saberesSeleccionados.has(id)) {
+        saberesSeleccionados.delete(id);
+      } else {
+        saberesSeleccionados.add(id);
+      }
+      guardarProgreso();
+      cargarSaberes();
+    };
+    
+    window.seleccionarArea = (area) => {
+      const data = DATA[selectedNivel]?.[selectedModulo] || {};
+      if (!data[area]) return;
+      data[area].saberes.forEach(s => saberesSeleccionados.add(s.id));
+      guardarProgreso();
+      cargarSaberes();
+    };
+    
+    window.seleccionarTodosSaberes = () => {
+      const data = DATA[selectedNivel]?.[selectedModulo] || {};
+      const filtro = document.getElementById('areaFiltro')?.value || 'todas';
+      for (let area in data) {
+        if (filtro !== 'todas' && filtro !== area) continue;
+        data[area].saberes.forEach(s => saberesSeleccionados.add(s.id));
+      }
+      guardarProgreso();
+      cargarSaberes();
+    };
+    
+    window.limpiarSeleccion = () => {
+      saberesSeleccionados.clear();
+      guardarProgreso();
+      cargarSaberes();
+    };
+    
 // ---------- IA: GENERACIÓN DE PROMPT + EDITOR EDITABLE (VERSIÓN CORREGIDA) ----------
 function renderIA(container) {
   if (!currentUser) { container.innerHTML = '<div class="card">Inicia sesión</div>'; return; }
