@@ -868,7 +868,7 @@
       cargarSaberes();
       modSelect.addEventListener('change', (e) => { selectedModulo = e.target.value; guardarProgreso(); cargarSaberes(); });
     }
-     function cargarSaberes() {
+    function cargarSaberes() {
       const data = DATA[selectedNivel]?.[selectedModulo] || {};
       const filtro = document.getElementById('areaFiltro')?.value || 'todas';
       let html = '';
@@ -878,8 +878,8 @@
         data[area].saberes.forEach(s => {
           const selected = saberesSeleccionados.has(s.id);
           const clase = selected ? 'selected' : '';
-          const texto = selected ? `✓ ${s.nombre}` : s.nombre;
-          html += `<span class="saber-tag ${clase}" data-area="${area}" onclick="toggleSaber('${s.id}')">${texto}</span>`;
+          // No agregamos el ✓ manualmente; el CSS lo hará
+          html += `<span class="saber-tag ${clase}" data-area="${area}" onclick="toggleSaber('${s.id}')">${s.nombre}</span>`;
         });
       }
       document.getElementById('saberesContainer').innerHTML = html;
@@ -899,6 +899,7 @@
     window.seleccionarArea = (area) => {
       const data = DATA[selectedNivel]?.[selectedModulo] || {};
       if (!data[area]) return;
+      // Solo los saberes de ESTA área
       data[area].saberes.forEach(s => saberesSeleccionados.add(s.id));
       guardarProgreso();
       cargarSaberes();
