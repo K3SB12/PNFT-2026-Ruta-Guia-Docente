@@ -838,108 +838,176 @@
     };
     window.limpiarSeleccion = () => { saberesSeleccionados.clear(); guardarProgreso(); cargarSaberes(); };
 
-    // ---------- DETALLES PARA IA ----------
-    function obtenerSaberesDetallados(ids) {
-      const detalles = [];
-      for (let nivel in DATA)
-        for (let mod in DATA[nivel])
-          for (let area in DATA[nivel][mod])
-            DATA[nivel][mod][area].saberes.forEach(s => { if (ids.includes(s.id)) detalles.push(`- ${s.nombre}: ${s.indicadores.join(' ')}`); });
-      return detalles.join('\n');
-    }
-
-    // ---------- IA ----------
-    function renderIA(container) {
-      if (!currentUser) { container.innerHTML = '<div class="card">Inicia sesión</div>'; return; }
-      const metodologiaSugerida = sugerirMetodologia(selectedNivel);
-      container.innerHTML = `
-        <div class="card"><h2>✨ Generar estrategia</h2>
-          <div id="iaMensaje" class="info-message" style="display:none;"></div>
-          <p>Saberes seleccionados: ${saberesSeleccionados.size}</p>
-          <div class="flex-row">
-            <select id="metodologia">
-              <option value="ABJ" ${metodologiaSugerida==='ABJ'?'selected':''}>ABJ (Juegos)</option>
-              <option value="ABR" ${metodologiaSugerida==='ABR'?'selected':''}>ABR (Retos)</option>
-              <option value="Design Thinking" ${metodologiaSugerida==='Design Thinking'?'selected':''}>Design Thinking</option>
-            </select>
-            <select id="contexto"><option>Con tecnología</option><option>Sin tecnología</option></select>
-            <select id="iaProvider"><option value="simulado">Simulación</option><option value="gemini">Gemini</option></select>
-            <button onclick="generarEstrategia()">Generar</button>
-            <button onclick="exportarTXT()">TXT</button>
-            <button onclick="exportarHTML()">HTML</button>
-            <button onclick="exportarWord()">Word</button>
-            <button onclick="copiarResultado()">Copiar</button>
-          </div>
-          <div id="resultadoEstrategia" class="resultado-box"></div>
-        </div>`;
-    }
-    window.generarEstrategia = async () => {
-      if (saberesSeleccionados.size === 0) {
-        document.getElementById('iaMensaje').innerHTML = '⚠️ Selecciona al menos un saber para generar la estrategia.';
-        document.getElementById('iaMensaje').style.display = 'block';
-        return;
-      }
-      document.getElementById('iaMensaje').style.display = 'none';
-      const resultadoDiv = document.getElementById('resultadoEstrategia');
-      resultadoDiv.innerText = '⏳ Generando estrategia con IA...';
+// ---------- IA: GENERACIÓN DE PROMPT + EDITOR EDITABLE ----------
+function renderIA(container) {
+  if (!currentUser) { container.innerHTML = '<div class="card">Inicia sesión</div>'; return; }
+  const metodologiaSugerida = sugerirMetodologia(selectedNivel);
+  container.innerHTML = `
+    <div class="card">
+      <h2>✨ Generador de Prompt Profesional (PNFT 2026)</h2>
+      <p>Saberes seleccionados: <strong>${saberesSeleccionados.size}</strong></p>
+      <div class="flex-row">
+        <select id="metodologia">
+          <option value="ABJ" ${metodologiaSugerida==='ABJ'?'selected':''}>ABJ (Juegos)</option>
+          <option value="ABR" ${metodologiaSugerida==='ABR'?'selected':''}>ABR (Retos)</option>
+          <option value="Design Thinking" ${metodologiaSugerida==='Design Thinking'?'selected':''}>Design Thinking</option>
+        </select>
+        <select id="contexto">
+          <option>Con tecnología</option>
+          <option>Sin tecnología</option>
+        </select>
+        <button onclick="generarPrompt()"><i class="fas fa-file-alt"></i> Generar Prompt</button>
+        <button onclick="copiarPrompt()"><i class="fas fa-copy"></i> Copiar Prompt</button>
+      </div>
       
-      const provider = document.getElementById('iaProvider').value;
-      const metodologia = document.getElementById('metodologia').value;
-      const contexto = document.getElementById('contexto').value;
-      const saberesIds = Array.from(saberesSeleccionados);
-      let respuesta = '';
+      <!-- Accesos directos a IAs -->
+      <div style="margin: 20px 0; display: flex; gap: 8px; flex-wrap: wrap;">
+        <a href="https://gemini.google.com/" target="_blank" class="btn" style="text-decoration:none;"><i class="fas fa-external-link-alt"></i> Gemini</a>
+        <a href="https://chat.openai.com/" target="_blank" class="btn" style="text-decoration:none;"><i class="fas fa-external-link-alt"></i> ChatGPT</a>
+        <a href="https://copilot.microsoft.com/" target="_blank" class="btn" style="text-decoration:none;"><i class="fas fa-external-link-alt"></i> Copilot</a>
+        <a href="https://claude.ai/" target="_blank" class="btn" style="text-decoration:none;"><i class="fas fa-external-link-alt"></i> Claude</a>
+        <a href="https://deepseek.com/" target="_blank" class="btn" style="text-decoration:none;"><i class="fas fa-external-link-alt"></i> DeepSeek</a>
+      </div>
       
-      if (provider === 'simulado') {
-        respuesta = `🧪 Estrategia simulada (${metodologia})\n\nFocalización: ...\nExploración: ...\nAplicación: ...\nReflexión: ...`;
-      } else {
-        const apiKey = prompt(`API Key ${provider}:`);
-        if (!apiKey) { resultadoDiv.innerText = ''; return; }
-        const prompt = crearPrompt(metodologia, contexto, saberesIds);
-        try { respuesta = await llamarAPI(provider, apiKey, prompt); }
-        catch(e) { respuesta = 'Error de conexión con la API.'; }
-      }
-      resultadoDiv.innerText = respuesta;
-      Storage.saveItem('pnft_estrategias', { nivel: selectedNivel, metodologia, provider, respuesta, saberes: saberesIds });
-    };
-    function crearPrompt(metodologia, contexto, saberesIds) {
-      const ciclo = obtenerCiclo(selectedNivel);
-      const rda = RDA[ciclo]?.['Apropiación tecnológica y Digital'] || '';
-      const detalle = obtenerSaberesDetallados(saberesIds);
-      return `Eres especialista MEP Costa Rica - PNFT 2026.
-Contexto: ${contexto}. Nivel: ${selectedNivel}. Metodología: ${metodologia}.
-Saberes:\n${detalle}\nRdA: ${rda}
+      <!-- Área del prompt generado -->
+      <h3>📋 Prompt listo para copiar</h3>
+      <textarea id="promptGenerado" style="width:100%; height:180px; background:#051520; color:white; border:1px solid #3c89b0; border-radius:16px; padding:16px; font-family: monospace;" readonly></textarea>
+      
+      <!-- Editor editable para pegar la respuesta de la IA -->
+      <h3 style="margin-top:25px;">✏️ Pega aquí la respuesta de la IA y edítala</h3>
+      <div id="editorRespuesta" contenteditable="true" style="
+        min-height:300px;
+        background:#051520;
+        border:1px solid #3c89b0;
+        border-radius:16px;
+        padding:16px;
+        outline:none;
+        white-space: pre-wrap;
+        color:white;
+      "></div>
+      
+      <div class="flex-row" style="margin-top:15px;">
+        <button onclick="copiarContenidoEditor()"><i class="fas fa-copy"></i> Copiar texto del editor</button>
+        <button onclick="exportarEditorTXT()"><i class="fas fa-download"></i> Descargar TXT</button>
+        <button onclick="exportarEditorHTML()"><i class="fas fa-print"></i> Imprimir HTML</button>
+        <button onclick="exportarEditorWord()"><i class="fas fa-file-word"></i> Word</button>
+      </div>
+    </div>
+  `;
+}
 
-Diseña una estrategia didáctica completa que incluya:
-1. Título motivador.
-2. Propósito.
-3. Momentos pedagógicos (Focalización, Exploración, Aplicación, Reflexión) con actividades concretas y tiempos.
-4. Ejemplo real contextualizado en Costa Rica.
-5. Recursos necesarios.
-6. Rúbrica analítica (Inicial, Intermedio, Avanzado).
-7. Recomendaciones DUA (Representación, Acción/Expresión, Motivación).
-8. Justificación alineada al PNFT.
-9. Evidencias de aprendizaje observables.
-10. Indicadores de logro vinculados explícitamente.`;
-    }
-    async function llamarAPI(provider, apiKey, prompt) {
-      if (provider === 'gemini') {
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
-          method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-        });
-        const data = await res.json();
-        return data.candidates?.[0]?.content?.parts?.[0]?.text || 'Sin respuesta';
-      }
-      return `[Simulación] Estrategia generada con éxito.`;
-    }
-    function obtenerCiclo(n) { if(n==='0°')return'Preescolar'; const g=parseInt(n); if(g<=3)return'I Ciclo'; if(g<=6)return'II Ciclo'; return'III Ciclo'; }
-    window.exportarTXT = () => { const c=document.getElementById('resultadoEstrategia')?.innerText||''; const b=new Blob([c]); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='estrategia.txt'; a.click(); };
-    window.exportarHTML = () => { const c=document.getElementById('resultadoEstrategia')?.innerText||''; const w=window.open(); w.document.write(`<pre>${c}</pre>`); w.print(); };
-    window.exportarWord = () => {
-      const c=document.getElementById('resultadoEstrategia')?.innerText||'';
-      const html = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'><body>${c.replace(/\n/g,'<br>')}</body></html>`;
-      const b=new Blob(['\ufeff',html],{type:'application/msword'});
-      const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='estrategia.doc'; a.click();
-    };
+// Función que genera el prompt profesional (multi-IA)
+window.generarPrompt = () => {
+  if (saberesSeleccionados.size === 0) {
+    alert('Selecciona al menos un saber para generar el prompt.');
+    return;
+  }
+  
+  const metodologia = document.getElementById('metodologia').value;
+  const contexto = document.getElementById('contexto').value;
+  const ciclo = obtenerCiclo(selectedNivel);
+  const rda = RDA[ciclo]?.['Apropiación tecnológica y Digital'] || 'RdA no definido';
+  const detalleSaberes = obtenerSaberesDetallados(Array.from(saberesSeleccionados));
+  
+  const prompt = `Actúa como especialista en mediación pedagógica del MEP Costa Rica bajo el enfoque PNFT 2026.
+
+Contexto:
+- Nivel educativo: ${selectedNivel}
+- Ciclo: ${ciclo}
+- Área(s) involucrada(s): Apropiación tecnológica y Digital (y otras según saberes)
+- Saberes seleccionados:
+${detalleSaberes}
+- Resultado de Aprendizaje (RdA):
+${rda}
+- Metodología: ${metodologia} (ABJ, ABR o Design Thinking)
+- Contexto de aula: ${contexto}
+
+Instrucciones:
+Diseña una estrategia de mediación pedagógica completa, clara, aplicable y alineada al PNFT 2026. Debe estar redactada para uso docente en Costa Rica.
+
+La respuesta DEBE cumplir estas condiciones:
+- Lenguaje claro, práctico y aplicable en aula
+- Actividades detalladas paso a paso
+- Coherencia entre saberes, actividades e indicadores
+- Enfoque inclusivo (DUA)
+- Evaluación formativa
+
+Estructura obligatoria:
+1. Título de la estrategia
+2. Propósito de aprendizaje
+3. Actividad de mediación pedagógica dividida en:
+   - Focalización (inicio)
+   - Exploración (desarrollo guiado)
+   - Aplicación (práctica significativa)
+   - Reflexión (cierre metacognitivo)
+4. Actividades detalladas (con tiempos aproximados)
+5. Ejemplo contextualizado en Costa Rica
+6. Recursos (con y sin tecnología)
+7. Rúbrica analítica en formato tabla:
+   - Niveles: Inicial | Intermedio | Avanzado
+   - Criterios claros y observables
+8. Estrategias DUA:
+   - Representación
+   - Acción y expresión
+   - Motivación
+9. Evidencias de aprendizaje
+10. Indicadores de logro alineados a los saberes
+
+Formato de salida:
+- Usa encabezados claros
+- Usa listas cuando sea necesario
+- La rúbrica debe estar en tabla
+- NO usar texto genérico ni relleno
+- NO resumir
+
+Genera una propuesta completa lista para aplicar en clase.`;
+  
+  document.getElementById('promptGenerado').value = prompt;
+};
+
+// Copiar el prompt al portapapeles
+window.copiarPrompt = () => {
+  const promptText = document.getElementById('promptGenerado').value;
+  if (!promptText) { alert('Primero genera el prompt'); return; }
+  navigator.clipboard.writeText(promptText).then(() => alert('Prompt copiado al portapapeles. Pégalo en tu IA favorita.'));
+};
+
+// Funciones de exportación desde el editor
+window.copiarContenidoEditor = () => {
+  const editor = document.getElementById('editorRespuesta');
+  navigator.clipboard.writeText(editor.innerText).then(() => alert('Contenido copiado'));
+};
+
+window.exportarEditorTXT = () => {
+  const contenido = document.getElementById('editorRespuesta').innerText;
+  const blob = new Blob([contenido], {type: 'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `estrategia_${selectedNivel}.txt`;
+  a.click();
+};
+
+window.exportarEditorHTML = () => {
+  const contenido = document.getElementById('editorRespuesta').innerHTML;
+  const ventana = window.open('', '_blank');
+  ventana.document.write(`
+    <html><head><title>Estrategia PNFT</title>
+    <style>body{font-family:Arial;padding:30px;background:#fff;color:#000;}</style>
+    </head><body>${contenido}</body></html>
+  `);
+  ventana.document.close();
+  ventana.print();
+};
+
+window.exportarEditorWord = () => {
+  const contenido = document.getElementById('editorRespuesta').innerHTML;
+  const html = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'><body>${contenido}</body></html>`;
+  const blob = new Blob(['\ufeff', html], {type: 'application/msword'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `estrategia_${selectedNivel}.doc`;
+  a.click();
+};
     window.copiarResultado = () => {
       const c=document.getElementById('resultadoEstrategia')?.innerText;
       if(c) navigator.clipboard.writeText(c).then(()=>alert('Copiado al portapapeles'));
