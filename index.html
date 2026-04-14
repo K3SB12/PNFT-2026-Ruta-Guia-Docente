@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PNFT 2026 · Sistema Inteligente (vFinal)</title>
+  <title>PNFT 2026 · Sistema Inteligente (vFinal PROFESIONAL)</title>
   <!-- Fuentes e Iconos -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -16,7 +16,6 @@
       display: flex;
       min-height: 100vh;
     }
-    /* Sidebar */
     .sidebar {
       width: 280px;
       background: rgba(8, 28, 45, 0.95);
@@ -29,123 +28,50 @@
       height: 100vh;
       overflow-y: auto;
     }
-    .logo {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-bottom: 30px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .logo { font-size: 1.8rem; font-weight: 700; margin-bottom: 30px; display: flex; align-items: center; gap: 10px; }
     .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 18px;
-      border-radius: 16px;
-      margin-bottom: 8px;
-      cursor: pointer;
-      transition: all 0.2s;
-      color: #b0d0f0;
-      background: transparent;
-      border: none;
-      width: 100%;
-      text-align: left;
-      font-size: 1rem;
+      display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-radius: 16px;
+      margin-bottom: 8px; cursor: pointer; transition: all 0.2s; color: #b0d0f0;
+      background: transparent; border: none; width: 100%; text-align: left; font-size: 1rem;
     }
-    .nav-item:hover, .nav-item.active {
-      background: #1e4f6b;
-      color: white;
-    }
+    .nav-item:hover, .nav-item.active { background: #1e4f6b; color: white; }
     .nav-item i { width: 24px; }
-    .user-section {
-      margin-top: auto;
-      padding-top: 20px;
-      border-top: 1px solid #1e4f6b;
-    }
-    /* Contenido principal */
-    .main-content {
-      margin-left: 280px;
-      flex: 1;
-      padding: 24px 32px;
-    }
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
-    }
+    .user-section { margin-top: auto; padding-top: 20px; border-top: 1px solid #1e4f6b; }
+    .main-content { margin-left: 280px; flex: 1; padding: 24px 32px; }
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
     h1 { font-weight: 600; font-size: 2rem; }
     h2 { font-size: 1.5rem; margin-bottom: 20px; font-weight: 500; }
     .card {
-      background: rgba(15, 38, 58, 0.7);
-      backdrop-filter: blur(8px);
-      border: 1px solid #255e7a;
-      border-radius: 28px;
-      padding: 24px;
-      margin-bottom: 24px;
+      background: rgba(15, 38, 58, 0.7); backdrop-filter: blur(8px); border: 1px solid #255e7a;
+      border-radius: 28px; padding: 24px; margin-bottom: 24px;
+      transition: all 0.3s ease;
     }
-    .flex-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      align-items: center;
-    }
+    .card:hover { transform: translateY(-4px); }
+    .flex-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
     button, .btn {
-      background: #1e5a7a;
-      border: none;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 40px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: 0.2s;
-      border: 1px solid #3c89b0;
-      font-size: 0.95rem;
+      background: #1e5a7a; border: none; color: white; padding: 10px 20px; border-radius: 40px;
+      font-weight: 500; cursor: pointer; transition: 0.2s; border: 1px solid #3c89b0; font-size: 0.95rem;
     }
     button:hover { background: #2b78a4; transform: translateY(-2px); }
     select, input {
-      background: #0a2535;
-      border: 1px solid #2e6b8f;
-      color: white;
-      padding: 10px 16px;
-      border-radius: 40px;
-      font-size: 1rem;
+      background: #0a2535; border: 1px solid #2e6b8f; color: white; padding: 10px 16px;
+      border-radius: 40px; font-size: 1rem;
     }
     .saber-tag {
-      display: inline-block;
-      background: #173e57;
-      padding: 8px 16px;
-      margin: 4px;
-      border-radius: 40px;
-      cursor: pointer;
-      border: 1px solid #3b7a9e;
+      display: inline-block; background: #173e57; padding: 8px 16px; margin: 4px;
+      border-radius: 40px; cursor: pointer; border: 1px solid #3b7a9e;
     }
     .saber-tag.selected { background: #1b7a9e; border-color: #a0dcff; }
-    .progress-bar {
-      height: 18px;
-      background: #123a50;
-      border-radius: 40px;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #2fb0ff, #b47aff);
-      width: 0%;
-    }
+    .progress-bar { height: 18px; background: #123a50; border-radius: 40px; overflow: hidden; margin: 8px 0; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #2fb0ff, #b47aff); width: 0%; }
     .resultado-box {
-      background: #051520;
-      border-radius: 20px;
-      padding: 20px;
-      white-space: pre-wrap;
-      max-height: 400px;
-      overflow-y: auto;
-      margin-top: 20px;
+      background: #051520; border-radius: 20px; padding: 20px; max-height: 400px;
+      overflow-y: auto; margin-top: 20px;
     }
+    .info-message { padding: 10px; background: #1e3a4f; border-radius: 20px; margin: 15px 0; text-align: center; }
   </style>
 </head>
 <body>
-  <!-- Sidebar -->
   <div class="sidebar">
     <div class="logo"><i class="fas fa-microchip"></i> PNFT 2026</div>
     <button class="nav-item active" data-page="curriculo"><i class="fas fa-book"></i> Currículo</button>
@@ -153,17 +79,10 @@
     <button class="nav-item" data-page="dashboard"><i class="fas fa-chart-bar"></i> Dashboard</button>
     <button class="nav-item" data-page="evaluacion"><i class="fas fa-star"></i> Evaluación</button>
     <button class="nav-item" data-page="historial"><i class="fas fa-history"></i> Historial</button>
-    <div class="user-section">
-      <div id="authArea"></div>
-    </div>
+    <div class="user-section"><div id="authArea"></div></div>
   </div>
-
-  <!-- Contenido principal -->
   <div class="main-content">
-    <div class="header">
-      <h1 id="pageTitle">Currículo PNFT</h1>
-      <div id="userBadge"></div>
-    </div>
+    <div class="header"><h1 id="pageTitle">Currículo PNFT</h1><div id="userBadge"></div></div>
     <div id="appContainer"></div>
   </div>
 
@@ -734,15 +653,38 @@
     let selectedModulo = 'Módulo 1 (básico)';
     let saberesSeleccionados = new Set();
     
+    // ---------- SEGURIDAD: HASH CON SALT POR USUARIO ----------
+    async function hashPassword(password, salt) {
+      const data = new TextEncoder().encode(password + salt);
+      const hash = await crypto.subtle.digest('SHA-256', data);
+      return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+    function generateSalt() {
+      return Array.from(crypto.getRandomValues(new Uint8Array(16))).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
     // ---------- ALMACENAMIENTO ----------
     const Storage = {
       getUsers: () => JSON.parse(localStorage.getItem('pnft_users') || '[]'),
-      saveUser: (user) => {
+      saveUser: async (user) => {
         const users = Storage.getUsers();
-        users.push(user);
+        if (users.find(u => u.email === user.email)) {
+          alert('Este correo ya está registrado.');
+          return false;
+        }
+        const salt = generateSalt();
+        const hashed = await hashPassword(user.password, salt);
+        users.push({...user, password: hashed, salt});
         localStorage.setItem('pnft_users', JSON.stringify(users));
+        return true;
       },
-      findUser: (email, pass) => Storage.getUsers().find(u => u.email === email && u.password === pass),
+      findUser: async (email, pass) => {
+        const users = Storage.getUsers();
+        const user = users.find(u => u.email === email);
+        if (!user) return null;
+        const hashedInput = await hashPassword(pass, user.salt);
+        return hashedInput === user.password ? user : null;
+      },
       setSession: (user) => localStorage.setItem('pnft_session', JSON.stringify(user)),
       clearSession: () => localStorage.removeItem('pnft_session'),
       saveItem: (key, data) => {
@@ -752,6 +694,11 @@
       },
       getItems: (key) => JSON.parse(localStorage.getItem(key) || '[]')
     };
+
+    if (currentUser) {
+      const exists = Storage.getUsers().find(u => u.email === currentUser.email);
+      if (!exists) { currentUser = null; Storage.clearSession(); }
+    }
 
     // ---------- AUTENTICACIÓN ----------
     function renderAuth() {
@@ -769,23 +716,22 @@
         document.getElementById('userBadge').innerHTML = '';
       }
     }
-    window.login = () => {
+    window.login = async () => {
       const email = document.getElementById('loginEmail')?.value;
       const pass = document.getElementById('loginPass')?.value;
-      const user = Storage.findUser(email, pass);
+      const user = await Storage.findUser(email, pass);
       if (user) { currentUser = user; Storage.setSession(user); renderAuth(); loadPage(currentPage); }
       else alert('Credenciales incorrectas');
     };
     window.logout = () => { currentUser = null; Storage.clearSession(); renderAuth(); loadPage(currentPage); };
-    window.showRegister = () => {
+    window.showRegister = async () => {
       const nombre = prompt('Nombre completo:');
       const email = prompt('Email:');
       const pass = prompt('Contraseña:');
       const centro = prompt('Centro educativo:');
       if (nombre && email && pass) {
-        Storage.saveUser({ nombre, email, password: pass, centro });
-        alert('Registrado correctamente. Inicia sesión.');
-        renderAuth();
+        const ok = await Storage.saveUser({ nombre, email, password: pass, centro });
+        if (ok) { alert('Registrado. Inicia sesión.'); renderAuth(); }
       }
     };
 
@@ -801,7 +747,7 @@
     function loadPage(page) {
       const container = document.getElementById('appContainer');
       const title = document.getElementById('pageTitle');
-      const titles = { curriculo:'Currículo PNFT', ia:'Generador de Estrategias', dashboard:'Dashboard de Progreso', evaluacion:'Evaluación MEP', historial:'Historial' };
+      const titles = { curriculo:'Currículo PNFT', ia:'Generador IA', dashboard:'Dashboard', evaluacion:'Evaluación', historial:'Historial' };
       title.innerText = titles[page] || page;
       if (page === 'curriculo') renderCurriculo(container);
       else if (page === 'ia') renderIA(container);
@@ -810,20 +756,30 @@
       else if (page === 'historial') renderHistorial(container);
     }
 
-    // ---------- GUARDAR / CARGAR PROGRESO ----------
+    // ---------- PROGRESO POR USUARIO ----------
+    function getProgressKey() { return currentUser ? `pnft_progreso_${currentUser.email}` : 'pnft_progreso_anon'; }
     function guardarProgreso() {
-      localStorage.setItem('pnft_progreso', JSON.stringify({
-        nivel: selectedNivel,
-        modulo: selectedModulo,
-        saberes: Array.from(saberesSeleccionados)
+      if (!currentUser) return;
+      localStorage.setItem(getProgressKey(), JSON.stringify({
+        nivel: selectedNivel, modulo: selectedModulo, saberes: Array.from(saberesSeleccionados)
       }));
     }
-    function cargarProgreso() {
-      const data = JSON.parse(localStorage.getItem('pnft_progreso') || 'null');
+    async function cargarProgreso() {
+      if (!currentUser) return;
+      const data = JSON.parse(localStorage.getItem(getProgressKey()) || 'null');
       if (!data) return;
       selectedNivel = data.nivel || selectedNivel;
       selectedModulo = data.modulo || selectedModulo;
       saberesSeleccionados = new Set(data.saberes || []);
+    }
+
+    // ---------- SUGERIR METODOLOGÍA ----------
+    function sugerirMetodologia(nivel) {
+      if (nivel === '0°') return 'ABJ';
+      const g = parseInt(nivel);
+      if (g <= 3) return 'ABJ';
+      if (g <= 6) return 'ABR';
+      return 'Design Thinking';
     }
 
     // ---------- CURRÍCULO ----------
@@ -832,290 +788,221 @@
       let html = `<div class="card"><div class="flex-row">
         <select id="nivelSelect">${niveles.map(n => `<option ${n===selectedNivel?'selected':''}>${n}</option>`).join('')}</select>
         <select id="moduloSelect"></select>
-        <select id="areaFiltro"><option value="todas">Todas las áreas</option></select>
+        <select id="areaFiltro"><option value="todas">Todas</option></select>
         <button onclick="seleccionarTodosSaberes()">Todos</button>
-      </div>
-      <div id="saberesContainer" style="margin-top:20px;"></div>
+        <button onclick="limpiarSeleccion()">Limpiar</button>
+      </div><div id="saberesContainer"></div>
       <p>Saberes seleccionados: <span id="contador">0</span></p></div>`;
       container.innerHTML = html;
       actualizarModulos();
       document.getElementById('nivelSelect').addEventListener('change', (e) => { selectedNivel = e.target.value; actualizarModulos(); guardarProgreso(); });
+      document.getElementById('areaFiltro').addEventListener('change', cargarSaberes);
     }
     function actualizarModulos() {
       const modSelect = document.getElementById('moduloSelect');
       const modulos = Object.keys(DATA[selectedNivel] || {});
+      if (!modulos.includes(selectedModulo)) selectedModulo = modulos[0];
       modSelect.innerHTML = modulos.map(m => `<option ${m===selectedModulo?'selected':''}>${m}</option>`).join('');
-      selectedModulo = modulos[0];
       cargarSaberes();
-      modSelect.addEventListener('change', (e) => { selectedModulo = e.target.value; cargarSaberes(); guardarProgreso(); });
+      modSelect.addEventListener('change', (e) => { selectedModulo = e.target.value; guardarProgreso(); cargarSaberes(); });
     }
     function cargarSaberes() {
       const data = DATA[selectedNivel]?.[selectedModulo] || {};
-      let html = ''; const areas = new Set();
+      const filtro = document.getElementById('areaFiltro')?.value || 'todas';
+      let html = '';
       for (let area in data) {
-        areas.add(area);
+        if (filtro !== 'todas' && filtro !== area) continue;
+        html += `<div style="margin-top:15px;"><strong>${area}</strong> <button style="margin-left:10px;" onclick="seleccionarArea('${area}')">Seleccionar área</button></div>`;
         data[area].saberes.forEach(s => {
           const selected = saberesSeleccionados.has(s.id) ? 'selected' : '';
           html += `<span class="saber-tag ${selected}" onclick="toggleSaber('${s.id}')">${s.nombre}</span>`;
         });
       }
       document.getElementById('saberesContainer').innerHTML = html;
-      const areaSelect = document.getElementById('areaFiltro');
-      areaSelect.innerHTML = '<option value="todas">Todas</option>';
-      areas.forEach(a => areaSelect.add(new Option(a,a)));
       document.getElementById('contador').innerText = saberesSeleccionados.size;
     }
     window.toggleSaber = (id) => {
       if (saberesSeleccionados.has(id)) saberesSeleccionados.delete(id);
       else saberesSeleccionados.add(id);
-      guardarProgreso();
-      cargarSaberes();
+      guardarProgreso(); cargarSaberes();
+    };
+    window.seleccionarArea = (area) => {
+      const data = DATA[selectedNivel]?.[selectedModulo] || {};
+      data[area]?.saberes.forEach(s => saberesSeleccionados.add(s.id));
+      guardarProgreso(); cargarSaberes();
     };
     window.seleccionarTodosSaberes = () => {
       const data = DATA[selectedNivel]?.[selectedModulo] || {};
       for (let area in data) data[area].saberes.forEach(s => saberesSeleccionados.add(s.id));
-      guardarProgreso();
-      cargarSaberes();
+      guardarProgreso(); cargarSaberes();
     };
+    window.limpiarSeleccion = () => { saberesSeleccionados.clear(); guardarProgreso(); cargarSaberes(); };
+
+    // ---------- DETALLES PARA IA ----------
+    function obtenerSaberesDetallados(ids) {
+      const detalles = [];
+      for (let nivel in DATA)
+        for (let mod in DATA[nivel])
+          for (let area in DATA[nivel][mod])
+            DATA[nivel][mod][area].saberes.forEach(s => { if (ids.includes(s.id)) detalles.push(`- ${s.nombre}: ${s.indicadores.join(' ')}`); });
+      return detalles.join('\n');
+    }
 
     // ---------- IA ----------
     function renderIA(container) {
-      if (!currentUser) { container.innerHTML = '<div class="card">Inicia sesión para usar el generador.</div>'; return; }
+      if (!currentUser) { container.innerHTML = '<div class="card">Inicia sesión</div>'; return; }
+      const metodologiaSugerida = sugerirMetodologia(selectedNivel);
       container.innerHTML = `
-        <div class="card">
-          <h2>✨ Generar estrategia</h2>
+        <div class="card"><h2>✨ Generar estrategia</h2>
+          <div id="iaMensaje" class="info-message" style="display:none;"></div>
           <p>Saberes seleccionados: ${saberesSeleccionados.size}</p>
           <div class="flex-row">
             <select id="metodologia">
-              <option value="ABJ">ABJ (Preescolar/I Ciclo)</option>
-              <option value="ABR">ABR (II Ciclo)</option>
-              <option value="DT">Design Thinking (III Ciclo)</option>
+              <option value="ABJ" ${metodologiaSugerida==='ABJ'?'selected':''}>ABJ (Juegos)</option>
+              <option value="ABR" ${metodologiaSugerida==='ABR'?'selected':''}>ABR (Retos)</option>
+              <option value="Design Thinking" ${metodologiaSugerida==='Design Thinking'?'selected':''}>Design Thinking</option>
             </select>
-            <select id="iaProvider">
-              <option value="simulado">Simulación local</option>
-              <option value="chatgpt">ChatGPT</option>
-              <option value="gemini">Gemini</option>
-              <option value="claude">Claude</option>
-              <option value="deepseek">DeepSeek</option>
-            </select>
+            <select id="contexto"><option>Con tecnología</option><option>Sin tecnología</option></select>
+            <select id="iaProvider"><option value="simulado">Simulación</option><option value="gemini">Gemini</option></select>
             <button onclick="generarEstrategia()">Generar</button>
-            <button onclick="exportarTXT()">Descargar TXT</button>
-            <button onclick="exportarHTML()">Imprimir HTML</button>
+            <button onclick="exportarTXT()">TXT</button>
+            <button onclick="exportarHTML()">HTML</button>
+            <button onclick="exportarWord()">Word</button>
+            <button onclick="copiarResultado()">Copiar</button>
           </div>
           <div id="resultadoEstrategia" class="resultado-box"></div>
-        </div>
-      `;
+        </div>`;
     }
     window.generarEstrategia = async () => {
-      if (saberesSeleccionados.size === 0) { alert('Selecciona al menos un saber'); return; }
+      if (saberesSeleccionados.size === 0) {
+        document.getElementById('iaMensaje').innerHTML = '⚠️ Selecciona al menos un saber para generar la estrategia.';
+        document.getElementById('iaMensaje').style.display = 'block';
+        return;
+      }
+      document.getElementById('iaMensaje').style.display = 'none';
+      const resultadoDiv = document.getElementById('resultadoEstrategia');
+      resultadoDiv.innerText = '⏳ Generando estrategia con IA...';
+      
       const provider = document.getElementById('iaProvider').value;
       const metodologia = document.getElementById('metodologia').value;
+      const contexto = document.getElementById('contexto').value;
       const saberesIds = Array.from(saberesSeleccionados);
       let respuesta = '';
       
       if (provider === 'simulado') {
-        respuesta = `🧪 Estrategia simulada (${metodologia})\n\nFocalización: Actividad lúdica.\nExploración: Descubrimiento guiado.\nAplicación: Reto colaborativo.\nReflexión: Puesta en común.\n\nRúbrica analítica:\n- Inicial: ...\n- Intermedio: ...\n- Avanzado: ...`;
+        respuesta = `🧪 Estrategia simulada (${metodologia})\n\nFocalización: ...\nExploración: ...\nAplicación: ...\nReflexión: ...`;
       } else {
-        let apiKey = prompt(`Ingresa tu API Key para ${provider}:`);
-        if (!apiKey) return;
-        const prompt = crearPrompt(provider, metodologia, saberesIds);
-        try {
-          respuesta = await llamarAPI(provider, apiKey, prompt);
-        } catch(e) {
-          respuesta = `Error al conectar con ${provider}. Verifica tu clave o conexión.`;
-        }
+        const apiKey = prompt(`API Key ${provider}:`);
+        if (!apiKey) { resultadoDiv.innerText = ''; return; }
+        const prompt = crearPrompt(metodologia, contexto, saberesIds);
+        try { respuesta = await llamarAPI(provider, apiKey, prompt); }
+        catch(e) { respuesta = 'Error de conexión con la API.'; }
       }
-      document.getElementById('resultadoEstrategia').innerText = respuesta;
-      Storage.saveItem('pnft_estrategias', { nivel: selectedNivel, saberes: saberesIds, respuesta, metodologia, provider });
+      resultadoDiv.innerText = respuesta;
+      Storage.saveItem('pnft_estrategias', { nivel: selectedNivel, metodologia, provider, respuesta, saberes: saberesIds });
     };
-    function crearPrompt(provider, metodologia, saberesIds) {
+    function crearPrompt(metodologia, contexto, saberesIds) {
       const ciclo = obtenerCiclo(selectedNivel);
-      const rda = RDA[ciclo]?.['Apropiación tecnológica y Digital'] || 'RdA no definido';
-      return `
-Actúa como especialista en mediación pedagógica del MEP Costa Rica - PNFT 2026.
+      const rda = RDA[ciclo]?.['Apropiación tecnológica y Digital'] || '';
+      const detalle = obtenerSaberesDetallados(saberesIds);
+      return `Eres especialista MEP Costa Rica - PNFT 2026.
+Contexto: ${contexto}. Nivel: ${selectedNivel}. Metodología: ${metodologia}.
+Saberes:\n${detalle}\nRdA: ${rda}
 
-📌 Nivel: ${selectedNivel}
-📌 Ciclo: ${ciclo}
-📌 Metodología: ${metodologia}
-
-📚 Saberes seleccionados:
-${saberesIds.join(', ')}
-
-🎯 Resultado de Aprendizaje:
-${rda}
-
----
-
-🎯 TAREA:
-
-Diseñar una ESTRATEGIA DE MEDIACIÓN PEDAGÓGICA COMPLETA que incluya:
-
-1. Título de la estrategia
-2. Propósito de aprendizaje
-3. Momentos pedagógicos:
-   - Focalización
-   - Exploración
-   - Aplicación
-   - Reflexión
-4. Actividades detalladas
-5. Recursos
-6. Evaluación:
-   - Rúbrica analítica (Inicial, Intermedio, Avanzado)
-7. Recomendaciones DUA:
-   - Representación
-   - Acción y expresión
-   - Motivación
-8. Justificación pedagógica alineada al PNFT
-
-⚠️ REGLAS:
-- No omitir ninguna sección
-- Redacción clara y profesional
-- Adaptado a estudiantes
-- En formato estructurado
-`;
+Diseña una estrategia didáctica completa que incluya:
+1. Título motivador.
+2. Propósito.
+3. Momentos pedagógicos (Focalización, Exploración, Aplicación, Reflexión) con actividades concretas y tiempos.
+4. Ejemplo real contextualizado en Costa Rica.
+5. Recursos necesarios.
+6. Rúbrica analítica (Inicial, Intermedio, Avanzado).
+7. Recomendaciones DUA (Representación, Acción/Expresión, Motivación).
+8. Justificación alineada al PNFT.
+9. Evidencias de aprendizaje observables.
+10. Indicadores de logro vinculados explícitamente.`;
     }
     async function llamarAPI(provider, apiKey, prompt) {
       if (provider === 'gemini') {
         const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
-          method: 'POST', headers: {'Content-Type':'application/json'},
-          body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+          method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
         });
         const data = await res.json();
-        return data.candidates?.[0]?.content?.parts?.[0]?.text || 'Sin respuesta.';
+        return data.candidates?.[0]?.content?.parts?.[0]?.text || 'Sin respuesta';
       }
-      return `[Simulación ${provider}] Respuesta a: "${prompt.substring(0,100)}..."\n\nEstrategia generada con éxito.`;
+      return `[Simulación] Estrategia generada con éxito.`;
     }
-    function obtenerCiclo(nivel) {
-      if (nivel==='0°') return 'Preescolar';
-      const g = parseInt(nivel);
-      if (g<=3) return 'I Ciclo';
-      if (g<=6) return 'II Ciclo';
-      return 'III Ciclo';
-    }
-    window.exportarTXT = () => {
-      const contenido = document.getElementById('resultadoEstrategia')?.innerText || '';
-      const blob = new Blob([contenido], {type: 'text/plain'});
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `estrategia_pnft_${new Date().toISOString().slice(0,10)}.txt`;
-      a.click();
+    function obtenerCiclo(n) { if(n==='0°')return'Preescolar'; const g=parseInt(n); if(g<=3)return'I Ciclo'; if(g<=6)return'II Ciclo'; return'III Ciclo'; }
+    window.exportarTXT = () => { const c=document.getElementById('resultadoEstrategia')?.innerText||''; const b=new Blob([c]); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='estrategia.txt'; a.click(); };
+    window.exportarHTML = () => { const c=document.getElementById('resultadoEstrategia')?.innerText||''; const w=window.open(); w.document.write(`<pre>${c}</pre>`); w.print(); };
+    window.exportarWord = () => {
+      const c=document.getElementById('resultadoEstrategia')?.innerText||'';
+      const html = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'><body>${c.replace(/\n/g,'<br>')}</body></html>`;
+      const b=new Blob(['\ufeff',html],{type:'application/msword'});
+      const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='estrategia.doc'; a.click();
     };
-    window.exportarHTML = () => {
-      const contenido = document.getElementById('resultadoEstrategia')?.innerText || '';
-      const html = `
-      <html>
-      <head>
-        <title>Estrategia PNFT</title>
-        <style>
-          body { font-family: Arial; padding: 40px; }
-          h1 { text-align: center; }
-          pre { white-space: pre-wrap; line-height: 1.5; }
-        </style>
-      </head>
-      <body>
-        <h1>📘 Estrategia de Mediación Pedagógica</h1>
-        <p><strong>Nivel:</strong> ${selectedNivel}</p>
-        <p><strong>Fecha:</strong> ${new Date().toLocaleDateString()}</p>
-        <hr>
-        <pre>${contenido}</pre>
-      </body>
-      </html>
-      `;
-      const ventana = window.open('', '_blank');
-      ventana.document.write(html);
-      ventana.document.close();
-      ventana.print();
+    window.copiarResultado = () => {
+      const c=document.getElementById('resultadoEstrategia')?.innerText;
+      if(c) navigator.clipboard.writeText(c).then(()=>alert('Copiado al portapapeles'));
     };
 
     // ---------- DASHBOARD ----------
     function renderDashboard(container) {
-      const totalSaberes = Object.values(DATA[selectedNivel]?.[selectedModulo]||{}).reduce((acc,area)=> acc+area.saberes.length,0);
-      const seleccionados = saberesSeleccionados.size;
-      const pct = totalSaberes ? Math.round((seleccionados/totalSaberes)*100) : 0;
-      const ciclo = obtenerCiclo(selectedNivel);
-      container.innerHTML = `
-        <div class="card">
-          <h2>📊 Progreso Curricular</h2>
-          <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-          <p><strong>${pct}%</strong> completado</p>
-          <p>${seleccionados} de ${totalSaberes} saberes</p>
-          <hr style="margin:20px 0; border:1px solid #1e4f6b;">
-          <h3>🎯 Resultado de Aprendizaje</h3>
-          <p>${RDA[ciclo]?.['Apropiación tecnológica y Digital'] || 'No definido'}</p>
-          <h3 style="margin-top:15px;">📌 Nivel actual</h3>
-          <p>${selectedNivel} · ${selectedModulo}</p>
-        </div>
-      `;
+      const data = DATA[selectedNivel]?.[selectedModulo] || {};
+      let totalSaberes=0, seleccionados=saberesSeleccionados.size, htmlAreas='';
+      for (let area in data) {
+        const total=data[area].saberes.length, sel=data[area].saberes.filter(s=>saberesSeleccionados.has(s.id)).length;
+        totalSaberes+=total;
+        htmlAreas+=`<div><p>${area} (${sel}/${total})</p><div class="progress-bar"><div class="progress-fill" style="width:${(sel/total)*100}%"></div></div></div>`;
+      }
+      const pct=totalSaberes?Math.round((seleccionados/totalSaberes)*100):0;
+      container.innerHTML=`<div class="card"><h2>Progreso</h2><div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div><p>${pct}% (${seleccionados}/${totalSaberes})</p>${htmlAreas}</div>`;
     }
 
     // ---------- EVALUACIÓN MEP ----------
     function renderEvaluacion(container) {
-      const ciclo = obtenerCiclo(selectedNivel).includes('I')?'I': (obtenerCiclo(selectedNivel).includes('II')?'II':'III');
-      const pesos = PESOS[ciclo];
-      container.innerHTML = `
-        <div class="card">
-          <h2>Evaluación (${ciclo} Ciclo)</h2>
-          <div class="flex-row">
-            <label>Trabajo Cotidiano (1-4): <input id="tc" type="number" min="1" max="4" step="0.1" value="3"></label>
-            <label>Tareas: <input id="tareas" type="number" min="0" max="100" value="80"></label>
-            ${ciclo==='III'? '<label>Proyecto: <input id="proy" type="number" min="0" max="100" value="85"></label>' : '<label>Pruebas: <input id="pruebas" type="number" min="0" max="100" value="75"></label>'}
-            <label>Asistencia %: <input id="asis" type="number" min="0" max="100" value="100"></label>
-            <button onclick="calcularNota()">Calcular</button>
-          </div>
-          <h3>Nota Final: <span id="notaFinal">-</span></h3>
-        </div>
-      `;
+      const ciclo=obtenerCiclo(selectedNivel).includes('I')?'I':(obtenerCiclo(selectedNivel).includes('II')?'II':'III');
+      container.innerHTML=`<div class="card"><h2>Evaluación ${ciclo} Ciclo</h2><div class="flex-row">
+        <label>TC(1-4):<input id="tc" type="number" min="1" max="4" step="0.1" value="3"></label>
+        <label>Tareas:<input id="tareas" type="number" value="80"></label>
+        ${ciclo==='III'?'<label>Proyecto:<input id="proy" value="85"></label>':'<label>Pruebas:<input id="pruebas" value="75"></label>'}
+        <label>Asistencia:<input id="asis" value="100"></label>
+        <button onclick="calcularNota()">Calcular</button>
+      </div><h3>Nota: <span id="notaFinal">-</span></h3></div>`;
     }
     window.calcularNota = () => {
-      const ciclo = obtenerCiclo(selectedNivel).includes('I')?'I': (obtenerCiclo(selectedNivel).includes('II')?'II':'III');
-      const pesos = PESOS[ciclo];
-      const tcRaw = parseFloat(document.getElementById('tc')?.value) || 3;
-      const tc = ((tcRaw-1)/3)*100;
-      const tareas = parseFloat(document.getElementById('tareas')?.value) || 0;
-      const pruebas = ciclo==='III' ? 0 : (parseFloat(document.getElementById('pruebas')?.value) || 0);
-      const proyecto = ciclo==='III' ? (parseFloat(document.getElementById('proy')?.value) || 0) : 0;
-      const asis = parseFloat(document.getElementById('asis')?.value) || 100;
-      let nota = 0, pesoTotal = 0;
-      if (pesos.trabajoCotidiano) { nota += tc * pesos.trabajoCotidiano; pesoTotal += pesos.trabajoCotidiano; }
-      if (pesos.tareas) { nota += tareas * pesos.tareas; pesoTotal += pesos.tareas; }
-      if (pesos.pruebas) { nota += pruebas * pesos.pruebas; pesoTotal += pesos.pruebas; }
-      if (pesos.proyecto) { nota += proyecto * pesos.proyecto; pesoTotal += pesos.proyecto; }
-      if (pesos.asistencia) { nota += asis * pesos.asistencia; pesoTotal += pesos.asistencia; }
-      const final = pesoTotal ? Math.round((nota / pesoTotal) * 100) / 100 : 0;
+      const ciclo=obtenerCiclo(selectedNivel).includes('I')?'I':(obtenerCiclo(selectedNivel).includes('II')?'II':'III');
+      const p=PESOS[ciclo];
+      const tc=(((parseFloat(document.getElementById('tc')?.value)||3)-1)/3)*100;
+      const t=parseFloat(document.getElementById('tareas')?.value)||0;
+      const pr=ciclo==='III'?0:(parseFloat(document.getElementById('pruebas')?.value)||0);
+      const py=ciclo==='III'?(parseFloat(document.getElementById('proy')?.value)||0):0;
+      const a=parseFloat(document.getElementById('asis')?.value)||100;
+      let nota=0,peso=0;
+      if(p.trabajoCotidiano){nota+=tc*p.trabajoCotidiano;peso+=p.trabajoCotidiano;}
+      if(p.tareas){nota+=t*p.tareas;peso+=p.tareas;}
+      if(p.pruebas){nota+=pr*p.pruebas;peso+=p.pruebas;}
+      if(p.proyecto){nota+=py*p.proyecto;peso+=p.proyecto;}
+      if(p.asistencia){nota+=a*p.asistencia;peso+=p.asistencia;}
+      const final = (nota/peso).toFixed(2);
       document.getElementById('notaFinal').innerText = final;
-      Storage.saveItem('pnft_evaluaciones', { nivel: selectedNivel, ciclo, componentes: {tc, tareas, pruebas, proyecto, asis}, notaFinal: final });
+      Storage.saveItem('pnft_evaluaciones', { 
+        nivel: selectedNivel, ciclo, notaFinal: final, saberes: Array.from(saberesSeleccionados),
+        componentes: {tc: tc.toFixed(1), tareas: t, pruebas: pr, proyecto: py, asistencia: a}
+      });
     };
 
     // ---------- HISTORIAL ----------
     function renderHistorial(container) {
-      const estrategias = Storage.getItems('pnft_estrategias');
-      const evaluaciones = Storage.getItems('pnft_evaluaciones');
-      container.innerHTML = `
-        <div class="card">
-          <h2>📜 Estrategias generadas</h2>
-          ${estrategias.slice(-5).reverse().map(e => `
-            <div style="margin-bottom:10px;">
-              <strong>${e.fecha?.slice(0,10)}</strong><br>
-              Nivel: ${e.nivel}<br>
-              Método: ${e.metodologia}<br>
-              IA: ${e.provider}
-            </div>
-          `).join('')}
-          <hr style="margin:20px 0;">
-          <h2>📋 Evaluaciones</h2>
-          ${evaluaciones.slice(-5).reverse().map(ev => `
-            <div style="margin-bottom:10px;">
-              ${ev.fecha?.slice(0,10)} - Nota: <strong>${ev.notaFinal}</strong>
-            </div>
-          `).join('')}
-        </div>
-      `;
+      const est=Storage.getItems('pnft_estrategias'), eva=Storage.getItems('pnft_evaluaciones');
+      container.innerHTML=`<div class="card"><h2>Estrategias recientes</h2>${est.slice(-3).reverse().map(e=>`<p>${e.fecha?.slice(0,10)} - ${e.nivel} (${e.metodologia})</p>`).join('')}<h2>Evaluaciones recientes</h2>${eva.slice(-3).reverse().map(v=>`<p>${v.fecha?.slice(0,10)} - Nota ${v.notaFinal}</p>`).join('')}</div>`;
     }
 
-    // ---------- INICIALIZACIÓN ----------
-    cargarProgreso();
-    renderAuth();
-    loadPage('curriculo');
+    // ---------- INICIO ----------
+    (async () => {
+      await cargarProgreso();
+      renderAuth();
+      loadPage('curriculo');
+    })();
   </script>
 </body>
 </html>
