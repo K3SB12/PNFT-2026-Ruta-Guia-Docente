@@ -3,13 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>🧭 PNFT 2026 · La Gran Ruta de las Islas</title>
-    <!-- Tailwind CSS para estilos rápidos y consistentes -->
+    <title>🧭 PNFT 2026 · La Gran Ruta (con Perfiles de Salida)</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Estilos personalizados para Glassmorfismo y Gamificación */
         body {
             background: radial-gradient(circle at 20% 30%, #0b1c2f, #040a14);
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -17,7 +14,6 @@
             position: relative;
             overflow-x: hidden;
         }
-        /* Efecto de fondo de islas (mapa sutil) */
         body::before {
             content: '';
             position: fixed;
@@ -56,10 +52,6 @@
             height: 100%;
             border-radius: 9999px;
             transition: width 0.5s cubic-bezier(0.2, 0.9, 0.4, 1);
-            background: linear-gradient(90deg, #34d399, #10b981);
-        }
-        .progress-glow {
-            box-shadow: 0 0 15px currentColor;
         }
         .btn-primary {
             background: linear-gradient(135deg, #2563eb, #1e40af);
@@ -70,19 +62,37 @@
             border-radius: 9999px;
             box-shadow: 0 8px 18px -6px #1e40af;
             transition: all 0.2s;
+            cursor: pointer;
         }
         .btn-primary:hover {
             background: linear-gradient(135deg, #3b82f6, #2563eb);
             transform: scale(1.02);
         }
-        /* Animación para el viaje entre islas */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-            100% { transform: translateY(0px); }
+        .level-tab {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            background: rgba(255,255,255,0.05);
+            color: #9ca3af;
+            font-weight: 600;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: 1px solid transparent;
         }
-        .floating {
-            animation: float 3s ease-in-out infinite;
+        .level-tab:hover {
+            background: rgba(59,130,246,0.2);
+            color: white;
+        }
+        .level-tab.active {
+            background: #2563eb;
+            color: white;
+            box-shadow: 0 0 15px #2563eb;
+        }
+        .collapsible-header {
+            cursor: pointer;
+            user-select: none;
+        }
+        .progress-glow {
+            box-shadow: 0 0 10px currentColor;
         }
     </style>
 </head>
@@ -111,188 +121,102 @@
         </div>
     </div>
 
-    <!-- ===== LAYOUT PRINCIPAL: MAPA DE ISLAS + PANEL LATERAL ===== -->
+    <!-- ===== SELECTOR GLOBAL DE NIVELES (PESTAÑAS) ===== -->
+    <div class="flex flex-wrap gap-2 mb-6 justify-center md:justify-start">
+        <div class="level-tab active" data-level="0°" onclick="selectGlobalLevel('0°')">0° Preescolar</div>
+        <div class="level-tab" data-level="1°" onclick="selectGlobalLevel('1°')">1° Grado</div>
+        <div class="level-tab" data-level="2°" onclick="selectGlobalLevel('2°')">2° Grado</div>
+        <div class="level-tab" data-level="3°" onclick="selectGlobalLevel('3°')">3° Grado</div>
+        <div class="level-tab" data-level="4°" onclick="selectGlobalLevel('4°')">4° Grado</div>
+        <div class="level-tab" data-level="5°" onclick="selectGlobalLevel('5°')">5° Grado</div>
+        <div class="level-tab" data-level="6°" onclick="selectGlobalLevel('6°')">6° Grado</div>
+        <div class="level-tab" data-level="7°" onclick="selectGlobalLevel('7°')">7° Grado</div>
+        <div class="level-tab" data-level="8°" onclick="selectGlobalLevel('8°')">8° Grado</div>
+        <div class="level-tab" data-level="9°" onclick="selectGlobalLevel('9°')">9° Grado</div>
+    </div>
+
+    <!-- ===== LAYOUT PRINCIPAL ===== -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        <!-- COLUMNA IZQUIERDA: EL MAPA DE ISLAS (GAMIFICACIÓN) -->
+        <!-- COLUMNA IZQUIERDA: MAPA DE ISLAS + SABERES -->
         <div class="lg:col-span-7 space-y-6">
-            <!-- Título del viaje -->
+            <!-- MAPA DE ISLAS -->
             <div class="flex items-center gap-3 mb-2">
                 <i class="fas fa-compass text-2xl text-cyan-400"></i>
                 <h2 class="text-xl font-bold text-white/90">Selecciona tu destino</h2>
-                <span class="text-xs bg-blue-500/30 px-3 py-1 rounded-full">Haz clic en una Isla</span>
             </div>
-            
-            <!-- GRID DE 4 ISLAS -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5" id="island-container">
-                <!-- Isla 1: Materno-Transición -->
-                <div class="island-card rounded-3xl p-6 border-l-8 border-l-pink-400" data-cycle="materno" data-levels="0°" onclick="selectCycle('materno', this)">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <span class="text-xs font-black uppercase tracking-wider text-pink-300">Isla 1</span>
-                            <h3 class="text-2xl font-black mt-1">🏝️ Materno · Transición</h3>
-                            <p class="text-white/60 text-sm mt-1">Exploración y juego guiado</p>
-                        </div>
-                        <i class="fas fa-robot text-3xl text-pink-300/70"></i>
-                    </div>
-                    <div class="mt-4 flex items-center gap-2">
-                        <span class="bg-white/10 text-xs px-3 py-1 rounded-full"><i class="fas fa-cubes mr-1"></i>0°</span>
-                        <span class="bg-white/10 text-xs px-3 py-1 rounded-full"><i class="fas fa-gamepad mr-1"></i>ABJ</span>
-                    </div>
-                    <div class="mt-3 text-xs text-white/40 flex justify-between">
-                        <span>Saberes: 14 (Básico) / 18 (Óptimo)</span>
-                        <span id="materno-badge" class="text-emerald-400">🔋 0%</span>
-                    </div>
-                </div>
-
-                <!-- Isla 2: I Ciclo -->
-                <div class="island-card rounded-3xl p-6 border-l-8 border-l-green-400" data-cycle="i" data-levels="1°,2°,3°" onclick="selectCycle('i', this)">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <span class="text-xs font-black uppercase tracking-wider text-green-300">Isla 2</span>
-                            <h3 class="text-2xl font-black mt-1">📗 I Ciclo</h3>
-                            <p class="text-white/60 text-sm mt-1">Alfabetización y patrones</p>
-                        </div>
-                        <i class="fas fa-code text-3xl text-green-300/70"></i>
-                    </div>
-                    <div class="mt-4 flex items-center gap-2">
-                        <span class="bg-white/10 text-xs px-3 py-1 rounded-full">1° · 2° · 3°</span>
-                        <span class="bg-white/10 text-xs px-3 py-1 rounded-full">ABJ</span>
-                    </div>
-                    <div class="mt-3 text-xs text-white/40 flex justify-between">
-                        <span>Progreso curricular</span>
-                        <span id="i-ciclo-badge" class="text-emerald-400">🔋 0%</span>
-                    </div>
-                </div>
-
-                <!-- Isla 3: II Ciclo -->
-                <div class="island-card rounded-3xl p-6 border-l-8 border-l-orange-400" data-cycle="ii" data-levels="4°,5°,6°" onclick="selectCycle('ii', this)">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <span class="text-xs font-black uppercase tracking-wider text-orange-300">Isla 3</span>
-                            <h3 class="text-2xl font-black mt-1">📙 II Ciclo</h3>
-                            <p class="text-white/60 text-sm mt-1">Resolución de retos</p>
-                        </div>
-                        <i class="fas fa-microchip text-3xl text-orange-300/70"></i>
-                    </div>
-                    <div class="mt-4 flex items-center gap-2">
-                        <span class="bg-white/10 text-xs px-3 py-1 rounded-full">4° · 5° · 6°</span>
-                        <span class="bg-white/10 text-xs px-3 py-1 rounded-full">ABR</span>
-                    </div>
-                    <div class="mt-3 text-xs text-white/40 flex justify-between">
-                        <span>Progreso curricular</span>
-                        <span id="ii-ciclo-badge" class="text-emerald-400">🔋 0%</span>
-                    </div>
-                </div>
-
-                <!-- Isla 4: III Ciclo -->
-                <div class="island-card rounded-3xl p-6 border-l-8 border-l-purple-400" data-cycle="iii" data-levels="7°,8°,9°" onclick="selectCycle('iii', this)">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <span class="text-xs font-black uppercase tracking-wider text-purple-300">Isla 4</span>
-                            <h3 class="text-2xl font-black mt-1">📕 III Ciclo</h3>
-                            <p class="text-white/60 text-sm mt-1">Innovación y prototipado</p>
-                        </div>
-                        <i class="fas fa-flask text-3xl text-purple-300/70"></i>
-                    </div>
-                    <div class="mt-4 flex items-center gap-2">
-                        <span class="bg-white/10 text-xs px-3 py-1 rounded-full">7° · 8° · 9°</span>
-                        <span class="bg-white/10 text-xs px-3 py-1 rounded-full">Design Thinking</span>
-                    </div>
-                    <div class="mt-3 text-xs text-white/40 flex justify-between">
-                        <span>Progreso curricular</span>
-                        <span id="iii-ciclo-badge" class="text-emerald-400">🔋 0%</span>
-                    </div>
-                </div>
+                <!-- Islas generadas dinámicamente con JS para mantener consistencia -->
             </div>
 
-            <!-- PANEL DE SELECCIÓN DE NIVEL Y MÓDULO (Aparece al seleccionar isla) -->
-            <div id="level-selector-panel" class="glass-card p-6 hidden transition-all">
+            <!-- SELECTOR DE MÓDULO -->
+            <div class="glass-card p-6">
                 <div class="flex items-center gap-3 mb-4">
                     <i class="fas fa-flag-checkered text-blue-400"></i>
-                    <h3 class="font-bold text-lg">Configurar Nivel y Módulo</h3>
+                    <h3 class="font-bold text-lg">Configurar Módulo</h3>
                 </div>
-                <div class="grid sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-cyan-300 uppercase mb-1">Nivel</label>
-                        <select id="select-nivel" class="w-full bg-slate-800/70 border border-slate-600 rounded-xl p-3 text-white">
-                            <option value="">-- Selecciona el grado --</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-cyan-300 uppercase mb-1">Módulo</label>
-                        <select id="select-modulo" class="w-full bg-slate-800/70 border border-slate-600 rounded-xl p-3 text-white">
-                            <option value="Módulo 1">Módulo 1 (Primer semestre)</option>
-                            <option value="Módulo 2">Módulo 2 (Segundo semestre)</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="mt-5 flex justify-end">
+                <div class="flex items-center gap-4">
+                    <span class="text-sm text-white/70">Nivel activo: <span id="current-level-display" class="font-bold text-white">0°</span></span>
+                    <select id="select-modulo" class="bg-slate-800/70 border border-slate-600 rounded-xl p-3 text-white">
+                        <option value="Módulo 1">Módulo 1 (Primer semestre)</option>
+                        <option value="Módulo 2">Módulo 2 (Segundo semestre)</option>
+                    </select>
                     <button onclick="cargarSaberesDelNivel()" class="btn-primary">
-                        <i class="fas fa-download mr-2"></i>Cargar Saberes del Nivel
+                        <i class="fas fa-download mr-2"></i>Cargar Saberes
                     </button>
                 </div>
             </div>
 
-            <!-- SECCIÓN DE SABERES (Aparece tras cargar nivel) -->
+            <!-- SECCIÓN DE SABERES -->
             <div id="saberes-section" class="glass-card p-6 hidden">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="font-bold text-lg flex items-center gap-2"><i class="fas fa-list-check text-emerald-400"></i> Saberes del Módulo</h3>
                     <span id="selected-count-badge" class="bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-full">0 seleccionados</span>
                 </div>
-                <div id="saberes-container" class="space-y-4 max-h-[400px] overflow-y-auto pr-2">
-                    <!-- Aquí se inyectan los saberes dinámicamente -->
-                </div>
+                <div id="saberes-container" class="space-y-4 max-h-[400px] overflow-y-auto pr-2"></div>
                 <div class="mt-4 text-xs text-amber-300/80 flex items-center gap-2">
                     <i class="fas fa-lightbulb"></i> Regla de Oro PNFT: Selecciona entre 3 y 5 indicadores para una evaluación profunda.
                 </div>
             </div>
         </div>
 
-        <!-- COLUMNA DERECHA: DASHBOARD DE BATERÍAS Y PROMPT -->
+        <!-- COLUMNA DERECHA: DASHBOARD + PROMPT -->
         <div class="lg:col-span-5 space-y-6">
-            <!-- TARJETA DE BATERÍAS DE PODER (4 PILARES) -->
+            <!-- TARJETA DE BATERÍAS DE PODER -->
             <div class="glass-card p-6">
                 <div class="flex items-center gap-2 mb-4">
                     <i class="fas fa-battery-full text-2xl text-amber-400"></i>
-                    <h3 class="font-bold text-lg">Baterías de Poder (Mapa de Calor)</h3>
+                    <h3 class="font-bold text-lg">Baterías de Poder (Áreas)</h3>
                 </div>
-                <div class="space-y-5">
-                    <!-- Apropiación Tecnológica -->
-                    <div>
-                        <div class="flex justify-between text-sm mb-1"><span>💻 Apropiación Digital</span> <span id="battery-apropiacion-value">0%</span></div>
-                        <div class="w-full h-5 bg-slate-700/50 rounded-full overflow-hidden border border-white/10">
-                            <div id="battery-apropiacion" class="battery-fill w-0" style="background: linear-gradient(90deg, #3b82f6, #60a5fa);"></div>
-                        </div>
-                    </div>
-                    <!-- Programación -->
-                    <div>
-                        <div class="flex justify-between text-sm mb-1"><span>🧩 Programación y Algoritmos</span> <span id="battery-programacion-value">0%</span></div>
-                        <div class="w-full h-5 bg-slate-700/50 rounded-full overflow-hidden border border-white/10">
-                            <div id="battery-programacion" class="battery-fill w-0" style="background: linear-gradient(90deg, #10b981, #34d399);"></div>
-                        </div>
-                    </div>
-                    <!-- Computación Física -->
-                    <div>
-                        <div class="flex justify-between text-sm mb-1"><span>🔌 Computación Física / Robótica</span> <span id="battery-robotica-value">0%</span></div>
-                        <div class="w-full h-5 bg-slate-700/50 rounded-full overflow-hidden border border-white/10">
-                            <div id="battery-robotica" class="battery-fill w-0" style="background: linear-gradient(90deg, #f59e0b, #fbbf24);"></div>
-                        </div>
-                    </div>
-                    <!-- Ciencia de Datos -->
-                    <div>
-                        <div class="flex justify-between text-sm mb-1"><span>📊 Ciencia de Datos / IA</span> <span id="battery-datos-value">0%</span></div>
-                        <div class="w-full h-5 bg-slate-700/50 rounded-full overflow-hidden border border-white/10">
-                            <div id="battery-datos" class="battery-fill w-0" style="background: linear-gradient(90deg, #8b5cf6, #a78bfa);"></div>
-                        </div>
-                    </div>
+                <div class="space-y-5" id="batteries-container"></div>
+            </div>
+
+            <!-- PANEL DE SABERES SELECCIONADOS (EDITABLE) -->
+            <div class="glass-card p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-bold text-lg flex items-center gap-2"><i class="fas fa-clipboard-list text-purple-400"></i> Saberes en Planeamiento</h3>
+                    <button onclick="limpiarSeleccionModulo()" class="text-xs bg-red-500/20 hover:bg-red-500/40 text-red-300 px-3 py-1 rounded-full"><i class="fas fa-trash-alt mr-1"></i>Limpiar</button>
                 </div>
-                <div class="mt-4 text-right">
-                    <span class="text-xs text-white/50"><i class="far fa-save mr-1"></i>Progreso guardado en tu navegador</span>
+                <div id="selected-saberes-list" class="space-y-2 max-h-48 overflow-y-auto text-sm">
+                    <p class="text-white/40 text-center">No hay saberes seleccionados</p>
                 </div>
             </div>
 
-            <!-- TARJETA GENERADOR DE PROMPTS + IA -->
+            <!-- PERFILES DE SALIDA (COLAPSABLE) -->
+            <div class="glass-card p-6">
+                <div class="collapsible-header flex items-center justify-between" onclick="togglePerfiles()">
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-user-graduate text-2xl text-emerald-400"></i>
+                        <h3 class="font-bold text-lg">🎓 Perfiles de Salida del Ciclo</h3>
+                    </div>
+                    <i id="perfiles-chevron" class="fas fa-chevron-down"></i>
+                </div>
+                <div id="perfiles-content" class="mt-4 space-y-3 hidden">
+                    <!-- Se llena dinámicamente -->
+                </div>
+            </div>
+
+            <!-- GENERADOR DE PROMPTS -->
             <div class="glass-card p-6">
                 <div class="flex items-center gap-2 mb-4">
                     <i class="fas fa-robot text-2xl text-indigo-400"></i>
@@ -302,18 +226,15 @@
                     <i class="fas fa-magic mr-2"></i>✨ Generar Prompt PNFT
                 </button>
                 <div class="relative">
-                    <textarea id="output-prompt" rows="6" class="w-full bg-slate-900/80 text-cyan-300 font-mono text-xs p-4 rounded-xl outline-none border border-white/20" placeholder='El prompt aparecerá aquí... Pega esto en tu IA favorita.' readonly></textarea>
-                    <button onclick="copiarPrompt()" class="absolute top-2 right-2 bg-white/10 hover:bg-white/20 p-2 rounded-lg" title="Copiar al portapapeles"><i class="far fa-copy"></i></button>
+                    <textarea id="output-prompt" rows="6" class="w-full bg-slate-900/80 text-cyan-300 font-mono text-xs p-4 rounded-xl outline-none border border-white/20" placeholder='El prompt aparecerá aquí...' readonly></textarea>
+                    <button onclick="copiarPrompt()" class="absolute top-2 right-2 bg-white/10 hover:bg-white/20 p-2 rounded-lg"><i class="far fa-copy"></i></button>
                 </div>
-                
-                <!-- Botones de IA -->
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-4">
                     <a href="https://gemini.google.com" target="_blank" class="bg-white/5 hover:bg-white/10 rounded-lg p-2 text-center text-xs"><i class="fab fa-google text-blue-300"></i> Gemini</a>
                     <a href="https://chat.openai.com" target="_blank" class="bg-white/5 hover:bg-white/10 rounded-lg p-2 text-center text-xs"><i class="fas fa-comment text-emerald-300"></i> ChatGPT</a>
                     <a href="https://copilot.microsoft.com" target="_blank" class="bg-white/5 hover:bg-white/10 rounded-lg p-2 text-center text-xs"><i class="fas fa-sync-alt text-sky-300"></i> Copilot</a>
                     <a href="https://deepseek.com" target="_blank" class="bg-white/5 hover:bg-white/10 rounded-lg p-2 text-center text-xs"><i class="fas fa-search text-amber-300"></i> DeepSeek</a>
                 </div>
-                <p class="text-[10px] text-white/40 mt-3 text-center">Haz clic en Generar Prompt, cópialo y pégalo en la IA de tu elección.</p>
             </div>
         </div>
     </div>
@@ -321,9 +242,9 @@
 
 <script>
     // =========================================================================
-    // 1. BASE DE DATOS PNFT (Extracto de tu archivo, suficiente para el MVP)
+    // 1. BASE DE DATOS COMPLETA (Extracto suficiente para demo)
     // =========================================================================
-    const PNFT_DATA = {
+const PNFT_DATA = {
             // ========== MATERNO INFANTIL / TRANSICIÓN ==========
             "0°": {
                 "Módulo 1": {
@@ -875,182 +796,219 @@
             }
         };
 
-    // =========================================================================
-    // 2. ESTADO GLOBAL Y LÓGICA DE LA APLICACIÓN
-    // =========================================================================
-    let currentCycle = 'materno';        // Ciclo seleccionado
-    let currentNivel = '';              // Nivel actual (0°, 1°, etc.)
-    let currentModulo = 'Módulo 1';     // Módulo actual
-    let selectedSaberes = new Set();    // Almacena identificadores únicos "area::nombre"
 
-    // Cargar datos guardados al iniciar
-    function loadFromStorage() {
-        const saved = localStorage.getItem('pnft_selected_saberes');
-        if (saved) {
-            try {
-                const arr = JSON.parse(saved);
-                selectedSaberes = new Set(arr);
-            } catch(e) { console.warn("Error cargando storage"); }
-        }
-        updateAllProgressBars();
-    }
-    function saveToStorage() {
-        localStorage.setItem('pnft_selected_saberes', JSON.stringify([...selectedSaberes]));
-    }
-
-    // Actualizar todas las baterías y badges de islas
-    function updateAllProgressBars() {
-        // Contar seleccionados por área (simplificado)
-        const counts = { 'Apropiación': 0, 'Programación': 0, 'Computación': 0, 'Ciencia': 0 };
-        let totalSeleccionados = selectedSaberes.size;
-        
-        // Simulación: actualizamos basado en la cantidad total (MVP)
-        // En una versión completa, se calcularía contra el total del módulo.
-        const maxPerArea = 5; // Asumimos 5 saberes por área para la demo
-        ['Apropiación', 'Programación', 'Computación', 'Ciencia'].forEach(area => {
-            let count = 0;
-            selectedSaberes.forEach(s => { if (s.includes(area)) count++; });
-            const pct = Math.min(100, Math.round((count / maxPerArea) * 100));
-            document.getElementById(`battery-${area.toLowerCase()}`).style.width = `${pct}%`;
-            document.getElementById(`battery-${area.toLowerCase()}-value`).innerText = `${pct}%`;
-        });
-
-        // Actualizar badges de islas (simulación visual)
-        const total = selectedSaberes.size;
-        document.getElementById('materno-badge').innerText = `🔋 ${Math.min(100, total*10)}%`;
-        document.getElementById('i-ciclo-badge').innerText = `🔋 ${Math.min(100, total*8)}%`;
-        document.getElementById('ii-ciclo-badge').innerText = `🔋 ${Math.min(100, total*6)}%`;
-        document.getElementById('iii-ciclo-badge').innerText = `🔋 ${Math.min(100, total*5)}%`;
-    }
-
-    // Seleccionar ciclo (Isla)
-    window.selectCycle = function(cycle, element) {
-        currentCycle = cycle;
-        document.querySelectorAll('.island-card').forEach(c => c.classList.remove('active'));
-        element.classList.add('active');
-        
-        // Mapear niveles
-        let niveles = [];
-        if (cycle === 'materno') niveles = ['0°'];
-        else if (cycle === 'i') niveles = ['1°', '2°', '3°'];
-        else if (cycle === 'ii') niveles = ['4°', '5°', '6°'];
-        else if (cycle === 'iii') niveles = ['7°', '8°', '9°'];
-        
-        const selectNivel = document.getElementById('select-nivel');
-        selectNivel.innerHTML = '<option value="">-- Selecciona el grado --</option>';
-        niveles.forEach(n => { selectNivel.innerHTML += `<option value="${n}">${n}</option>`; });
-        
-        document.getElementById('level-selector-panel').classList.remove('hidden');
-        document.getElementById('saberes-section').classList.add('hidden');
+    const PERFILES_POR_CICLO = {
+        "Materno Infantil/Transición": [
+            { nombre: "Fundamentos de tecnología", area: "Apropiación tecnológica y Digital" },
+            { nombre: "Experiencias de uso", area: "Apropiación tecnológica y Digital" },
+            { nombre: "Fundamentos de programación", area: "Programación y Algoritmos" },
+            { nombre: "Principios de computación física", area: "Computación física y Robótica" }
+        ],
+        "I Ciclo": [
+            { nombre: "Fundamentos de tecnología", area: "Apropiación tecnológica y Digital" },
+            { nombre: "Seguridad digital", area: "Apropiación tecnológica y Digital" },
+            { nombre: "Lenguajes de programación", area: "Programación y Algoritmos" },
+            { nombre: "Introducción a la IA", area: "Ciencia de datos e Inteligencia artificial" }
+        ],
+        "II Ciclo": [
+            { nombre: "Fundamentos de tecnología", area: "Apropiación tecnológica y Digital" },
+            { nombre: "Seguridad digital", area: "Apropiación tecnológica y Digital" },
+            { nombre: "Lenguajes de programación", area: "Programación y Algoritmos" },
+            { nombre: "Electrónica y circuitos", area: "Computación física y Robótica" },
+            { nombre: "Creación de prototipos", area: "Computación física y Robótica" }
+        ],
+        "III Ciclo": [
+            { nombre: "Fundamentos de tecnología", area: "Apropiación tecnológica y Digital" },
+            { nombre: "Seguridad digital", area: "Apropiación tecnológica y Digital" },
+            { nombre: "Lenguajes de programación", area: "Programación y Algoritmos" },
+            { nombre: "Mecánica y diseño de robots", area: "Computación física y Robótica" },
+            { nombre: "Introducción a los datos", area: "Ciencia de datos e Inteligencia artificial" }
+        ]
     };
 
-    // Cargar saberes al seleccionar nivel
-    window.cargarSaberesDelNivel = function() {
-        currentNivel = document.getElementById('select-nivel').value;
+    const EJES_POR_CICLO = {
+        "Materno Infantil/Transición": { "Pensamiento computacional": "Utiliza algoritmos simples...", "Ciudadanía Digital": "Reconoce uso responsable..." },
+        "I Ciclo": { "Pensamiento computacional": "Aplica conceptos de lógica...", "Ciudadanía Digital": "Infiere responsabilidad en línea..." },
+        "II Ciclo": { "Pensamiento computacional": "Diseña algoritmos eficientes...", "Ciudadanía Digital": "Gestiona identidad digital..." },
+        "III Ciclo": { "Pensamiento computacional": "Construye algoritmos eficientes...", "Ciudadanía Digital": "Reflexiona sobre huella digital..." }
+    };
+
+    // =========================================================================
+    // 2. ESTADO Y LÓGICA PRINCIPAL
+    // =========================================================================
+    let currentLevel = '0°';
+    let currentModulo = 'Módulo 1';
+    let selectedSaberes = new Set();
+    let storageKey = `pnft_${currentLevel}_${currentModulo}`;
+
+    // Renderizado de islas
+    function renderIslands() {
+        const container = document.getElementById('island-container');
+        container.innerHTML = `
+            <div class="island-card rounded-3xl p-6 border-l-8 border-l-pink-400" onclick="selectCycle('materno')">
+                <div class="flex items-start justify-between"><div><span class="text-xs font-black uppercase tracking-wider text-pink-300">Isla 1</span><h3 class="text-2xl font-black mt-1">🏝️ Materno · Transición</h3><p class="text-white/60 text-sm mt-1">Exploración y juego guiado</p></div><i class="fas fa-robot text-3xl text-pink-300/70"></i></div>
+                <div class="mt-4 flex items-center gap-2"><span class="bg-white/10 text-xs px-3 py-1 rounded-full"><i class="fas fa-cubes mr-1"></i>0°</span><span class="bg-white/10 text-xs px-3 py-1 rounded-full"><i class="fas fa-gamepad mr-1"></i>ABJ</span></div>
+            </div>
+            <div class="island-card rounded-3xl p-6 border-l-8 border-l-green-400" onclick="selectCycle('i')">
+                <div class="flex items-start justify-between"><div><span class="text-xs font-black uppercase tracking-wider text-green-300">Isla 2</span><h3 class="text-2xl font-black mt-1">📗 I Ciclo</h3><p class="text-white/60 text-sm mt-1">Alfabetización y patrones</p></div><i class="fas fa-code text-3xl text-green-300/70"></i></div>
+                <div class="mt-4 flex items-center gap-2"><span class="bg-white/10 text-xs px-3 py-1 rounded-full">1° · 2° · 3°</span><span class="bg-white/10 text-xs px-3 py-1 rounded-full">ABJ</span></div>
+            </div>
+            <div class="island-card rounded-3xl p-6 border-l-8 border-l-orange-400" onclick="selectCycle('ii')">
+                <div class="flex items-start justify-between"><div><span class="text-xs font-black uppercase tracking-wider text-orange-300">Isla 3</span><h3 class="text-2xl font-black mt-1">📙 II Ciclo</h3><p class="text-white/60 text-sm mt-1">Resolución de retos</p></div><i class="fas fa-microchip text-3xl text-orange-300/70"></i></div>
+                <div class="mt-4 flex items-center gap-2"><span class="bg-white/10 text-xs px-3 py-1 rounded-full">4° · 5° · 6°</span><span class="bg-white/10 text-xs px-3 py-1 rounded-full">ABR</span></div>
+            </div>
+            <div class="island-card rounded-3xl p-6 border-l-8 border-l-purple-400" onclick="selectCycle('iii')">
+                <div class="flex items-start justify-between"><div><span class="text-xs font-black uppercase tracking-wider text-purple-300">Isla 4</span><h3 class="text-2xl font-black mt-1">📕 III Ciclo</h3><p class="text-white/60 text-sm mt-1">Innovación y prototipado</p></div><i class="fas fa-flask text-3xl text-purple-300/70"></i></div>
+                <div class="mt-4 flex items-center gap-2"><span class="bg-white/10 text-xs px-3 py-1 rounded-full">7° · 8° · 9°</span><span class="bg-white/10 text-xs px-3 py-1 rounded-full">Design Thinking</span></div>
+            </div>
+        `;
+    }
+
+    window.selectCycle = (cycle) => {
+        let firstLevel = { materno: '0°', i: '1°', ii: '4°', iii: '7°' }[cycle];
+        selectGlobalLevel(firstLevel);
+    };
+
+    window.selectGlobalLevel = (level) => {
+        currentLevel = level;
+        document.getElementById('current-level-display').innerText = level;
+        document.querySelectorAll('.level-tab').forEach(t => t.classList.remove('active'));
+        document.querySelector(`.level-tab[data-level="${level}"]`).classList.add('active');
+        cargarSaberesDelNivel();
+    };
+
+    function loadFromStorage() {
+        storageKey = `pnft_${currentLevel}_${currentModulo}`;
+        const saved = localStorage.getItem(storageKey);
+        selectedSaberes = saved ? new Set(JSON.parse(saved)) : new Set();
+    }
+    function saveToStorage() {
+        localStorage.setItem(storageKey, JSON.stringify([...selectedSaberes]));
+    }
+
+    window.cargarSaberesDelNivel = () => {
         currentModulo = document.getElementById('select-modulo').value;
-        if (!currentNivel) { alert("Selecciona un nivel"); return; }
-        
-        const nivelData = PNFT_DATA[currentNivel]?.[currentModulo];
-        if (!nivelData) { alert("Datos no disponibles para este nivel/módulo (MVP)."); return; }
-        
+        loadFromStorage();
+        const nivelData = PNFT_DATA[currentLevel]?.[currentModulo];
         const container = document.getElementById('saberes-container');
+        if (!nivelData) { container.innerHTML = '<p class="text-white/40">Datos no disponibles para este nivel/módulo (MVP).</p>'; return; }
         container.innerHTML = '';
-        
         Object.entries(nivelData).forEach(([area, content]) => {
-            const areaDiv = document.createElement('div');
-            areaDiv.className = "border-b border-white/10 pb-3 mb-3";
+            const areaDiv = document.createElement('div'); areaDiv.className = "border-b border-white/10 pb-3 mb-3";
             areaDiv.innerHTML = `<h4 class="text-md font-bold text-blue-300 mb-2">${area}</h4>`;
-            
             content.saberes.forEach(saber => {
                 const saberId = `${area}::${saber.nombre}`;
-                const isChecked = selectedSaberes.has(saberId);
-                const label = document.createElement('label');
-                label.className = "flex items-start gap-3 p-2 hover:bg-white/5 rounded-lg cursor-pointer";
-                label.innerHTML = `
-                    <input type="checkbox" class="saber-checkbox mt-1 accent-blue-500" data-id="${saberId}" ${isChecked ? 'checked' : ''} onchange="toggleSaber('${saberId}', this.checked)">
-                    <div>
-                        <p class="font-semibold text-white">${saber.nombre}</p>
-                        <p class="text-[10px] text-slate-400">${saber.indicadores[0]}</p>
-                    </div>
-                `;
+                const checked = selectedSaberes.has(saberId);
+                const label = document.createElement('label'); label.className = "flex items-start gap-3 p-2 hover:bg-white/5 rounded-lg cursor-pointer";
+                label.innerHTML = `<input type="checkbox" class="saber-checkbox mt-1 accent-blue-500" data-id="${saberId}" ${checked ? 'checked' : ''} onchange="toggleSaber('${saberId}', this.checked)"><div><p class="font-semibold text-white">${saber.nombre}</p><p class="text-[10px] text-slate-400">${saber.indicadores[0]}</p></div>`;
                 areaDiv.appendChild(label);
             });
             container.appendChild(areaDiv);
         });
-        
         document.getElementById('saberes-section').classList.remove('hidden');
-        document.getElementById('selected-count-badge').innerText = `${selectedSaberes.size} seleccionados`;
+        actualizarUI();
     };
 
-    window.toggleSaber = function(saberId, isChecked) {
-        if (isChecked) {
-            if (selectedSaberes.size >= 5) {
-                alert("⚠️ Regla de Oro PNFT: Máximo 5 indicadores para evaluación profunda.");
-                event.target.checked = false;
-                return;
-            }
-            selectedSaberes.add(saberId);
-        } else {
-            selectedSaberes.delete(saberId);
-        }
-        if (selectedSaberes.size < 3 && selectedSaberes.size > 0) {
-            // Solo aviso, no bloquea
-        }
-        document.getElementById('selected-count-badge').innerText = `${selectedSaberes.size} seleccionados`;
-        saveToStorage();
-        updateAllProgressBars();
+    window.toggleSaber = (saberId, isChecked) => {
+        if (isChecked) { if (selectedSaberes.size >= 5) { alert("⚠️ Máximo 5 saberes"); event.target.checked = false; return; } selectedSaberes.add(saberId); }
+        else selectedSaberes.delete(saberId);
+        saveToStorage(); actualizarUI();
     };
 
-    // Generar Prompt Profesional
-    window.generarPrompt = function() {
-        if (!currentNivel) { alert("Selecciona un nivel y carga los saberes."); return; }
-        if (selectedSaberes.size === 0) { alert("Selecciona al menos un saber."); return; }
-        
-        let metodologia = "Aprendizaje Basado en Juegos (ABJ)";
-        if (currentCycle === 'ii') metodologia = "Aprendizaje Basado en Retos (ABR)";
-        else if (currentCycle === 'iii') metodologia = "Design Thinking (Pensamiento de Diseño)";
-        
-        const cicloNombre = { 'materno':'Materno Infantil/Transición', 'i':'I Ciclo', 'ii':'II Ciclo', 'iii':'III Ciclo' }[currentCycle];
-        const rda = RDA_POR_CICLO[cicloNombre]?.["Apropiación tecnológica y Digital"] || "Resultado de Aprendizaje del ciclo.";
-        
-        let saberesTxt = '';
-        selectedSaberes.forEach(s => { saberesTxt += `- ${s}\n`; });
-        
-        const prompt = `Actúa como especialista en mediación pedagógica del MEP Costa Rica - PNFT 2026.
+    function actualizarUI() {
+        document.getElementById('selected-count-badge').innerText = `${selectedSaberes.size} seleccionados`;
+        renderBaterias(); renderPerfiles(); renderListaSeleccionados();
+    }
 
-Nivel: ${currentNivel} | Módulo: ${currentModulo}
-Ciclo: ${cicloNombre}
-Metodología oficial: ${metodologia}
+    function renderBaterias() {
+        const areas = ['Apropiación tecnológica y Digital', 'Programación y Algoritmos', 'Computación física y Robótica', 'Ciencia de datos e Inteligencia artificial'];
+        const contador = {}; areas.forEach(a => contador[a] = 0);
+        selectedSaberes.forEach(s => { const area = s.split('::')[0]; if (contador.hasOwnProperty(area)) contador[area]++; });
+        const html = areas.map(area => {
+            const total = PNFT_DATA[currentLevel]?.[currentModulo]?.[area]?.saberes?.length || 5;
+            const pct = Math.round((contador[area] / total) * 100);
+            const color = area.includes('Apropiación') ? 'from-blue-500 to-cyan-400' : area.includes('Programación') ? 'from-emerald-500 to-green-400' : area.includes('Robótica') ? 'from-amber-500 to-orange-400' : 'from-purple-500 to-pink-400';
+            return `<div><div class="flex justify-between text-sm mb-1"><span>${area.substring(0,25)}...</span><span>${pct}%</span></div><div class="w-full h-5 bg-slate-700/50 rounded-full"><div class="battery-fill h-full rounded-full bg-gradient-to-r ${color}" style="width:${pct}%"></div></div></div>`;
+        }).join('');
+        document.getElementById('batteries-container').innerHTML = html;
+    }
 
-📌 SABERES SELECCIONADOS:
-${saberesTxt}
+    function renderPerfiles() {
+        const ciclo = getCicloFromLevel(currentLevel);
+        const perfiles = PERFILES_POR_CICLO[ciclo] || [];
+        const contenedor = document.getElementById('perfiles-content');
+        if (perfiles.length === 0) { contenedor.innerHTML = '<p class="text-white/40">No hay perfiles definidos.</p>'; return; }
+        let html = '';
+        perfiles.forEach(perfil => {
+            const total = PNFT_DATA[currentLevel]?.[currentModulo]?.[perfil.area]?.saberes?.length || 5;
+            const seleccionados = [...selectedSaberes].filter(s => s.startsWith(perfil.area)).length;
+            const pct = Math.round((seleccionados / total) * 100);
+            const emoji = pct >= 80 ? '🏆' : pct >= 50 ? '🔥' : '🌱';
+            html += `<div><div class="flex justify-between text-xs mb-1"><span>${perfil.nombre}</span><span>${pct}% ${emoji}</span></div><div class="w-full h-4 bg-slate-700/50 rounded-full"><div class="battery-fill h-full rounded-full bg-emerald-500" style="width:${pct}%"></div></div></div>`;
+        });
+        contenedor.innerHTML = html;
+    }
 
-🎯 RESULTADO DE APRENDIZAJE (RdA): ${rda}
+    function renderListaSeleccionados() {
+        const lista = document.getElementById('selected-saberes-list');
+        if (selectedSaberes.size === 0) { lista.innerHTML = '<p class="text-white/40 text-center">No hay saberes seleccionados</p>'; return; }
+        let html = '';
+        const agrupados = {};
+        selectedSaberes.forEach(s => { const [area, nombre] = s.split('::'); if (!agrupados[area]) agrupados[area] = []; agrupados[area].push(nombre); });
+        for (let area in agrupados) {
+            html += `<p class="text-xs font-bold text-blue-300 mt-2">${area}</p>`;
+            agrupados[area].forEach(nombre => { html += `<div class="flex items-center justify-between text-sm pl-2"><span>• ${nombre}</span><i class="fas fa-times-circle text-red-400 cursor-pointer" onclick="eliminarSaber('${area}::${nombre}')"></i></div>`; });
+        }
+        lista.innerHTML = html;
+    }
 
-⚙️ EJES TRANSVERSALES: Pensamiento computacional, Ciudadanía digital, Emprendimiento.
+    window.eliminarSaber = (saberId) => {
+        selectedSaberes.delete(saberId);
+        document.querySelectorAll('.saber-checkbox').forEach(cb => { if (cb.dataset.id === saberId) cb.checked = false; });
+        saveToStorage(); actualizarUI();
+    };
 
-TAREA: Diseñar una Estrategia de Mediación Pedagógica completa con:
-1. Título creativo.
-2. Momentos pedagógicos (Focalización, Exploración, Aplicación, Reflexión) con tiempos.
-3. Rúbrica analítica (Inicial, Intermedio, Avanzado).
-4. Recomendaciones DUA.
-5. Justificación de alineación curricular.`;
-        
+    window.limpiarSeleccionModulo = () => {
+        if (confirm('¿Eliminar todos los saberes seleccionados en este módulo?')) {
+            selectedSaberes.clear();
+            document.querySelectorAll('.saber-checkbox').forEach(cb => cb.checked = false);
+            saveToStorage(); actualizarUI();
+        }
+    };
+
+    window.togglePerfiles = () => {
+        const content = document.getElementById('perfiles-content');
+        const chevron = document.getElementById('perfiles-chevron');
+        content.classList.toggle('hidden');
+        chevron.classList.toggle('fa-chevron-down');
+        chevron.classList.toggle('fa-chevron-up');
+    };
+
+    function getCicloFromLevel(level) {
+        if (level === '0°') return 'Materno Infantil/Transición';
+        const num = parseInt(level);
+        if (num <= 3) return 'I Ciclo';
+        if (num <= 6) return 'II Ciclo';
+        return 'III Ciclo';
+    }
+
+    window.generarPrompt = () => {
+        if (!currentLevel || selectedSaberes.size === 0) { alert("Selecciona un nivel y al menos un saber."); return; }
+        const ciclo = getCicloFromLevel(currentLevel);
+        let metodologia = "ABJ"; if (ciclo === 'II Ciclo') metodologia = "ABR"; else if (ciclo === 'III Ciclo') metodologia = "Design Thinking";
+        const rda = RDA_POR_CICLO[ciclo]?.["Apropiación tecnológica y Digital"] || "Resultado de Aprendizaje del ciclo.";
+        const ejes = EJES_POR_CICLO[ciclo] || {};
+        let ejesTxt = ''; for (let e in ejes) ejesTxt += `- ${e}: ${ejes[e]}\n`;
+        let saberesTxt = ''; selectedSaberes.forEach(s => saberesTxt += `- ${s}\n`);
+        const prompt = `Actúa como especialista en mediación pedagógica del MEP Costa Rica - PNFT 2026.\nNivel: ${currentLevel} | Módulo: ${currentModulo}\nCiclo: ${ciclo}\nMetodología: ${metodologia}\n📌 SABERES:\n${saberesTxt}\n🎯 RdA: ${rda}\n⚙️ EJES TRANSVERSALES:\n${ejesTxt}\nTAREA: Diseñar Estrategia de Mediación con Focalización, Exploración, Aplicación, Reflexión, Rúbrica y DUA.`;
         document.getElementById('output-prompt').value = prompt;
     };
 
-    window.copiarPrompt = function() {
-        const ta = document.getElementById('output-prompt');
-        ta.select();
-        document.execCommand('copy');
-        alert('✅ Prompt copiado al portapapeles.');
-    };
+    window.copiarPrompt = () => { const ta = document.getElementById('output-prompt'); ta.select(); document.execCommand('copy'); alert('✅ Prompt copiado.'); };
 
-    // Inicializar
-    window.onload = function() {
-        loadFromStorage();
-        // Activar Isla 1 por defecto
-        document.querySelector('[data-cycle="materno"]').click();
+    window.onload = () => {
+        renderIslands();
+        selectGlobalLevel('0°');
     };
 </script>
 </body>
