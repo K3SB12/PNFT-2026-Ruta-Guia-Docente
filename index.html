@@ -1051,7 +1051,6 @@ const RDA_POR_CICLO = {
         // NUEVA FUNCIÓN AUXILIAR: Obtener progreso acumulado del ciclo
         obtenerProgresoCiclo() {
             const ciclo = this.getCiclo();
-            // Determinar los grados que pertenecen a este ciclo
             let grados = [];
             if (ciclo === 'Materno Infantil/Transición') grados = ['0°'];
             else if (ciclo === 'I Ciclo') grados = ['1°', '2°', '3°'];
@@ -1059,9 +1058,8 @@ const RDA_POR_CICLO = {
             else if (ciclo === 'III Ciclo') grados = ['7°', '8°', '9°'];
         
             const areas = ['Apropiación tecnológica y Digital', 'Programación y Algoritmos', 'Computación física y Robótica', 'Ciencia de datos e Inteligencia artificial'];
-            const totales = {};        // total de saberes por área en todo el ciclo
-            const seleccionados = {};  // saberes seleccionados acumulados (Set para evitar duplicados)
-            
+            const totales = {};
+            const seleccionados = {};
             areas.forEach(a => { totales[a] = 0; seleccionados[a] = new Set(); });
         
             grados.forEach(grado => {
@@ -1069,15 +1067,13 @@ const RDA_POR_CICLO = {
                     const key = `${grado}_${modulo}`;
                     const data = Storage.cargar(key) || {};
                     const saberesIds = data.seleccionados || [];
-                    
-                    // Obtener la estructura del módulo para contar totales
+        
                     const modData = PNFT_DATA[grado]?.[modulo];
                     if (modData) {
                         areas.forEach(area => {
                             const areaData = modData[area];
-                            if (areaData) {
+                            if (areaData && areaData.saberes) {
                                 totales[area] += areaData.saberes.length;
-                                // Agregar los seleccionados de esta área
                                 saberesIds.forEach(id => {
                                     if (id.startsWith(area + '::')) {
                                         seleccionados[area].add(id);
@@ -1089,7 +1085,6 @@ const RDA_POR_CICLO = {
                 });
             });
         
-            // Construir objeto de resultado con porcentajes
             const resultado = {};
             areas.forEach(area => {
                 const tot = totales[area] || 1;
@@ -1103,8 +1098,7 @@ const RDA_POR_CICLO = {
                 };
             });
             return resultado;
-        },
-
+        }
         // VERSIÓN ACTUALIZADA DE actualizarPanelRdA
         actualizarPanelRdA() {
             const ciclo = this.getCiclo();
