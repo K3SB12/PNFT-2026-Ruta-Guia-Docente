@@ -1060,6 +1060,22 @@ const RDA_POR_CICLO = {
             }
             lista.innerHTML = html;
         },
+
+                eliminarSaber(id) {
+            this.saberesSeleccionados.delete(id);
+            this.guardarStorage();
+            this.renderizarTodo();
+        },
+
+        togglePerfiles() {
+            const c = document.getElementById('perfiles-content');
+            const chevron = document.getElementById('perfiles-chevron');
+            c.classList.toggle('hidden');
+            chevron.classList.toggle('fa-chevron-down');
+            chevron.classList.toggle('fa-chevron-up');
+        },
+
+        
         generarPrompt() {
             if (this.saberesSeleccionados.size === 0) { alert('Selecciona al menos un saber.'); return; }
             const ciclo = this.getCiclo();
