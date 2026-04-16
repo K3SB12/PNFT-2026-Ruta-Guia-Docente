@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🧭 PNFT 2026 · Portal Docente Completo</title>
-    <!-- Tailwind + Font Awesome -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -20,7 +19,6 @@
         .level-tab.active { background: #2563eb; color: white; }
         .island-card { background: rgba(20, 40, 60, 0.6); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.2); transition: all 0.3s; cursor: pointer; }
         .island-card:hover { transform: translateY(-6px); border-color: #3b82f6; box-shadow: 0 0 25px rgba(59,130,246,0.3); }
-        .island-card.active { border: 3px solid #fbbf24; box-shadow: 0 0 30px #fbbf24; }
         .btn-primary { background: linear-gradient(135deg, #2563eb, #1e40af); border: none; color: white; font-weight: bold; padding: 0.75rem 1.5rem; border-radius: 9999px; box-shadow: 0 8px 18px -6px #1e40af; cursor: pointer; }
         .floating { animation: float 3s ease-in-out infinite; }
         @keyframes float { 0% { transform: translateY(0); } 50% { transform: translateY(-5px); } 100% { transform: translateY(0); } }
@@ -29,35 +27,25 @@
 <body class="text-white">
 
 <div class="relative z-10 max-w-7xl mx-auto px-4 py-6">
-    <!-- ===== HEADER ORIGINAL ===== -->
+    <!-- HEADER -->
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 pb-4 border-b border-white/10">
         <div class="flex items-center gap-4">
             <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center shadow-lg floating">
                 <i class="fas fa-map-signs text-2xl"></i>
             </div>
             <div>
-                <h1 class="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-cyan-200 via-white to-blue-300 bg-clip-text text-transparent">
-                    PNFT 2026 · La Gran Ruta
-                </h1>
-                <p class="text-cyan-300/80 text-sm flex items-center gap-2">
-                    <i class="fas fa-island-tropical"></i> 
-                    Navegando hacia el Perfil de Salida · Dashboard de Cumplimiento
-                </p>
+                <h1 class="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-cyan-200 via-white to-blue-300 bg-clip-text text-transparent">PNFT 2026 · La Gran Ruta</h1>
+                <p class="text-cyan-300/80 text-sm flex items-center gap-2"><i class="fas fa-island-tropical"></i> Navegando hacia el Perfil de Salida</p>
             </div>
         </div>
-        <div class="flex items-center gap-3 bg-black/20 backdrop-blur-md px-5 py-2 rounded-full border border-white/10">
-            <i class="fas fa-dice-d6 text-amber-400"></i>
-            <span class="text-sm font-semibold">Islas de Aprendizaje · MEP 2026</span>
+        <div class="flex items-center gap-3">
+            <select id="select-grupo" class="bg-slate-800/70 border border-slate-600 rounded-xl p-2 text-sm" onchange="App.cambiarGrupo()"></select>
+            <button onclick="Grupos.abrirModalGrupo()" class="bg-white/10 hover:bg-white/20 px-3 py-1 rounded-full text-sm"><i class="fas fa-plus mr-1"></i>Grupo</button>
+            <span class="bg-black/20 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 text-xs"><i class="fas fa-dice-d6 text-amber-400 mr-1"></i>Islas MEP</span>
         </div>
     </div>
 
-    <!-- Selector de grupo (discreto) -->
-    <div class="flex justify-end mb-4">
-        <select id="select-grupo" class="bg-slate-800/70 border border-slate-600 rounded-xl p-2 text-sm" onchange="App.cambiarGrupo()"></select>
-        <button onclick="Grupos.abrirModalGrupo()" class="ml-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded-full text-sm"><i class="fas fa-plus mr-1"></i>Grupo</button>
-    </div>
-
-    <!-- Pestañas principales -->
+    <!-- PESTAÑAS -->
     <div class="flex gap-3 mb-6 border-b border-white/10 pb-3">
         <div class="tab-btn active" data-tab="dashboard" onclick="App.switchTab('dashboard')"><i class="fas fa-map mr-2"></i>Dashboard</div>
         <div class="tab-btn" data-tab="grupos" onclick="App.switchTab('grupos')"><i class="fas fa-users mr-2"></i>Grupos</div>
@@ -65,117 +53,81 @@
         <div class="tab-btn" data-tab="exportar" onclick="App.switchTab('exportar')"><i class="fas fa-download mr-2"></i>Exportar</div>
     </div>
 
-    <!-- ===== CONTENEDOR DASHBOARD ===== -->
+    <!-- DASHBOARD -->
     <div id="tab-dashboard" class="tab-content">
         <div class="flex flex-wrap gap-2 mb-6 justify-center md:justify-start">
-            <div class="level-tab active" data-level="0°" onclick="App.selectLevel('0°')">0° Preescolar</div>
-            <div class="level-tab" data-level="1°" onclick="App.selectLevel('1°')">1° Grado</div>
-            <div class="level-tab" data-level="2°" onclick="App.selectLevel('2°')">2° Grado</div>
-            <div class="level-tab" data-level="3°" onclick="App.selectLevel('3°')">3° Grado</div>
-            <div class="level-tab" data-level="4°" onclick="App.selectLevel('4°')">4° Grado</div>
-            <div class="level-tab" data-level="5°" onclick="App.selectLevel('5°')">5° Grado</div>
-            <div class="level-tab" data-level="6°" onclick="App.selectLevel('6°')">6° Grado</div>
-            <div class="level-tab" data-level="7°" onclick="App.selectLevel('7°')">7° Grado</div>
-            <div class="level-tab" data-level="8°" onclick="App.selectLevel('8°')">8° Grado</div>
-            <div class="level-tab" data-level="9°" onclick="App.selectLevel('9°')">9° Grado</div>
+            <div class="level-tab active" data-level="0°" onclick="App.selectLevel('0°')">0° Preescolar</div><div class="level-tab" data-level="1°" onclick="App.selectLevel('1°')">1°</div><div class="level-tab" data-level="2°" onclick="App.selectLevel('2°')">2°</div><div class="level-tab" data-level="3°" onclick="App.selectLevel('3°')">3°</div><div class="level-tab" data-level="4°" onclick="App.selectLevel('4°')">4°</div><div class="level-tab" data-level="5°" onclick="App.selectLevel('5°')">5°</div><div class="level-tab" data-level="6°" onclick="App.selectLevel('6°')">6°</div><div class="level-tab" data-level="7°" onclick="App.selectLevel('7°')">7°</div><div class="level-tab" data-level="8°" onclick="App.selectLevel('8°')">8°</div><div class="level-tab" data-level="9°" onclick="App.selectLevel('9°')">9°</div>
         </div>
-
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div class="lg:col-span-7 space-y-6">
-                <div class="flex items-center gap-3 mb-2">
-                    <i class="fas fa-compass text-2xl text-cyan-400"></i>
-                    <h2 class="text-xl font-bold text-white/90">Selecciona tu destino</h2>
-                </div>
+            <div class="lg:col-span-8 space-y-6">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5" id="island-container"></div>
-
                 <div class="glass-card p-6">
-                    <div class="flex items-center gap-3 mb-4">
-                        <i class="fas fa-flag-checkered text-blue-400"></i>
-                        <h3 class="font-bold text-lg">Configurar Módulo</h3>
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold text-lg"><i class="fas fa-flag-checkered text-blue-400 mr-2"></i>Configurar Módulo</h3>
+                        <span class="text-sm bg-white/10 px-3 py-1 rounded-full">Nivel: <span id="current-level-display">0°</span></span>
                     </div>
                     <div class="flex items-center gap-4">
-                        <span class="text-sm text-white/70">Nivel activo: <span id="current-level-display" class="font-bold text-white">0°</span></span>
                         <select id="select-modulo" class="bg-slate-800/70 border border-slate-600 rounded-xl p-3 text-white">
                             <option value="Módulo 1">Módulo 1 (Primer semestre)</option>
                             <option value="Módulo 2">Módulo 2 (Segundo semestre)</option>
                         </select>
-                        <button onclick="App.cargarSaberesDelNivel()" class="btn-primary">
-                            <i class="fas fa-download mr-2"></i>Cargar Saberes
-                        </button>
+                        <button onclick="App.cargarSaberesDelNivel()" class="btn-primary"><i class="fas fa-download mr-2"></i>Cargar Saberes</button>
                     </div>
                 </div>
-
                 <div id="saberes-section" class="glass-card p-6 hidden">
                     <div class="flex justify-between items-center mb-4">
-                        <h3 class="font-bold text-lg flex items-center gap-2"><i class="fas fa-list-check text-emerald-400"></i> Saberes del Módulo</h3>
+                        <h3 class="font-bold text-lg"><i class="fas fa-list-check text-emerald-400"></i> Saberes del Módulo</h3>
                         <span id="selected-count-badge" class="bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-full">0 seleccionados</span>
                     </div>
-                    <div id="saberes-container" class="space-y-4 max-h-[400px] overflow-y-auto pr-2"></div>
-                    <div class="mt-4 text-xs text-amber-300/80 flex items-center gap-2">
-                        <i class="fas fa-lightbulb"></i> Regla de Oro PNFT: Selecciona entre 3 y 5 indicadores.
-                    </div>
+                    <div id="saberes-container" class="space-y-4 max-h-[600px] overflow-y-auto pr-2"></div>
+                    <div class="mt-4 text-xs text-amber-300/80 flex items-center gap-2"><i class="fas fa-lightbulb"></i> Regla de Oro: Selecciona entre 3 y 5 indicadores.</div>
                 </div>
             </div>
-
-            <div class="lg:col-span-5 space-y-6">
+            <div class="lg:col-span-4 space-y-6">
                 <div class="glass-card p-6">
-                    <div class="flex items-center gap-2 mb-4">
-                        <i class="fas fa-battery-full text-2xl text-amber-400"></i>
-                        <h3 class="font-bold text-lg">Baterías de Poder (Áreas)</h3>
-                    </div>
+                    <h3 class="font-bold text-lg mb-4"><i class="fas fa-battery-full text-amber-400 mr-2"></i>Baterías de Poder</h3>
                     <div class="space-y-5" id="batteries-container"></div>
                 </div>
-
                 <div class="glass-card p-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-bold text-lg flex items-center gap-2"><i class="fas fa-clipboard-list text-purple-400"></i> Saberes en Planeamiento</h3>
-                        <button onclick="App.limpiarSeleccionModulo()" class="text-xs bg-red-500/20 hover:bg-red-500/40 text-red-300 px-3 py-1 rounded-full"><i class="fas fa-trash-alt mr-1"></i>Limpiar</button>
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold text-lg"><i class="fas fa-clipboard-list text-purple-400 mr-2"></i>Planeamiento</h3>
+                        <button onclick="App.limpiarSeleccionModulo()" class="text-xs bg-red-500/20 hover:bg-red-500/40 text-red-300 px-3 py-1 rounded-full"><i class="fas fa-trash-alt"></i></button>
                     </div>
-                    <div id="selected-saberes-list" class="space-y-2 max-h-48 overflow-y-auto text-sm">
-                        <p class="text-white/40 text-center">No hay saberes seleccionados</p>
-                    </div>
+                    <div id="selected-saberes-list" class="space-y-2 max-h-48 overflow-y-auto text-sm"></div>
                 </div>
-
                 <div class="glass-card p-6">
                     <div class="collapsible-header flex items-center justify-between" onclick="App.togglePerfiles()">
-                        <div class="flex items-center gap-2">
-                            <i class="fas fa-user-graduate text-2xl text-emerald-400"></i>
-                            <h3 class="font-bold text-lg">🎓 Perfiles de Salida del Ciclo</h3>
-                        </div>
+                        <h3 class="font-bold text-lg"><i class="fas fa-user-graduate text-emerald-400 mr-2"></i>Perfiles de Salida</h3>
                         <i id="perfiles-chevron" class="fas fa-chevron-down"></i>
                     </div>
                     <div id="perfiles-content" class="mt-4 space-y-3 hidden"></div>
                 </div>
-
                 <div class="glass-card p-6">
-                    <div class="flex items-center gap-2 mb-4">
-                        <i class="fas fa-robot text-2xl text-indigo-400"></i>
-                        <h3 class="font-bold text-lg">Generador de Planeamiento IA</h3>
-                    </div>
-                    <button onclick="App.generarPrompt()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition mb-4">
-                        <i class="fas fa-magic mr-2"></i>✨ Generar Prompt PNFT
-                    </button>
-                    <div class="relative">
-                        <textarea id="output-prompt" rows="6" class="w-full bg-slate-900/80 text-cyan-300 font-mono text-xs p-4 rounded-xl outline-none border border-white/20" placeholder='El prompt aparecerá aquí...' readonly></textarea>
-                        <button onclick="App.copiarPrompt()" class="absolute top-2 right-2 bg-white/10 hover:bg-white/20 p-2 rounded-lg"><i class="far fa-copy"></i></button>
-                    </div>
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-4">
-                        <a href="https://gemini.google.com" target="_blank" class="bg-white/5 hover:bg-white/10 rounded-lg p-2 text-center text-xs"><i class="fab fa-google text-blue-300"></i> Gemini</a>
-                        <a href="https://chat.openai.com" target="_blank" class="bg-white/5 hover:bg-white/10 rounded-lg p-2 text-center text-xs"><i class="fas fa-comment text-emerald-300"></i> ChatGPT</a>
-                        <a href="https://copilot.microsoft.com" target="_blank" class="bg-white/5 hover:bg-white/10 rounded-lg p-2 text-center text-xs"><i class="fas fa-sync-alt text-sky-300"></i> Copilot</a>
-                        <a href="https://deepseek.com" target="_blank" class="bg-white/5 hover:bg-white/10 rounded-lg p-2 text-center text-xs"><i class="fas fa-search text-amber-300"></i> DeepSeek</a>
+                    <h3 class="font-bold text-lg mb-4"><i class="fas fa-robot text-indigo-400 mr-2"></i>Generador IA</h3>
+                    <div class="mb-3"><label class="text-xs text-white/60 block mb-1">Ejes Transversales:</label><div id="ejes-checkboxes" class="space-y-1 text-sm"></div></div>
+                    <div class="mb-3"><label class="text-xs text-white/60 block mb-1">Duración clase (min):</label><input type="number" id="duracion-clase" value="40" class="w-full bg-slate-800 p-2 rounded text-white text-sm"></div>
+                    <button onclick="App.generarPrompt()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition mb-4"><i class="fas fa-magic mr-2"></i>✨ Generar Prompt</button>
+                    <div class="relative"><textarea id="output-prompt" rows="6" class="w-full bg-slate-900/80 text-cyan-300 font-mono text-xs p-4 rounded-xl border border-white/20" readonly></textarea><button onclick="App.copiarPrompt()" class="absolute top-2 right-2 bg-white/10 hover:bg-white/20 p-2 rounded-lg"><i class="far fa-copy"></i></button></div>
+                    <div class="grid grid-cols-4 gap-2 mt-4">
+                        <a href="https://gemini.google.com" target="_blank" class="bg-white/5 hover:bg-white/10 rounded-lg p-2 text-center text-xs"><i class="fab fa-google"></i> Gemini</a>
+                        <a href="https://chat.openai.com" target="_blank" class="bg-white/5 hover:bg-white/10 rounded-lg p-2 text-center text-xs"><i class="fas fa-comment"></i> ChatGPT</a>
+                        <a href="https://copilot.microsoft.com" target="_blank" class="bg-white/5 hover:bg-white/10 rounded-lg p-2 text-center text-xs"><i class="fas fa-sync-alt"></i> Copilot</a>
+                        <a href="https://deepseek.com" target="_blank" class="bg-white/5 hover:bg-white/10 rounded-lg p-2 text-center text-xs"><i class="fas fa-search"></i> DeepSeek</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ===== OTRAS PESTAÑAS ===== -->
+    <!-- GRUPOS -->
     <div id="tab-grupos" class="tab-content hidden">
         <div class="glass-card p-6">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold"><i class="fas fa-layer-group mr-3"></i>Gestión de Grupos y Estudiantes</h2>
-                <button onclick="Grupos.abrirModalSeccion()" class="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-full"><i class="fas fa-plus mr-2"></i>Nueva Sección</button>
+                <div class="flex gap-2">
+                    <button onclick="Grupos.abrirModalSeccion()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-full text-sm"><i class="fas fa-plus mr-1"></i>Sección</button>
+                    <label class="bg-amber-600 hover:bg-amber-700 px-4 py-2 rounded-full text-sm cursor-pointer"><i class="fas fa-upload mr-1"></i>Importar CSV <input type="file" id="input-import-csv" accept=".csv" class="hidden" onchange="Grupos.importarCSV(event)"></label>
+                </div>
             </div>
             <div class="grid md:grid-cols-4 gap-4">
                 <div class="md:col-span-1 bg-slate-800/30 p-4 rounded-xl">
@@ -190,55 +142,42 @@
         </div>
     </div>
 
+    <!-- EVALUACIÓN -->
     <div id="tab-evaluacion" class="tab-content hidden">
         <div class="glass-card p-6">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold"><i class="fas fa-calculator mr-3"></i>Gestión de Calificaciones</h2>
                 <div class="text-sm bg-blue-500/20 px-4 py-2 rounded-full" id="ciclo-eval-badge">Ciclo: I Ciclo</div>
             </div>
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-8">
-                <button onclick="Eval.abrirModalCotidiano()" class="bg-blue-600/30 hover:bg-blue-600/50 p-4 rounded-xl"><i class="fas fa-user-check text-2xl mb-2"></i><br>Trabajo Cotidiano <span id="peso-cotidiano" class="text-xs block">65%</span></button>
-                <button onclick="alert('Módulo de Tareas en desarrollo')" class="bg-emerald-600/30 hover:bg-emerald-600/50 p-4 rounded-xl"><i class="fas fa-tasks text-2xl mb-2"></i><br>Tareas <span id="peso-tareas" class="text-xs block">10%</span></button>
-                <button onclick="alert('Módulo de Pruebas en desarrollo')" class="bg-amber-600/30 hover:bg-amber-600/50 p-4 rounded-xl"><i class="fas fa-file-alt text-2xl mb-2"></i><br>Pruebas <span id="peso-pruebas" class="text-xs block">15%</span></button>
-                <button onclick="Eval.abrirModalProyecto()" class="bg-purple-600/30 hover:bg-purple-600/50 p-4 rounded-xl"><i class="fas fa-project-diagram text-2xl mb-2"></i><br>Proyecto <span id="peso-proyecto" class="text-xs block">0%</span></button>
-                <button onclick="alert('Módulo de Asistencia en desarrollo')" class="bg-pink-600/30 hover:bg-pink-600/50 p-4 rounded-xl"><i class="fas fa-calendar-check text-2xl mb-2"></i><br>Asistencia <span class="text-xs block">10%</span></button>
-            </div>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-8" id="eval-botones"></div>
             <h3 class="text-lg font-bold mb-3">Resumen de Calificaciones</h3>
-            <div class="overflow-x-auto"><table class="w-full text-sm"><thead class="bg-slate-800/50"><tr><th class="p-3">Estudiante</th><th class="p-3">Cotid.</th><th class="p-3">Tareas</th><th class="p-3">Pruebas</th><th class="p-3">Proy.</th><th class="p-3">Asist.</th><th class="p-3">Nota Final</th><th class="p-3">Condición</th></tr></thead><tbody id="tabla-calificaciones-body"></tbody></table></div>
+            <div class="overflow-x-auto"><table class="w-full text-sm" id="tabla-calificaciones"><thead class="bg-slate-800/50"></thead><tbody id="tabla-calificaciones-body"></tbody></table></div>
         </div>
     </div>
 
+    <!-- EXPORTAR -->
     <div id="tab-exportar" class="tab-content hidden">
         <div class="glass-card p-6">
-            <h2 class="text-2xl font-bold mb-6"><i class="fas fa-download mr-3"></i>Exportar Datos</h2>
-            <div class="grid md:grid-cols-3 gap-4">
-                <button onclick="Exportar.pdf()" class="bg-red-600/30 hover:bg-red-600/50 p-6 rounded-xl"><i class="fas fa-file-pdf text-4xl mb-3"></i><br>Exportar a PDF</button>
-                <button onclick="Exportar.word()" class="bg-blue-600/30 hover:bg-blue-600/50 p-6 rounded-xl"><i class="fas fa-file-word text-4xl mb-3"></i><br>Exportar a Word</button>
-                <button onclick="Exportar.json()" class="bg-emerald-600/30 hover:bg-emerald-600/50 p-6 rounded-xl"><i class="fas fa-file-code text-4xl mb-3"></i><br>Exportar JSON</button>
+            <h2 class="text-2xl font-bold mb-6"><i class="fas fa-download mr-3"></i>Exportar e Importar</h2>
+            <div class="grid md:grid-cols-2 gap-4">
+                <button onclick="Exportar.informeGrupo()" class="bg-indigo-600/30 hover:bg-indigo-600/50 p-6 rounded-xl"><i class="fas fa-file-alt text-4xl mb-3"></i><br>Exportar Informe (PDF/Word)</button>
+                <button onclick="Exportar.backupCompleto()" class="bg-amber-600/30 hover:bg-amber-600/50 p-6 rounded-xl"><i class="fas fa-archive text-4xl mb-3"></i><br>Exportar Backup Completo</button>
+                <button onclick="document.getElementById('input-import-backup').click()" class="bg-purple-600/30 hover:bg-purple-600/50 p-6 rounded-xl"><i class="fas fa-upload text-4xl mb-3"></i><br>Importar Backup</button>
+                <input type="file" id="input-import-backup" accept=".json" class="hidden" onchange="Exportar.importarBackup(event)">
             </div>
-            <div class="grid md:grid-cols-2 gap-4 mt-6">
-                <button onclick="Exportar.backupCompleto()" class="bg-amber-600/30 hover:bg-amber-600/50 p-6 rounded-xl">
-                    <i class="fas fa-archive text-4xl mb-3"></i><br>Exportar Backup Completo
-                </button>
-                <button onclick="document.getElementById('input-import-backup').click()" class="bg-purple-600/30 hover:bg-purple-600/50 p-6 rounded-xl">
-                    <i class="fas fa-upload text-4xl mb-3"></i><br>Importar Backup
-                </button>
-                <input type="file" id="input-import-backup" accept=".json,application/json" style="display:none" onchange="Exportar.importarBackup(event)">
-            </div>
-            <p class="text-xs text-white/40 mt-4">Exporta o importa todos tus grupos, estudiantes, calificaciones y planificaciones.</p>
         </div>
     </div>
 </div>
 
 <!-- MODALES -->
-<div id="modal-grupo" class="modal hidden"><div class="modal-content glass-card p-6 w-full max-w-md"><h3 class="text-xl font-bold mb-4">Nuevo Grupo</h3><input id="grupo-nombre" placeholder="Nombre del grupo" class="w-full bg-slate-800 p-3 rounded-xl mb-3"><div class="flex justify-end gap-3"><button onclick="Grupos.cerrarModal('modal-grupo')" class="bg-slate-600 px-4 py-2 rounded-full">Cancelar</button><button onclick="Grupos.guardarGrupo()" class="bg-green-600 px-6 py-2 rounded-full">Guardar</button></div></div></div>
-<div id="modal-seccion" class="modal hidden"><div class="modal-content glass-card p-6 w-full max-w-md"><h3 class="text-xl font-bold mb-4">Nueva Sección</h3><input id="seccion-nombre" placeholder="Nombre de la sección" class="w-full bg-slate-800 p-3 rounded-xl mb-3"><div class="flex justify-end gap-3"><button onclick="Grupos.cerrarModal('modal-seccion')" class="bg-slate-600 px-4 py-2 rounded-full">Cancelar</button><button onclick="Grupos.guardarSeccion()" class="bg-green-600 px-6 py-2 rounded-full">Guardar</button></div></div></div>
-<div id="modal-estudiante" class="modal hidden"><div class="modal-content glass-card p-6 w-full max-w-md"><h3 class="text-xl font-bold mb-4" id="modal-estudiante-title">Nuevo Estudiante</h3><input type="hidden" id="edit-estudiante-id"><input id="est-nombre" placeholder="Nombre" class="w-full bg-slate-800 p-3 rounded-xl mb-2"><input id="est-apellido1" placeholder="Primer Apellido" class="w-full bg-slate-800 p-3 rounded-xl mb-2"><input id="est-apellido2" placeholder="Segundo Apellido" class="w-full bg-slate-800 p-3 rounded-xl mb-3"><div class="flex justify-end gap-3"><button onclick="Grupos.cerrarModal('modal-estudiante')" class="bg-slate-600 px-4 py-2 rounded-full">Cancelar</button><button onclick="Grupos.guardarEstudiante()" class="bg-green-600 px-6 py-2 rounded-full">Guardar</button></div></div></div>
-<div id="modal-cotidiano" class="modal hidden"><div class="modal-content glass-card p-6 w-full max-w-2xl"><h3 class="text-xl font-bold mb-4">📝 Calificar Trabajo Cotidiano</h3><div id="cotidiano-lista-estudiantes" class="space-y-3 max-h-96 overflow-y-auto"></div><div class="flex justify-end gap-3 mt-6"><button onclick="Eval.cerrarModal('modal-cotidiano')" class="bg-slate-600 px-4 py-2 rounded-full">Cancelar</button><button onclick="Eval.guardarCotidiano()" class="bg-blue-600 px-6 py-2 rounded-full">Guardar</button></div></div></div>
-<div id="modal-proyecto" class="modal hidden"><div class="modal-content glass-card p-6 w-full max-w-3xl"><h3 class="text-xl font-bold mb-4">🚀 Calificar Proyecto (Design Thinking)</h3><div id="proyecto-fases" class="space-y-4"></div><div class="flex justify-end gap-3 mt-6"><button onclick="Eval.cerrarModal('modal-proyecto')" class="bg-slate-600 px-4 py-2 rounded-full">Cancelar</button><button onclick="Eval.guardarProyecto()" class="bg-purple-600 px-6 py-2 rounded-full">Guardar</button></div></div></div>
+<div id="modal-grupo" class="modal hidden"><div class="modal-content glass-card p-6 w-full max-w-md"><h3 class="text-xl font-bold mb-4">Nuevo Grupo</h3><input id="grupo-nombre" placeholder="Nombre" class="w-full bg-slate-800 p-3 rounded-xl mb-3"><div class="flex justify-end gap-3"><button onclick="Grupos.cerrarModal('modal-grupo')" class="bg-slate-600 px-4 py-2 rounded-full">Cancelar</button><button onclick="Grupos.guardarGrupo()" class="bg-green-600 px-6 py-2 rounded-full">Guardar</button></div></div></div>
+<div id="modal-seccion" class="modal hidden"><div class="modal-content glass-card p-6 w-full max-w-md"><h3 class="text-xl font-bold mb-4">Nueva Sección</h3><input id="seccion-nombre" placeholder="Nombre" class="w-full bg-slate-800 p-3 rounded-xl mb-3"><div class="flex justify-end gap-3"><button onclick="Grupos.cerrarModal('modal-seccion')" class="bg-slate-600 px-4 py-2 rounded-full">Cancelar</button><button onclick="Grupos.guardarSeccion()" class="bg-green-600 px-6 py-2 rounded-full">Guardar</button></div></div></div>
+<div id="modal-estudiante" class="modal hidden"><div class="modal-content glass-card p-6 w-full max-w-md"><h3 class="text-xl font-bold mb-4">Estudiante</h3><input type="hidden" id="edit-estudiante-id"><input id="est-nombre" placeholder="Nombre" class="w-full bg-slate-800 p-3 rounded-xl mb-2"><input id="est-apellido1" placeholder="Primer Apellido" class="w-full bg-slate-800 p-3 rounded-xl mb-2"><input id="est-apellido2" placeholder="Segundo Apellido" class="w-full bg-slate-800 p-3 rounded-xl mb-3"><div class="flex justify-end gap-3"><button onclick="Grupos.cerrarModal('modal-estudiante')" class="bg-slate-600 px-4 py-2 rounded-full">Cancelar</button><button onclick="Grupos.guardarEstudiante()" class="bg-green-600 px-6 py-2 rounded-full">Guardar</button></div></div></div>
+<div id="modal-cotidiano" class="modal hidden"><div class="modal-content glass-card p-6 w-full max-w-2xl"><h3 class="text-xl font-bold mb-4">📝 Calificar Trabajo Cotidiano</h3><div id="cotidiano-lista" class="space-y-3 max-h-96 overflow-y-auto"></div><div class="flex justify-end gap-3 mt-6"><button onclick="Eval.cerrarModal('modal-cotidiano')" class="bg-slate-600 px-4 py-2 rounded-full">Cancelar</button><button onclick="Eval.guardarCotidiano()" class="bg-blue-600 px-6 py-2 rounded-full">Guardar</button></div></div></div>
+<div id="modal-proyecto" class="modal hidden"><div class="modal-content glass-card p-6 w-full max-w-3xl"><h3 class="text-xl font-bold mb-4">🚀 Calificar Proyecto</h3><div id="proyecto-fases" class="space-y-4"></div><div class="flex justify-end gap-3 mt-6"><button onclick="Eval.cerrarModal('modal-proyecto')" class="bg-slate-600 px-4 py-2 rounded-full">Cancelar</button><button onclick="Eval.guardarProyecto()" class="bg-purple-600 px-6 py-2 rounded-full">Guardar</button></div></div></div>
 
 <script>
-    // ========== PEGA AQUÍ TU OBJETO PNFT_DATA COMPLETO ==========
+ 
   const PNFT_DATA = {
             // ========== MATERNO INFANTIL / TRANSICIÓN ==========
             "0°": {
@@ -868,307 +807,105 @@ const RDA_POR_CICLO = {
 };
     const PESOS_EVALUACION = { "I Ciclo": { cotidiano:65, tareas:10, pruebas:15, proyecto:0, asistencia:10 }, "II Ciclo": { cotidiano:60, tareas:10, pruebas:20, proyecto:0, asistencia:10 }, "III Ciclo": { cotidiano:50, tareas:10, pruebas:0, proyecto:30, asistencia:10 } };
 
- // ---------- INDEXEDDB con respaldo a localStorage ----------
+ // ---------- INDEXEDDB ----------
     const DB = {
-        db: null,
-        useLocalStorage: false,
-        async init() {
-            if (!window.indexedDB) { console.warn("IndexedDB no soportado. Usando localStorage."); this.useLocalStorage = true; return false; }
-            return new Promise((resolve) => {
-                const request = indexedDB.open('PNFT_DB', 1);
-                request.onupgradeneeded = (e) => {
-                    const db = e.target.result;
-                    if (!db.objectStoreNames.contains('grupos')) db.createObjectStore('grupos', { keyPath: 'id', autoIncrement: true });
-                    if (!db.objectStoreNames.contains('secciones')) { const sec = db.createObjectStore('secciones', { keyPath: 'id', autoIncrement: true }); sec.createIndex('grupoId', 'grupoId'); }
-                    if (!db.objectStoreNames.contains('estudiantes')) { const est = db.createObjectStore('estudiantes', { keyPath: 'id', autoIncrement: true }); est.createIndex('seccionId', 'seccionId'); }
-                    if (!db.objectStoreNames.contains('calificaciones')) db.createObjectStore('calificaciones', { keyPath: 'id', autoIncrement: true });
-                    if (!db.objectStoreNames.contains('planificacion')) db.createObjectStore('planificacion', { keyPath: 'id' });
-                };
-                request.onsuccess = (e) => { this.db = e.target.result; this.useLocalStorage = false; resolve(true); };
-                request.onerror = (e) => { console.error("Error al abrir IndexedDB, usando localStorage.", e); this.useLocalStorage = true; resolve(false); };
-                request.onblocked = () => { console.warn("Base de datos bloqueada. Usando localStorage."); this.useLocalStorage = true; resolve(false); };
-            });
-        },
-        async getAll(store) {
-            if (this.useLocalStorage) return JSON.parse(localStorage.getItem(`pnft_${store}`) || '[]');
-            return new Promise((res, rej) => { const tx = this.db.transaction(store, 'readonly'); const req = tx.objectStore(store).getAll(); req.onsuccess = () => res(req.result); req.onerror = rej; });
-        },
-        async getByIndex(store, index, value) {
-            if (this.useLocalStorage) { const data = JSON.parse(localStorage.getItem(`pnft_${store}`) || '[]'); return data.filter(item => item[index] === value); }
-            return new Promise((res, rej) => { const tx = this.db.transaction(store, 'readonly'); const req = tx.objectStore(store).index(index).getAll(value); req.onsuccess = () => res(req.result); req.onerror = rej; });
-        },
-        async add(store, item) {
-            if (this.useLocalStorage) { const data = JSON.parse(localStorage.getItem(`pnft_${store}`) || '[]'); item.id = Date.now() + Math.floor(Math.random()*1000); data.push(item); localStorage.setItem(`pnft_${store}`, JSON.stringify(data)); return item.id; }
-            return new Promise((res, rej) => { const tx = this.db.transaction(store, 'readwrite'); const req = tx.objectStore(store).add(item); req.onsuccess = () => res(req.result); req.onerror = rej; });
-        },
-        async put(store, item) {
-            if (this.useLocalStorage) { const data = JSON.parse(localStorage.getItem(`pnft_${store}`) || '[]'); const idx = data.findIndex(i => i.id === item.id); if (idx>=0) data[idx] = item; else data.push(item); localStorage.setItem(`pnft_${store}`, JSON.stringify(data)); return; }
-            return new Promise((res, rej) => { const tx = this.db.transaction(store, 'readwrite'); const req = tx.objectStore(store).put(item); req.onsuccess = () => res(req.result); req.onerror = rej; });
-        },
-        async delete(store, id) {
-            if (this.useLocalStorage) { let data = JSON.parse(localStorage.getItem(`pnft_${store}`) || '[]'); data = data.filter(i => i.id !== id); localStorage.setItem(`pnft_${store}`, JSON.stringify(data)); return; }
-            return new Promise((res, rej) => { const tx = this.db.transaction(store, 'readwrite'); const req = tx.objectStore(store).delete(id); req.onsuccess = () => res(); req.onerror = rej; });
-        }
+        db: null, useLS: false,
+        async init() { if(!window.indexedDB) { this.useLS=true; return false; } return new Promise(r=>{ const req=indexedDB.open('PNFT_DB',1); req.onupgradeneeded=e=>{ const db=e.target.result; if(!db.objectStoreNames.contains('grupos')) db.createObjectStore('grupos',{keyPath:'id',autoIncrement:true}); if(!db.objectStoreNames.contains('secciones')){ const s=db.createObjectStore('secciones',{keyPath:'id',autoIncrement:true}); s.createIndex('grupoId','grupoId'); } if(!db.objectStoreNames.contains('estudiantes')){ const s=db.createObjectStore('estudiantes',{keyPath:'id',autoIncrement:true}); s.createIndex('seccionId','seccionId'); } if(!db.objectStoreNames.contains('calificaciones')) db.createObjectStore('calificaciones',{keyPath:'id'}); if(!db.objectStoreNames.contains('planificacion')) db.createObjectStore('planificacion',{keyPath:'id'}); }; req.onsuccess=e=>{ this.db=e.target.result; r(true); }; req.onerror=()=>{ this.useLS=true; r(false); }; }); },
+        _lsGet(k){ return JSON.parse(localStorage.getItem(k)||'[]'); },
+        _lsSet(k,v){ localStorage.setItem(k,JSON.stringify(v)); },
+        async getAll(s){ if(this.useLS) return this._lsGet(`pnft_${s}`); return new Promise(r=>{ const tx=this.db.transaction(s,'readonly'); tx.objectStore(s).getAll().onsuccess=e=>r(e.target.result); }); },
+        async getByIndex(s,idx,val){ if(this.useLS) return this._lsGet(`pnft_${s}`).filter(i=>i[idx]===val); return new Promise(r=>{ const tx=this.db.transaction(s,'readonly'); tx.objectStore(s).index(idx).getAll(val).onsuccess=e=>r(e.target.result); }); },
+        async add(s,item){ if(this.useLS){ const d=this._lsGet(`pnft_${s}`); item.id=Date.now()+Math.random(); d.push(item); this._lsSet(`pnft_${s}`,d); return item.id; } return new Promise(r=>{ const tx=this.db.transaction(s,'readwrite'); const req=tx.objectStore(s).add(item); req.onsuccess=()=>r(req.result); }); },
+        async put(s,item){ if(this.useLS){ const d=this._lsGet(`pnft_${s}`); const idx=d.findIndex(i=>i.id===item.id); if(idx>=0) d[idx]=item; else d.push(item); this._lsSet(`pnft_${s}`,d); return; } return new Promise(r=>{ const tx=this.db.transaction(s,'readwrite'); tx.objectStore(s).put(item).onsuccess=()=>r(); }); },
+        async delete(s,id){ if(this.useLS){ const d=this._lsGet(`pnft_${s}`).filter(i=>i.id!==id); this._lsSet(`pnft_${s}`,d); return; } return new Promise(r=>{ const tx=this.db.transaction(s,'readwrite'); tx.objectStore(s).delete(id).onsuccess=()=>r(); }); }
     };
 
     // ---------- APP PRINCIPAL ----------
     const App = {
-        nivelActual: '0°', moduloActual: 'Módulo 1', grupoActualId: null, seccionActualId: null,
-        saberesSeleccionados: new Set(), saberesImpartidos: new Set(), estudiantes: [], calificaciones: {},
-        async init() {
-            const dbOk = await DB.init();
-            if (!dbOk) alert("⚠️ IndexedDB no disponible. Se usará almacenamiento local (menor capacidad).");
-            this.renderIslands();
-            await this.cargarGrupos();
-            await this.cargarStorage();
-            this.renderizarTodo();
-        },
-        renderIslands() {
-            document.getElementById('island-container').innerHTML = `
-                <div class="island-card rounded-3xl p-6 border-l-8 border-l-pink-400" onclick="App.selectCycle('materno')"><div class="flex items-start justify-between"><div><span class="text-xs font-black uppercase tracking-wider text-pink-300">Isla 1</span><h3 class="text-2xl font-black mt-1">🏝️ Materno · Transición</h3><p class="text-white/60 text-sm mt-1">Exploración y juego guiado</p></div><i class="fas fa-robot text-3xl text-pink-300/70"></i></div><div class="mt-4 flex items-center gap-2"><span class="bg-white/10 text-xs px-3 py-1 rounded-full"><i class="fas fa-cubes mr-1"></i>0°</span><span class="bg-white/10 text-xs px-3 py-1 rounded-full"><i class="fas fa-gamepad mr-1"></i>ABJ</span></div></div>
-                <div class="island-card rounded-3xl p-6 border-l-8 border-l-green-400" onclick="App.selectCycle('i')"><div class="flex items-start justify-between"><div><span class="text-xs font-black uppercase tracking-wider text-green-300">Isla 2</span><h3 class="text-2xl font-black mt-1">📗 I Ciclo</h3><p class="text-white/60 text-sm mt-1">Alfabetización y patrones</p></div><i class="fas fa-code text-3xl text-green-300/70"></i></div><div class="mt-4 flex items-center gap-2"><span class="bg-white/10 text-xs px-3 py-1 rounded-full">1° · 2° · 3°</span><span class="bg-white/10 text-xs px-3 py-1 rounded-full">ABJ</span></div></div>
-                <div class="island-card rounded-3xl p-6 border-l-8 border-l-orange-400" onclick="App.selectCycle('ii')"><div class="flex items-start justify-between"><div><span class="text-xs font-black uppercase tracking-wider text-orange-300">Isla 3</span><h3 class="text-2xl font-black mt-1">📙 II Ciclo</h3><p class="text-white/60 text-sm mt-1">Resolución de retos</p></div><i class="fas fa-microchip text-3xl text-orange-300/70"></i></div><div class="mt-4 flex items-center gap-2"><span class="bg-white/10 text-xs px-3 py-1 rounded-full">4° · 5° · 6°</span><span class="bg-white/10 text-xs px-3 py-1 rounded-full">ABR</span></div></div>
-                <div class="island-card rounded-3xl p-6 border-l-8 border-l-purple-400" onclick="App.selectCycle('iii')"><div class="flex items-start justify-between"><div><span class="text-xs font-black uppercase tracking-wider text-purple-300">Isla 4</span><h3 class="text-2xl font-black mt-1">📕 III Ciclo</h3><p class="text-white/60 text-sm mt-1">Innovación y prototipado</p></div><i class="fas fa-flask text-3xl text-purple-300/70"></i></div><div class="mt-4 flex items-center gap-2"><span class="bg-white/10 text-xs px-3 py-1 rounded-full">7° · 8° · 9°</span><span class="bg-white/10 text-xs px-3 py-1 rounded-full">Design Thinking</span></div></div>
-            `;
-        },
-        selectCycle(cycle) { this.selectLevel({ materno: '0°', i: '1°', ii: '4°', iii: '7°' }[cycle]); },
-        async cargarGrupos() {
-            const grupos = await DB.getAll('grupos');
-            const select = document.getElementById('select-grupo');
-            select.innerHTML = '<option value="">Seleccionar grupo...</option>';
-            grupos.forEach(g => select.innerHTML += `<option value="${g.id}">${g.nombre}</option>`);
-            if (grupos.length && !this.grupoActualId) { this.grupoActualId = grupos[0].id; select.value = this.grupoActualId; await this.cargarSecciones(); }
-        },
-        async cambiarGrupo() {
-            this.grupoActualId = +document.getElementById('select-grupo').value;
-            await this.cargarSecciones();
-            await this.cargarStorage();
-            this.renderizarTodo();
-            if (document.querySelector('[data-tab="evaluacion"]')?.classList.contains('active')) Eval.renderizarTabla();
-        },
-        async cargarSecciones() {
-            if (!this.grupoActualId) return;
-            const secciones = await DB.getByIndex('secciones', 'grupoId', this.grupoActualId);
-            if (secciones.length) this.seccionActualId = secciones[0].id;
-            await this.cargarEstudiantes();
-            if (typeof Grupos !== 'undefined') Grupos.renderSecciones();
-        },
-        async cargarEstudiantes() {
-            if (!this.seccionActualId) { this.estudiantes = []; return; }
-            this.estudiantes = await DB.getByIndex('estudiantes', 'seccionId', this.seccionActualId);
-        },
-        async cargarStorage() {
-            if (!this.grupoActualId || !this.seccionActualId) return;
-            const key = `plan_${this.grupoActualId}_${this.seccionActualId}_${this.nivelActual}_${this.moduloActual}`;
-            const data = await DB.getByIndex('planificacion', 'id', key);
-            if (data.length) { this.saberesSeleccionados = new Set(data[0].seleccionados || []); this.saberesImpartidos = new Set(data[0].impartidos || []); }
-            else { this.saberesSeleccionados.clear(); this.saberesImpartidos.clear(); }
-            const calif = await DB.getByIndex('calificaciones', 'id', `cal_${this.grupoActualId}_${this.seccionActualId}`);
-            this.calificaciones = calif.length ? calif[0].data : {};
-        },
-        async guardarStorage() {
-            if (!this.grupoActualId || !this.seccionActualId) return;
-            const key = `plan_${this.grupoActualId}_${this.seccionActualId}_${this.nivelActual}_${this.moduloActual}`;
-            await DB.put('planificacion', { id: key, seleccionados: [...this.saberesSeleccionados], impartidos: [...this.saberesImpartidos] });
-            await DB.put('calificaciones', { id: `cal_${this.grupoActualId}_${this.seccionActualId}`, data: this.calificaciones });
-        },
-        getCiclo() { const n = parseInt(this.nivelActual); if (isNaN(n)) return 'Materno Infantil/Transición'; if (n <= 3) return 'I Ciclo'; if (n <= 6) return 'II Ciclo'; return 'III Ciclo'; },
-        selectLevel(level) {
-            this.nivelActual = level;
-            document.getElementById('current-level-display').innerText = level;
-            document.querySelectorAll('.level-tab').forEach(t => t.classList.remove('active'));
-            document.querySelector(`.level-tab[data-level="${level}"]`).classList.add('active');
-            this.cargarStorage().then(() => this.renderizarTodo());
-        },
-        cargarSaberesDelNivel() {
-            this.moduloActual = document.getElementById('select-modulo').value;
-            this.cargarStorage().then(() => {
-                document.getElementById('saberes-section').classList.remove('hidden');
-                this.renderSaberes();
-                this.renderBateriasYPerfiles();
-                this.renderListaSeleccionados();
-            });
-        },
-        switchTab(tab) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
-            document.getElementById(`tab-${tab}`).classList.remove('hidden');
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
-            if (tab === 'evaluacion') Eval.renderizarTabla();
-            if (tab === 'grupos' && typeof Grupos !== 'undefined') Grupos.renderSecciones();
-        },
-        renderizarTodo() {
-            this.renderSaberes();
-            this.renderBateriasYPerfiles();
-            this.renderListaSeleccionados();
-            document.getElementById('ciclo-eval-badge').innerText = `Ciclo: ${this.getCiclo()}`;
-            this.actualizarPesosUI();
-        },
-        actualizarPesosUI() {
-            const ciclo = this.getCiclo(); const p = PESOS_EVALUACION[ciclo] || PESOS_EVALUACION['I Ciclo'];
-            document.getElementById('peso-cotidiano').innerText = `${p.cotidiano}%`; document.getElementById('peso-tareas').innerText = `${p.tareas}%`;
-            document.getElementById('peso-pruebas').innerText = `${p.pruebas}%`; document.getElementById('peso-proyecto').innerText = `${p.proyecto}%`;
-        },
-        toggleSaber(id, checked) { if (checked) this.saberesSeleccionados.add(id); else this.saberesSeleccionados.delete(id); this.guardarStorage().then(() => this.renderizarTodo()); },
-        toggleImpartido(id) { if (this.saberesImpartidos.has(id)) this.saberesImpartidos.delete(id); else this.saberesImpartidos.add(id); this.guardarStorage().then(() => this.renderSaberes()); },
-        limpiarSeleccionModulo() { this.saberesSeleccionados.clear(); this.guardarStorage().then(() => this.renderizarTodo()); },
-        renderSaberes() {
-            const data = PNFT_DATA[this.nivelActual]?.[this.moduloActual]; const container = document.getElementById('saberes-container');
-            if (!data) { container.innerHTML = '<p class="text-white/40">Datos no disponibles.</p>'; document.getElementById('selected-count-badge').innerText = '0 seleccionados'; return; }
-            let html = ''; let totalSeleccionados = 0;
-            Object.entries(data).forEach(([area, content]) => {
-                html += `<h4 class="text-lg font-bold text-blue-300 mt-4">${area}</h4>`;
-                content.saberes.forEach(s => {
-                    const id = `${area}::${s.nombre}`; const checked = this.saberesSeleccionados.has(id); const impartido = this.saberesImpartidos.has(id);
-                    if (checked) totalSeleccionados++;
-                    const indicadoresHtml = s.indicadores.map(ind => `• ${ind}`).join('<br>');
-                    html += `<div class="flex items-start gap-3 p-2 border-b border-white/10 ${impartido ? 'bg-green-500/20' : ''}"><input type="checkbox" ${checked ? 'checked' : ''} onchange="App.toggleSaber('${id}', this.checked)" class="mt-1"><div class="flex-1"><span class="font-semibold text-white">${s.nombre}</span><div class="text-[10px] text-slate-400 mt-1">${indicadoresHtml}</div></div><button onclick="App.toggleImpartido('${id}')" class="text-xs ${impartido ? 'text-green-400' : 'text-white/40'} self-center"><i class="fas fa-check-circle"></i> Impartido</button></div>`;
-                });
-            });
-            container.innerHTML = html;
-            document.getElementById('selected-count-badge').innerText = `${totalSeleccionados} seleccionados`;
-        },
-        renderBateriasYPerfiles() {
-            const areas = ['Apropiación tecnológica y Digital', 'Programación y Algoritmos', 'Computación física y Robótica', 'Ciencia de datos e Inteligencia artificial'];
-            const contador = {}; areas.forEach(a => contador[a] = 0);
-            this.saberesSeleccionados.forEach(s => { const area = s.split('::')[0]; if (contador.hasOwnProperty(area)) contador[area]++; });
-            const data = PNFT_DATA[this.nivelActual]?.[this.moduloActual] || {};
-            const bhtml = areas.map(area => {
-                const total = data[area]?.saberes?.length || 1; const pct = Math.round((contador[area] / total) * 100);
-                const color = area.includes('Apropiación') ? 'from-blue-500' : area.includes('Programación') ? 'from-emerald-500' : area.includes('Robótica') ? 'from-amber-500' : 'from-purple-500';
-                return `<div><div class="flex justify-between text-sm"><span>${area}</span><span>${pct}%</span></div><div class="w-full h-5 bg-slate-700/50 rounded-full"><div class="battery-fill h-full rounded-full bg-gradient-to-r ${color}" style="width:${pct}%"></div></div></div>`;
-            }).join('');
-            document.getElementById('batteries-container').innerHTML = bhtml;
-            const ciclo = this.getCiclo(); const perfiles = PERFILES_POR_CICLO[ciclo] || [];
-            const phtml = perfiles.map(p => {
-                const total = data[p.area]?.saberes?.length || 1; const sel = [...this.saberesSeleccionados].filter(s => s.startsWith(p.area)).length;
-                return `<div><div class="flex justify-between text-xs"><span>${p.nombre}</span><span>${Math.round((sel/total)*100)}%</span></div><div class="w-full h-4 bg-slate-700/50 rounded-full"><div class="battery-fill h-full rounded-full bg-emerald-500" style="width:${Math.round((sel/total)*100)}%"></div></div></div>`;
-            }).join('');
-            document.getElementById('perfiles-content').innerHTML = phtml;
-        },
-        renderListaSeleccionados() {
-            const lista = document.getElementById('selected-saberes-list');
-            if (this.saberesSeleccionados.size === 0) { lista.innerHTML = '<p class="text-white/40 text-center">No hay saberes seleccionados</p>'; return; }
-            const data = PNFT_DATA[this.nivelActual]?.[this.moduloActual] || {};
-            let html = ''; const agrupados = {};
-            this.saberesSeleccionados.forEach(s => { const [area, nombre] = s.split('::'); if (!agrupados[area]) agrupados[area] = []; agrupados[area].push(nombre); });
-            for (let area in agrupados) {
-                html += `<p class="text-xs font-bold text-blue-300 mt-2">${area}</p>`;
-                agrupados[area].forEach(nombre => {
-                    const saber = data[area]?.saberes?.find(s => s.nombre === nombre);
-                    const indicadoresPreview = saber ? saber.indicadores[0].substring(0, 40) + '…' : '';
-                    html += `<div class="flex items-center justify-between text-sm pl-2"><span>• ${nombre} <span class="text-[10px] text-slate-400">${indicadoresPreview}</span></span><i class="fas fa-times-circle text-red-400 cursor-pointer" onclick="App.eliminarSaber('${area}::${nombre}')"></i></div>`;
-                });
-            }
-            lista.innerHTML = html;
-        },
-        eliminarSaber(id) { this.saberesSeleccionados.delete(id); this.guardarStorage().then(() => this.renderizarTodo()); },
-        togglePerfiles() { const c = document.getElementById('perfiles-content'); const ch = document.getElementById('perfiles-chevron'); c.classList.toggle('hidden'); ch.classList.toggle('fa-chevron-down'); ch.classList.toggle('fa-chevron-up'); },
-        generarPrompt() {
-            if (this.saberesSeleccionados.size === 0) { alert('Selecciona al menos un saber.'); return; }
-            const ciclo = this.getCiclo(); const rda = RDA_POR_CICLO[ciclo]?.["Apropiación tecnológica y Digital"] || "";
-            const ejes = EJES_POR_CICLO[ciclo] || {}; let ejesTxt = ''; for (let e in ejes) ejesTxt += `- ${e}: ${ejes[e]}\n`;
-            let saberesTxt = ''; const data = PNFT_DATA[this.nivelActual]?.[this.moduloActual] || {};
-            for (let id of this.saberesSeleccionados) {
-                const [area, nombre] = id.split('::'); const saber = data[area]?.saberes?.find(s => s.nombre === nombre);
-                if (saber) { saberesTxt += `📌 ${area} - ${nombre}\n`; saber.indicadores.forEach(ind => saberesTxt += `   • ${ind}\n`); }
-                else { saberesTxt += `- ${id} (indicadores no encontrados)\n`; }
-            }
-            let metodologia = "ABJ"; if (ciclo === 'II Ciclo') metodologia = "ABR"; else if (ciclo === 'III Ciclo') metodologia = "Design Thinking";
-            const prompt = `Actúa como especialista en mediación pedagógica del MEP Costa Rica - PNFT 2026.\nNivel: ${this.nivelActual} | Módulo: ${this.moduloActual}\nCiclo: ${ciclo}\nMetodología: ${metodologia}\n\n📌 SABERES SELECCIONADOS CON INDICADORES:\n${saberesTxt}\n🎯 RESULTADO DE APRENDIZAJE (RdA):\n${rda}\n\n⚙️ EJES TRANSVERSALES:\n${ejesTxt}\nTAREA: Diseñar una Estrategia de Mediación Pedagógica completa que incluya:\n- Título creativo.\n- Momentos pedagógicos: Focalización, Exploración, Aplicación, Reflexión (con tiempos estimados).\n- Rúbrica analítica (Inicial, Intermedio, Avanzado).\n- Recomendaciones DUA (Representación, Acción/Expresión, Motivación).\n- Justificación de alineación curricular.`;
-            document.getElementById('output-prompt').value = prompt;
-        },
-        copiarPrompt() { const ta = document.getElementById('output-prompt'); ta.select(); document.execCommand('copy'); alert('✅ Prompt copiado.'); }
+        nivelActual:'0°', moduloActual:'Módulo 1', grupoActualId:null, seccionActualId:null,
+        saberesSeleccionados:new Set(), saberesImpartidos:new Set(), estudiantes:[], calificaciones:{},
+        async init(){ await DB.init(); this.renderIslas(); await this.cargarGrupos(); await this.cargarStorage(); this.renderizarTodo(); },
+        renderIslas(){ document.getElementById('island-container').innerHTML=`
+            <div class="island-card rounded-3xl p-6 border-l-8 border-l-pink-400" onclick="App.selectCycle('materno')"><h3 class="text-2xl font-black">🏝️ Materno</h3><p>ABJ</p></div>
+            <div class="island-card rounded-3xl p-6 border-l-8 border-l-green-400" onclick="App.selectCycle('i')"><h3 class="text-2xl font-black">📗 I Ciclo</h3><p>1°·2°·3°</p></div>
+            <div class="island-card rounded-3xl p-6 border-l-8 border-l-orange-400" onclick="App.selectCycle('ii')"><h3 class="text-2xl font-black">📙 II Ciclo</h3><p>ABR</p></div>
+            <div class="island-card rounded-3xl p-6 border-l-8 border-l-purple-400" onclick="App.selectCycle('iii')"><h3 class="text-2xl font-black">📕 III Ciclo</h3><p>Design Thinking</p></div>
+        `; },
+        selectCycle(c){ const m={materno:'0°',i:'1°',ii:'4°',iii:'7°'}; this.selectLevel(m[c]); },
+        async cargarGrupos(){ const gs=await DB.getAll('grupos'); const sel=document.getElementById('select-grupo'); sel.innerHTML='<option value="">Seleccionar grupo...</option>'; gs.forEach(g=>sel.innerHTML+=`<option value="${g.id}">${g.nombre}</option>`); if(gs.length&&!this.grupoActualId){ this.grupoActualId=gs[0].id; sel.value=this.grupoActualId; await this.cargarSecciones(); } },
+        async cambiarGrupo(){ this.grupoActualId=+document.getElementById('select-grupo').value; await this.cargarSecciones(); await this.cargarStorage(); this.renderizarTodo(); if(document.querySelector('[data-tab="evaluacion"]')?.classList.contains('active')) Eval.renderizarTabla(); },
+        async cargarSecciones(){ if(!this.grupoActualId) return; const secs=await DB.getByIndex('secciones','grupoId',this.grupoActualId); if(secs.length) this.seccionActualId=secs[0].id; await this.cargarEstudiantes(); Grupos.renderSecciones(secs); },
+        async cargarEstudiantes(){ this.estudiantes=this.seccionActualId?await DB.getByIndex('estudiantes','seccionId',this.seccionActualId):[]; },
+        async cargarStorage(){ if(!this.grupoActualId||!this.seccionActualId) return; const key=`plan_${this.grupoActualId}_${this.seccionActualId}_${this.nivelActual}_${this.moduloActual}`; const data=await DB.getByIndex('planificacion','id',key); this.saberesSeleccionados=new Set(data[0]?.seleccionados||[]); this.saberesImpartidos=new Set(data[0]?.impartidos||[]); const cal=await DB.getByIndex('calificaciones','id',`cal_${this.grupoActualId}_${this.seccionActualId}`); this.calificaciones=cal[0]?.data||{}; },
+        async guardarStorage(){ if(!this.grupoActualId||!this.seccionActualId) return; const key=`plan_${this.grupoActualId}_${this.seccionActualId}_${this.nivelActual}_${this.moduloActual}`; await DB.put('planificacion',{id:key,seleccionados:[...this.saberesSeleccionados],impartidos:[...this.saberesImpartidos]}); await DB.put('calificaciones',{id:`cal_${this.grupoActualId}_${this.seccionActualId}`,data:this.calificaciones}); },
+        getCiclo(){ const n=parseInt(this.nivelActual); if(isNaN(n)) return 'Materno Infantil/Transición'; if(n<=3) return 'I Ciclo'; if(n<=6) return 'II Ciclo'; return 'III Ciclo'; },
+        selectLevel(l){ this.nivelActual=l; document.getElementById('current-level-display').innerText=l; document.querySelectorAll('.level-tab').forEach(t=>{ t.classList.toggle('active',t.dataset.level===l); }); this.cargarStorage().then(()=>this.renderizarTodo()); },
+        cargarSaberesDelNivel(){ this.moduloActual=document.getElementById('select-modulo').value; this.cargarStorage().then(()=>{ document.getElementById('saberes-section').classList.remove('hidden'); this.renderSaberes(); this.renderBateriasYPerfiles(); this.renderListaSeleccionados(); }); },
+        switchTab(t){ document.querySelectorAll('.tab-content').forEach(c=>c.classList.add('hidden')); document.getElementById(`tab-${t}`).classList.remove('hidden'); document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); document.querySelector(`[data-tab="${t}"]`).classList.add('active'); if(t==='evaluacion') Eval.renderizarTabla(); if(t==='grupos') App.cargarSecciones().then(()=>Grupos.renderSecciones()); },
+        renderizarTodo(){ this.renderSaberes(); this.renderBateriasYPerfiles(); this.renderListaSeleccionados(); this.actualizarPesosUI(); this.renderEjesCheckboxes(); },
+        actualizarPesosUI(){ const c=this.getCiclo(); document.getElementById('ciclo-eval-badge').innerText=`Ciclo: ${c}`; },
+        renderEjesCheckboxes(){ const ejes=EJES_POR_CICLO[this.getCiclo()]||{}; const div=document.getElementById('ejes-checkboxes'); div.innerHTML=Object.keys(ejes).map(e=>`<label class="flex items-center gap-2"><input type="checkbox" value="${e}" checked> ${e}</label>`).join(''); },
+        toggleSaber(id,chk){ if(chk) this.saberesSeleccionados.add(id); else this.saberesSeleccionados.delete(id); this.guardarStorage().then(()=>this.renderizarTodo()); },
+        toggleImpartido(id){ if(this.saberesImpartidos.has(id)) this.saberesImpartidos.delete(id); else this.saberesImpartidos.add(id); this.guardarStorage().then(()=>this.renderSaberes()); },
+        limpiarSeleccionModulo(){ this.saberesSeleccionados.clear(); this.guardarStorage().then(()=>this.renderizarTodo()); },
+        renderSaberes(){ const data=PNFT_DATA[this.nivelActual]?.[this.moduloActual]; const cont=document.getElementById('saberes-container'); if(!data){ cont.innerHTML='<p class="text-white/40">Datos no disponibles.</p>'; return; } let html='',total=0; Object.entries(data).forEach(([area,content])=>{ html+=`<h4 class="text-lg font-bold text-blue-300 mt-4">${area}</h4>`; content.saberes.forEach(s=>{ const id=`${area}::${s.nombre}`; const checked=this.saberesSeleccionados.has(id); const impartido=this.saberesImpartidos.has(id); if(checked) total++; html+=`<div class="flex items-start gap-3 p-2 border-b border-white/10 ${impartido?'bg-green-500/20':''}"><input type="checkbox" ${checked?'checked':''} onchange="App.toggleSaber('${id}', this.checked)"><div class="flex-1"><span class="font-semibold">${s.nombre}</span><div class="text-[10px] text-slate-400">${s.indicadores.map(i=>`• ${i}`).join('<br>')}</div></div><button onclick="App.toggleImpartido('${id}')" class="text-xs ${impartido?'text-green-400':'text-white/40'}"><i class="fas fa-check-circle"></i> Impartido</button></div>`; }); }); cont.innerHTML=html; document.getElementById('selected-count-badge').innerText=`${total} seleccionados`; },
+        renderBateriasYPerfiles(){ const areas=['Apropiación tecnológica y Digital','Programación y Algoritmos','Computación física y Robótica','Ciencia de datos e Inteligencia artificial']; const contador={}; areas.forEach(a=>contador[a]=0); this.saberesSeleccionados.forEach(s=>{ const a=s.split('::')[0]; if(contador.hasOwnProperty(a)) contador[a]++; }); const data=PNFT_DATA[this.nivelActual]?.[this.moduloActual]||{}; const bhtml=areas.map(a=>{ const tot=data[a]?.saberes?.length||1; const pct=Math.round((contador[a]/tot)*100); return `<div><div class="flex justify-between text-sm"><span>${a}</span><span>${pct}%</span></div><div class="w-full h-5 bg-slate-700/50 rounded-full"><div class="battery-fill h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-400" style="width:${pct}%"></div></div></div>`; }).join(''); document.getElementById('batteries-container').innerHTML=bhtml; const ciclo=this.getCiclo(); const perfiles=PERFILES_POR_CICLO[ciclo]||[]; const phtml=perfiles.map(p=>{ const tot=data[p.area]?.saberes?.length||1; const sel=[...this.saberesSeleccionados].filter(s=>s.startsWith(p.area)).length; return `<div><div class="flex justify-between text-xs"><span>${p.nombre}</span><span>${Math.round((sel/tot)*100)}%</span></div><div class="w-full h-4 bg-slate-700/50 rounded-full"><div class="battery-fill h-full rounded-full bg-emerald-500" style="width:${Math.round((sel/tot)*100)}%"></div></div></div>`; }).join(''); document.getElementById('perfiles-content').innerHTML=phtml; },
+        renderListaSeleccionados(){ const lista=document.getElementById('selected-saberes-list'); if(this.saberesSeleccionados.size===0){ lista.innerHTML='<p class="text-white/40 text-center">No hay saberes seleccionados</p>'; return; } const data=PNFT_DATA[this.nivelActual]?.[this.moduloActual]||{}; let html=''; const agrupados={}; this.saberesSeleccionados.forEach(s=>{ const [area,nombre]=s.split('::'); if(!agrupados[area]) agrupados[area]=[]; agrupados[area].push(nombre); }); for(let area in agrupados){ html+=`<p class="text-xs font-bold text-blue-300 mt-2">${area}</p>`; agrupados[area].forEach(nombre=>{ const saber=data[area]?.saberes?.find(s=>s.nombre===nombre); const preview=saber?saber.indicadores[0].substring(0,30)+'…':''; html+=`<div class="flex items-center justify-between text-sm pl-2"><span>• ${nombre} <span class="text-[10px] text-slate-400">${preview}</span></span><i class="fas fa-times-circle text-red-400 cursor-pointer" onclick="App.eliminarSaber('${area}::${nombre}')"></i></div>`; }); } lista.innerHTML=html; },
+        eliminarSaber(id){ this.saberesSeleccionados.delete(id); this.guardarStorage().then(()=>this.renderizarTodo()); },
+        togglePerfiles(){ const c=document.getElementById('perfiles-content'); c.classList.toggle('hidden'); document.getElementById('perfiles-chevron').classList.toggle('fa-chevron-down'); },
+        generarPrompt(){ if(this.saberesSeleccionados.size===0){ alert('Selecciona al menos un saber.'); return; } const ciclo=this.getCiclo(); const rda=RDA_POR_CICLO[ciclo]?.["Apropiación tecnológica y Digital"]||''; const ejesSeleccionados=[...document.querySelectorAll('#ejes-checkboxes input:checked')].map(cb=>cb.value); const ejesTxt=ejesSeleccionados.map(e=>`- ${e}: ${EJES_POR_CICLO[ciclo][e]}`).join('\n'); let saberesTxt=''; const data=PNFT_DATA[this.nivelActual]?.[this.moduloActual]||{}; for(let id of this.saberesSeleccionados){ const [area,nombre]=id.split('::'); const saber=data[area]?.saberes?.find(s=>s.nombre===nombre); if(saber){ saberesTxt+=`📌 ${area} - ${nombre}\n`; saber.indicadores.forEach(i=>saberesTxt+=`   • ${i}\n`); } } const duracion=document.getElementById('duracion-clase').value; const prompt=`Actúa como especialista MEP-PNFT 2026.\nNivel: ${this.nivelActual} | Módulo: ${this.moduloActual} | Ciclo: ${ciclo}\nDuración clase: ${duracion} min.\nMetodología: ${ciclo==='II Ciclo'?'ABR':ciclo==='III Ciclo'?'Design Thinking':'ABJ'}\n📌 SABERES:\n${saberesTxt}\n🎯 RdA: ${rda}\n⚙️ EJES TRANSVERSALES SELECCIONADOS:\n${ejesTxt}\nTAREA: Diseñar estrategia completa con Focalización, Exploración, Aplicación, Reflexión, Rúbrica y DUA.`; document.getElementById('output-prompt').value=prompt; },
+        copiarPrompt(){ const ta=document.getElementById('output-prompt'); ta.select(); document.execCommand('copy'); alert('Prompt copiado.'); }
     };
 
-    // Grupos, Evaluación, Exportar
+    // ---------- GRUPOS ----------
     const Grupos = {
-        async abrirModalGrupo() { document.getElementById('grupo-nombre').value = ''; document.getElementById('modal-grupo').classList.remove('hidden'); },
-        async guardarGrupo() { const nombre = document.getElementById('grupo-nombre').value; if (!nombre) return; await DB.add('grupos', { nombre }); this.cerrarModal('modal-grupo'); App.cargarGrupos(); },
-        async abrirModalSeccion() { if (!App.grupoActualId) { alert('Selecciona un grupo.'); return; } document.getElementById('seccion-nombre').value = ''; document.getElementById('modal-seccion').classList.remove('hidden'); },
-        async guardarSeccion() { const nombre = document.getElementById('seccion-nombre').value; await DB.add('secciones', { nombre, grupoId: App.grupoActualId }); this.cerrarModal('modal-seccion'); App.cargarSecciones(); },
-        async seleccionarSeccion(id) { App.seccionActualId = id; await App.cargarEstudiantes(); this.renderEstudiantes(); this.renderSecciones(); },
-        async abrirModalEstudiante() { if (!App.seccionActualId) { alert('Selecciona una sección.'); return; } document.getElementById('modal-estudiante-title').innerText = 'Nuevo Estudiante'; document.getElementById('est-nombre').value = ''; document.getElementById('modal-estudiante').classList.remove('hidden'); },
-        async guardarEstudiante() { const nombre = document.getElementById('est-nombre').value; const ape1 = document.getElementById('est-apellido1').value; const ape2 = document.getElementById('est-apellido2').value; await DB.add('estudiantes', { nombre, apellido1: ape1, apellido2: ape2, seccionId: App.seccionActualId }); this.cerrarModal('modal-estudiante'); App.cargarEstudiantes().then(() => this.renderEstudiantes()); },
-        async eliminarEstudiante(id) { await DB.delete('estudiantes', id); App.cargarEstudiantes().then(() => this.renderEstudiantes()); },
-        renderSecciones() {
-            if (!App.grupoActualId) return;
-            DB.getByIndex('secciones', 'grupoId', App.grupoActualId).then(secs => {
-                const div = document.getElementById('lista-secciones');
-                div.innerHTML = secs.map(s => `<div class="p-2 rounded cursor-pointer ${App.seccionActualId === s.id ? 'bg-blue-600' : 'bg-white/5'}" onclick="Grupos.seleccionarSeccion(${s.id})">${s.nombre}</div>`).join('');
-                if (secs.length && !App.seccionActualId) { App.seccionActualId = secs[0].id; App.cargarEstudiantes().then(() => this.renderEstudiantes()); }
-            });
-        },
-        renderEstudiantes() {
-            const tbody = document.getElementById('tabla-estudiantes-body');
-            tbody.innerHTML = App.estudiantes.map(e => `<tr><td class="p-2">${e.nombre} ${e.apellido1} ${e.apellido2}</td><td><button onclick="Grupos.eliminarEstudiante(${e.id})" class="text-red-400"><i class="fas fa-trash"></i></button></td></tr>`).join('');
-        },
-        cerrarModal(id) { document.getElementById(id).classList.add('hidden'); }
+        abrirModalGrupo(){ document.getElementById('grupo-nombre').value=''; document.getElementById('modal-grupo').classList.remove('hidden'); },
+        async guardarGrupo(){ const n=document.getElementById('grupo-nombre').value.trim(); if(!n) return; await DB.add('grupos',{nombre:n}); this.cerrarModal('modal-grupo'); await App.cargarGrupos(); },
+        abrirModalSeccion(){ if(!App.grupoActualId){ alert('Selecciona un grupo primero'); return; } document.getElementById('seccion-nombre').value=''; document.getElementById('modal-seccion').classList.remove('hidden'); },
+        async guardarSeccion(){ const n=document.getElementById('seccion-nombre').value.trim(); if(!n) return; await DB.add('secciones',{nombre:n,grupoId:App.grupoActualId}); this.cerrarModal('modal-seccion'); await App.cargarSecciones(); },
+        async seleccionarSeccion(id){ App.seccionActualId=id; await App.cargarEstudiantes(); this.renderEstudiantes(); await App.cargarStorage(); App.renderizarTodo(); },
+        abrirModalEstudiante(){ if(!App.seccionActualId){ alert('Selecciona una sección'); return; } document.getElementById('edit-estudiante-id').value=''; document.getElementById('est-nombre').value=''; document.getElementById('est-apellido1').value=''; document.getElementById('est-apellido2').value=''; document.getElementById('modal-estudiante').classList.remove('hidden'); },
+        async guardarEstudiante(){ const id=document.getElementById('edit-estudiante-id').value; const nombre=document.getElementById('est-nombre').value.trim(); const ape1=document.getElementById('est-apellido1').value.trim(); const ape2=document.getElementById('est-apellido2').value.trim(); if(!nombre) return; const datos={nombre,apellido1:ape1,apellido2:ape2,seccionId:App.seccionActualId}; if(id){ datos.id=+id; await DB.put('estudiantes',datos); } else { await DB.add('estudiantes',datos); } this.cerrarModal('modal-estudiante'); await App.cargarEstudiantes(); this.renderEstudiantes(); },
+        async eliminarEstudiante(id){ await DB.delete('estudiantes',id); await App.cargarEstudiantes(); this.renderEstudiantes(); },
+        renderSecciones(secs){ const div=document.getElementById('lista-secciones'); if(!secs) return; div.innerHTML=secs.map(s=>`<div class="p-2 rounded cursor-pointer ${App.seccionActualId===s.id?'bg-blue-600':'bg-white/5'}" onclick="Grupos.seleccionarSeccion(${s.id})">${s.nombre}</div>`).join(''); if(secs.length&&!App.seccionActualId){ App.seccionActualId=secs[0].id; App.cargarEstudiantes().then(()=>this.renderEstudiantes()); } },
+        renderEstudiantes(){ const tbody=document.getElementById('tabla-estudiantes-body'); tbody.innerHTML=App.estudiantes.map(e=>`<tr><td class="p-2">${e.nombre} ${e.apellido1} ${e.apellido2}</td><td><button onclick="Grupos.eliminarEstudiante(${e.id})" class="text-red-400"><i class="fas fa-trash"></i></button></td></tr>`).join(''); },
+        cerrarModal(id){ document.getElementById(id).classList.add('hidden'); },
+        async importarCSV(event){ const file=event.target.files[0]; if(!file) return; const reader=new FileReader(); reader.onload=async(e)=>{ const lines=e.target.result.split('\n'); for(let line of lines){ const cols=line.split(','); if(cols.length>=3){ const nombre=cols[0].trim(), ape1=cols[1].trim(), ape2=cols[2].trim(); if(nombre) await DB.add('estudiantes',{nombre,apellido1:ape1,apellido2:ape2,seccionId:App.seccionActualId}); } } await App.cargarEstudiantes(); this.renderEstudiantes(); alert('Estudiantes importados.'); }; reader.readAsText(file); }
     };
 
+    // ---------- EVALUACIÓN ----------
     const Eval = {
-        abrirModalCotidiano() { if (App.estudiantes.length === 0) { alert('Registra estudiantes.'); return; } const div = document.getElementById('cotidiano-lista-estudiantes'); div.innerHTML = App.estudiantes.map(e => `<div class="flex items-center gap-3"><span class="w-32">${e.nombre} ${e.apellido1}</span><input type="number" min="1" max="4" id="cot_${e.id}" class="bg-slate-800 w-20 p-2 rounded"></div>`).join(''); document.getElementById('modal-cotidiano').classList.remove('hidden'); },
-        guardarCotidiano() { App.estudiantes.forEach(e => { const nota = parseFloat(document.getElementById(`cot_${e.id}`)?.value); if (!isNaN(nota)) { if (!App.calificaciones[e.id]) App.calificaciones[e.id] = {}; App.calificaciones[e.id].cotidiano = nota; } }); App.guardarStorage().then(() => { this.cerrarModal('modal-cotidiano'); Eval.renderizarTabla(); }); },
-        abrirModalProyecto() { if (App.estudiantes.length === 0) { alert('Registra estudiantes.'); return; } const fases = ['Empatizar', 'Definir', 'Idear', 'Prototipar', 'Evaluar']; let html = ''; App.estudiantes.forEach(e => { html += `<div class="border-b border-white/20 pb-2"><p class="font-bold">${e.nombre} ${e.apellido1}</p><div class="grid grid-cols-5 gap-2">`; fases.forEach(f => html += `<input type="number" min="0" max="100" id="proy_${e.id}_${f}" placeholder="${f}" class="bg-slate-800 p-1 rounded text-xs">`); html += `</div></div>`; }); document.getElementById('proyecto-fases').innerHTML = html; document.getElementById('modal-proyecto').classList.remove('hidden'); },
-        guardarProyecto() { const fases = ['Empatizar', 'Definir', 'Idear', 'Prototipar', 'Evaluar']; App.estudiantes.forEach(e => { let suma = 0; fases.forEach(f => { const val = parseFloat(document.getElementById(`proy_${e.id}_${f}`)?.value); if (!isNaN(val)) suma += val; }); const prom = suma / fases.length; if (!App.calificaciones[e.id]) App.calificaciones[e.id] = {}; App.calificaciones[e.id].proyecto = prom; }); App.guardarStorage().then(() => { this.cerrarModal('modal-proyecto'); Eval.renderizarTabla(); }); },
-        renderizarTabla() {
-            const tbody = document.getElementById('tabla-calificaciones-body'); if (App.estudiantes.length === 0) { tbody.innerHTML = '<tr><td colspan="8" class="p-3 text-center">No hay estudiantes.</td></tr>'; return; }
-            const pesos = PESOS_EVALUACION[App.getCiclo()] || PESOS_EVALUACION['I Ciclo']; let html = '';
-            App.estudiantes.forEach(e => {
-                const cal = App.calificaciones[e.id] || {}; const cot = cal.cotidiano || 0, tar = cal.tareas || 0, pru = cal.pruebas || 0, proy = cal.proyecto || 0, asis = cal.asistencia || 100;
-                const nota = (cot*pesos.cotidiano + tar*pesos.tareas + pru*pesos.pruebas + proy*pesos.proyecto + asis*pesos.asistencia) / 100;
-                let cond = 'Reprobado', color = 'text-red-400'; if (nota >= 70) { cond = 'Aprobado'; color = 'text-green-400'; } else if (nota >= 60) { cond = 'Aplazado'; color = 'text-yellow-400'; }
-                html += `<tr><td class="p-2">${e.nombre} ${e.apellido1}</td><td>${cot}</td><td>${tar}</td><td>${pru}</td><td>${proy.toFixed(1)}</td><td>${asis}</td><td>${nota.toFixed(1)}</td><td class="${color}">${cond}</td></tr>`;
+        abrirModalCotidiano(){ if(!App.estudiantes.length){ alert('No hay estudiantes.'); return; } const div=document.getElementById('cotidiano-lista'); div.innerHTML=App.estudiantes.map(e=>{ const nota=App.calificaciones[e.id]?.cotidiano||''; return `<div class="flex items-center gap-3"><span class="w-40">${e.nombre} ${e.apellido1}</span><input type="number" min="1" max="4" step="0.1" id="cot_${e.id}" value="${nota}" class="bg-slate-800 w-20 p-2 rounded"></div>`; }).join(''); document.getElementById('modal-cotidiano').classList.remove('hidden'); },
+        async guardarCotidiano(){ App.estudiantes.forEach(e=>{ const val=parseFloat(document.getElementById(`cot_${e.id}`)?.value); if(!isNaN(val)){ if(!App.calificaciones[e.id]) App.calificaciones[e.id]={}; App.calificaciones[e.id].cotidiano=val; } }); await App.guardarStorage(); this.cerrarModal('modal-cotidiano'); this.renderizarTabla(); },
+        abrirModalProyecto(){ if(!App.estudiantes.length){ alert('No hay estudiantes.'); return; } const fases=['Empatizar','Definir','Idear','Prototipar','Evaluar']; let html=''; App.estudiantes.forEach(e=>{ html+=`<div class="border-b border-white/20 pb-2"><p class="font-bold">${e.nombre} ${e.apellido1}</p><div class="grid grid-cols-5 gap-2">`; fases.forEach(f=>{ const val=App.calificaciones[e.id]?.proyectoFases?.[f]||''; html+=`<input type="number" min="0" max="100" id="proy_${e.id}_${f}" value="${val}" placeholder="${f}" class="bg-slate-800 p-1 rounded text-xs">`; }); html+=`</div></div>`; }); document.getElementById('proyecto-fases').innerHTML=html; document.getElementById('modal-proyecto').classList.remove('hidden'); },
+        async guardarProyecto(){ const fases=['Empatizar','Definir','Idear','Prototipar','Evaluar']; App.estudiantes.forEach(e=>{ let suma=0, count=0; const fasesObj={}; fases.forEach(f=>{ const val=parseFloat(document.getElementById(`proy_${e.id}_${f}`)?.value); if(!isNaN(val)){ suma+=val; count++; fasesObj[f]=val; } }); const prom=count?suma/count:0; if(!App.calificaciones[e.id]) App.calificaciones[e.id]={}; App.calificaciones[e.id].proyecto=prom; App.calificaciones[e.id].proyectoFases=fasesObj; }); await App.guardarStorage(); this.cerrarModal('modal-proyecto'); this.renderizarTabla(); },
+        renderizarTabla(){
+            const ciclo=App.getCiclo(); const pesos=PESOS_EVALUACION[ciclo]||PESOS_EVALUACION['I Ciclo'];
+            const thead=document.querySelector('#tabla-calificaciones thead'); const tbody=document.getElementById('tabla-calificaciones-body');
+            let columnas=['Estudiante']; if(pesos.cotidiano>0) columnas.push('Cotid.'); if(pesos.tareas>0) columnas.push('Tareas'); if(pesos.pruebas>0) columnas.push('Pruebas'); if(pesos.proyecto>0) columnas.push('Proyecto'); columnas.push('Asist.'); columnas.push('Nota Final','Condición');
+            thead.innerHTML=`<tr>${columnas.map(c=>`<th class="p-3">${c}</th>`).join('')}</tr>`;
+            if(!App.estudiantes.length){ tbody.innerHTML=`<tr><td colspan="${columnas.length}" class="p-3 text-center">No hay estudiantes.</td></tr>`; return; }
+            let html='';
+            App.estudiantes.forEach(e=>{
+                const cal=App.calificaciones[e.id]||{}; const cot=cal.cotidiano||0, tar=cal.tareas||0, pru=cal.pruebas||0, proy=cal.proyecto||0, asis=cal.asistencia||100;
+                const nota=(cot*pesos.cotidiano + tar*pesos.tareas + pru*pesos.pruebas + proy*pesos.proyecto + asis*pesos.asistencia)/100;
+                let cond='Reprobado',color='text-red-400'; if(nota>=70){ cond='Aprobado'; color='text-green-400'; } else if(nota>=60){ cond='Aplazado'; color='text-yellow-400'; }
+                html+=`<tr>`; html+=`<td class="p-2">${e.nombre} ${e.apellido1}</td>`; if(pesos.cotidiano>0) html+=`<td>${cot}</td>`; if(pesos.tareas>0) html+=`<td>${tar}</td>`; if(pesos.pruebas>0) html+=`<td>${pru}</td>`; if(pesos.proyecto>0) html+=`<td>${proy.toFixed(1)}</td>`; html+=`<td>${asis}</td><td>${nota.toFixed(1)}</td><td class="${color}">${cond}</td></tr>`;
             });
-            tbody.innerHTML = html;
+            tbody.innerHTML=html;
         },
-        cerrarModal(id) { document.getElementById(id).classList.add('hidden'); }
+        cerrarModal(id){ document.getElementById(id).classList.add('hidden'); }
     };
 
+    // ---------- EXPORTAR ----------
     const Exportar = {
-        pdf() { window.print(); },
-        word() { const contenido = document.getElementById('tab-dashboard').innerHTML; const blob = new Blob([contenido], { type: 'application/msword' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'dashboard.doc'; a.click(); },
-        async json() { const data = { grupo: App.grupoActualId, seccion: App.seccionActualId, nivel: App.nivelActual, modulo: App.moduloActual, calificaciones: App.calificaciones, estudiantes: App.estudiantes }; const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'datos_pnft.json'; a.click(); },
-        async backupCompleto() {
-            try {
-                const grupos = await DB.getAll('grupos'); const secciones = await DB.getAll('secciones'); const estudiantes = await DB.getAll('estudiantes');
-                const planificaciones = await DB.getAll('planificacion'); const calificaciones = await DB.getAll('calificaciones');
-                const backup = { version: "1.0", fecha: new Date().toISOString(), grupos, secciones, estudiantes, planificaciones, calificaciones };
-                const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' }); const a = document.createElement('a');
-                a.href = URL.createObjectURL(blob); a.download = `backup_pnft_${new Date().toISOString().slice(0,10)}.json`; a.click();
-                URL.revokeObjectURL(a.href); alert('✅ Backup completo exportado correctamente.');
-            } catch (e) { console.error(e); alert('❌ Error al exportar backup.'); }
-        },
-        async importarBackup(event) {
-            const file = event.target.files[0]; if (!file) return;
-            const reader = new FileReader();
-            reader.onload = async (e) => {
-                try {
-                    const backup = JSON.parse(e.target.result);
-                    if (!backup.version || !backup.grupos || !backup.secciones) throw new Error('Formato de backup no válido');
-                    if (!confirm('⚠️ Esto reemplazará TODOS los datos actuales. ¿Estás seguro?')) return;
-                    await this._clearAllStores();
-                    for (let g of backup.grupos) await DB.add('grupos', g);
-                    for (let s of backup.secciones) await DB.add('secciones', s);
-                    for (let e of backup.estudiantes) await DB.add('estudiantes', e);
-                    for (let p of backup.planificaciones) await DB.put('planificacion', p);
-                    for (let c of backup.calificaciones) await DB.put('calificaciones', c);
-                    alert('✅ Backup importado correctamente. La aplicación se reiniciará.'); window.location.reload();
-                } catch (err) { console.error(err); alert('❌ Error al importar el archivo.'); }
-            };
-            reader.readAsText(file);
-        },
-        async _clearAllStores() {
-            const stores = ['grupos', 'secciones', 'estudiantes', 'planificacion', 'calificaciones'];
-            for (let store of stores) {
-                if (DB.useLocalStorage) { localStorage.removeItem(`pnft_${store}`); }
-                else { await new Promise((res, rej) => { const tx = DB.db.transaction(store, 'readwrite'); const req = tx.objectStore(store).clear(); req.onsuccess = res; req.onerror = rej; }); }
-            }
-        }
+        informeGrupo(){ const printWindow=window.open('','_blank'); printWindow.document.write('<html><head><title>Informe PNFT</title><style>body{font-family:sans-serif;margin:2rem;} table{border-collapse:collapse;width:100%;} th,td{border:1px solid #ccc;padding:8px;text-align:left;}</style></head><body>'); printWindow.document.write(`<h1>Informe del Grupo</h1><p>Nivel: ${App.nivelActual} | Módulo: ${App.moduloActual}</p>`); printWindow.document.write(document.getElementById('tabla-calificaciones').outerHTML); printWindow.document.write('</body></html>'); printWindow.document.close(); printWindow.print(); },
+        async backupCompleto(){ const grupos=await DB.getAll('grupos'); const secciones=await DB.getAll('secciones'); const estudiantes=await DB.getAll('estudiantes'); const plan=await DB.getAll('planificacion'); const cal=await DB.getAll('calificaciones'); const backup={version:'1.0',fecha:new Date().toISOString(),grupos,secciones,estudiantes,planificacion:plan,calificaciones:cal}; const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`backup_pnft_${new Date().toISOString().slice(0,10)}.json`; a.click(); URL.revokeObjectURL(a.href); alert('Backup exportado.'); },
+        async importarBackup(e){ const file=e.target.files[0]; if(!file) return; const reader=new FileReader(); reader.onload=async(ev)=>{ try{ const data=JSON.parse(ev.target.result); if(!data.version||!data.grupos) throw new Error('Formato inválido'); if(!confirm('¿Reemplazar todos los datos actuales?')) return; const stores=['grupos','secciones','estudiantes','planificacion','calificaciones']; for(let s of stores){ if(DB.useLS) localStorage.removeItem(`pnft_${s}`); else await new Promise(r=>{ const tx=DB.db.transaction(s,'readwrite'); tx.objectStore(s).clear().onsuccess=r; }); } for(let g of data.grupos) await DB.add('grupos',g); for(let s of data.secciones) await DB.add('secciones',s); for(let e of data.estudiantes) await DB.add('estudiantes',e); for(let p of data.planificacion) await DB.put('planificacion',p); for(let c of data.calificaciones) await DB.put('calificaciones',c); alert('Backup importado. Recargando...'); window.location.reload(); }catch(err){ alert('Error al importar'); console.error(err); } }; reader.readAsText(file); }
     };
 
-    window.App = App; window.Grupos = Grupos; window.Eval = Eval; window.Exportar = Exportar;
-    window.onload = () => App.init().catch(e => { console.error("Error crítico al iniciar:", e); alert("Ocurrió un error al iniciar. Intenta recargar la página."); });
+    window.App=App; window.Grupos=Grupos; window.Eval=Eval; window.Exportar=Exportar;
+    window.onload=()=>App.init().catch(e=>{ console.error(e); alert('Error al iniciar.'); });
 </script>
 </body>
 </html>
