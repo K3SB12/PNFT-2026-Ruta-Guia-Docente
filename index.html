@@ -72,7 +72,17 @@
                     </div>
                 </div>
 
-                                            <!-- GENERADOR DE PROMPT (MOVIDO AQUÍ) -->
+                <!-- SABERES DEL MÓDULO -->
+                <div id="saberes-section" class="glass-card p-6 hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold text-lg"><i class="fas fa-list-check text-emerald-400"></i> Saberes del Módulo</h3>
+                        <span id="selected-count-badge" class="bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-full">0 seleccionados</span>
+                    </div>
+                    <div id="saberes-container" class="space-y-4 max-h-[600px] overflow-y-auto pr-2"></div>
+                    <div class="mt-4 text-xs text-amber-300/80 flex items-center gap-2"><i class="fas fa-lightbulb"></i> Regla de Oro: Selecciona entre 3 y 5 indicadores.</div>
+                </div>
+
+                <!-- GENERADOR DE PROMPT (DEBAJO DE SABERES) -->
                 <div class="glass-card p-6">
                     <h3 class="font-bold text-lg mb-4"><i class="fas fa-robot text-indigo-400 mr-2"></i>Generador de Prompt para IA</h3>
                     <div class="mb-3"><label class="text-xs text-white/60 block mb-1">Ejes Transversales a incluir:</label><div id="ejes-checkboxes" class="space-y-1 text-sm"></div></div>
@@ -85,16 +95,6 @@
                         <a href="https://copilot.microsoft.com" target="_blank" class="bg-white/5 hover:bg-white/10 rounded-lg p-2 text-center text-xs"><i class="fas fa-sync-alt"></i> Copilot</a>
                         <a href="https://deepseek.com" target="_blank" class="bg-white/5 hover:bg-white/10 rounded-lg p-2 text-center text-xs"><i class="fas fa-search"></i> DeepSeek</a>
                     </div>
-                </div>
-                
-                <!-- SABERES -->
-                <div id="saberes-section" class="glass-card p-6 hidden">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="font-bold text-lg"><i class="fas fa-list-check text-emerald-400"></i> Saberes del Módulo</h3>
-                        <span id="selected-count-badge" class="bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-full">0 seleccionados</span>
-                    </div>
-                    <div id="saberes-container" class="space-y-4 max-h-[600px] overflow-y-auto pr-2"></div>
-                    <div class="mt-4 text-xs text-amber-300/80 flex items-center gap-2"><i class="fas fa-lightbulb"></i> Regla de Oro: Selecciona entre 3 y 5 indicadores.</div>
                 </div>
             </div>
 
@@ -767,7 +767,7 @@ const RDA_POR_CICLO = {
 };
     const PESOS_EVALUACION = { "I Ciclo": { cotidiano:65, tareas:10, pruebas:15, proyecto:0, asistencia:10 }, "II Ciclo": { cotidiano:60, tareas:10, pruebas:20, proyecto:0, asistencia:10 }, "III Ciclo": { cotidiano:50, tareas:10, pruebas:0, proyecto:30, asistencia:10 } };
 
-  // ---------- ALMACENAMIENTO SIMPLE ----------
+     // ---------- ALMACENAMIENTO (LOCALSTORAGE SIMPLE) ----------
     const Storage = {
         guardar(key, data) { localStorage.setItem(`pnft_${key}`, JSON.stringify(data)); },
         cargar(key) { const d = localStorage.getItem(`pnft_${key}`); return d ? JSON.parse(d) : null; },
