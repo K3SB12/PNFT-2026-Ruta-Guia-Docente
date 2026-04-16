@@ -1052,7 +1052,7 @@ const RDA_POR_CICLO = {
                 });
             }
             lista.innerHTML = html;
-        }
+        },
         generarPrompt() {
             if (this.saberesSeleccionados.size === 0) { alert('Selecciona al menos un saber.'); return; }
             const ciclo = this.getCiclo();
@@ -1068,29 +1068,29 @@ const RDA_POR_CICLO = {
             const duracion = document.getElementById('duracion-clase').value;
             const metodologia = ciclo === 'II Ciclo' ? 'ABR' : (ciclo === 'III Ciclo' ? 'Design Thinking' : 'ABJ');
             const prompt = `Actúa como especialista MEP-PNFT 2026.\nNivel: ${this.nivelActual} | Módulo: ${this.moduloActual} | Ciclo: ${ciclo}\nDuración clase: ${duracion} min.\nMetodología: ${metodologia}\n📌 SABERES:\n${saberesTxt}\n🎯 RdA: ${rda}\n⚙️ EJES TRANSVERSALES SELECCIONADOS:\n${ejesTxt}\nTAREA: Diseñar una Estrategia de Mediación Pedagógica completa:
-1. Título creativo y motivador.
-2. Momentos pedagógicos (Focalización, Exploración, Reflexión, Aplicación) alineados a los indicadores descritos.
-3. Evaluación formativa: Rúbrica analítica de 3 niveles (Inicial, Intermedio, Avanzado) basada en los indicadores.
-4. Recomendaciones DUA (Principios: Representación, Acción/Expresión, Motivación) para inclusión.
-5. Preguntar al usuario si necesita algún tipo de formato (ppt, pdf, word, json o inclusive infografías) para entregar la información.
-6. Condiciones obligatorias:
-- NO resumir ni omitir información.
-- Mantener la redacción completa y profesional.
-- Incluir TODOS los apartados:
-  1. Título
-  2. Momentos pedagógicos (Focalización, Exploración, Aplicación, Reflexión) con todas sus actividades Inicio, desarrollo, conclusión. Tiempos estimados.
-  3. Evaluación formativa (rúbrica analítica completa)
-  4. Recomendaciones DUA (Representación, Acción/Expresión, Motivación)
-  5. Resumen de alineación curricular.
-- Distribuir el contenido en varias diapositivas u hojas en caso de formatos (pdf o word) de forma clara (puede dividir un mismo apartado en varias diapositivas u hojas si es necesario).
-- Evitar formato de palabras sueltas; usar ideas completas comprensibles para docentes.
-- Agregar títulos por diapositiva u hojas en caso de pdf o word, coherentes con cada sección.
-- Cada momento pedagógico debe ocupar al menos 2 diapositivas o 1 hoja en caso de ser en formato pdf o word.
-- La rúbrica debe presentarse en formato de tabla.
-- El resumen curricular debe aparecer en una diapositiva final claramente identificada.
-- En caso de que el docente elija una metodología el sistema le debe solicitar seleccionar la totalidad de los saberes conceptuales del área o las áreas de conocimiento para que no se vea fraccionada la metodología como columna vertebral del aprendizaje.
-Redacción profesional, inspiradora, coherente con el enfoque por competencias. Asegúrese de que cada indicador se evidencie en las actividades.)
-`;
+                1. Título creativo y motivador.
+                2. Momentos pedagógicos (Focalización, Exploración, Reflexión, Aplicación) alineados a los indicadores descritos.
+                3. Evaluación formativa: Rúbrica analítica de 3 niveles (Inicial, Intermedio, Avanzado) basada en los indicadores.
+                4. Recomendaciones DUA (Principios: Representación, Acción/Expresión, Motivación) para inclusión.
+                5. Preguntar al usuario si necesita algún tipo de formato (ppt, pdf, word, json o inclusive infografías) para entregar la información.
+                6. Condiciones obligatorias:
+                - NO resumir ni omitir información.
+                - Mantener la redacción completa y profesional.
+                - Incluir TODOS los apartados:
+                  1. Título
+                  2. Momentos pedagógicos (Focalización, Exploración, Aplicación, Reflexión) con todas sus actividades Inicio, desarrollo, conclusión. Tiempos estimados.
+                  3. Evaluación formativa (rúbrica analítica completa)
+                  4. Recomendaciones DUA (Representación, Acción/Expresión, Motivación)
+                  5. Resumen de alineación curricular.
+                - Distribuir el contenido en varias diapositivas u hojas en caso de formatos (pdf o word) de forma clara (puede dividir un mismo apartado en varias diapositivas u hojas si es necesario).
+                - Evitar formato de palabras sueltas; usar ideas completas comprensibles para docentes.
+                - Agregar títulos por diapositiva u hojas en caso de pdf o word, coherentes con cada sección.
+                - Cada momento pedagógico debe ocupar al menos 2 diapositivas o 1 hoja en caso de ser en formato pdf o word.
+                - La rúbrica debe presentarse en formato de tabla.
+                - El resumen curricular debe aparecer en una diapositiva final claramente identificada.
+                - En caso de que el docente elija una metodología el sistema le debe solicitar seleccionar la totalidad de los saberes conceptuales del área o las áreas de conocimiento para que no se vea fraccionada la metodología como columna vertebral del aprendizaje.
+                Redacción profesional, inspiradora, coherente con el enfoque por competencias. Asegúrese de que cada indicador se evidencie en las actividades.
+                `;
             document.getElementById('output-prompt').value = prompt;
         },
         copiarPrompt() { const ta = document.getElementById('output-prompt'); ta.select(); document.execCommand('copy'); alert('Prompt copiado.'); }
