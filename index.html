@@ -1032,7 +1032,7 @@ const RDA_POR_CICLO = {
                 return `<div><div class="flex justify-between text-xs"><span>${p.nombre}</span><span>${pctPerfil}%</span></div><div class="w-full h-4 bg-slate-700/50 rounded-full"><div class="battery-fill h-full rounded-full bg-emerald-500" style="width:${pctPerfil}%"></div></div></div>`;
             }).join('');
             document.getElementById('perfiles-content').innerHTML = phtml || '<p style="font-size:0.9rem; color:#e5e7eb;">No hay perfiles definidos para este ciclo.</p>';
-        }
+        },
        renderListaSeleccionados() {
             const lista = document.getElementById('selected-saberes-list');
             if (this.saberesSeleccionados.size === 0) {
