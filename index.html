@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🧭 PNFT 2026 · La Gran Ruta (Dashboard Original + Módulos)</title>
+    <title>🧭 PNFT 2026 · Portal Docente Completo</title>
+    <!-- Tailwind + Font Awesome -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -50,7 +51,7 @@
         </div>
     </div>
 
-    <!-- Selector de grupo (nuevo, discreto) -->
+    <!-- Selector de grupo (discreto) -->
     <div class="flex justify-end mb-4">
         <select id="select-grupo" class="bg-slate-800/70 border border-slate-600 rounded-xl p-2 text-sm" onchange="App.cambiarGrupo()"></select>
         <button onclick="Grupos.abrirModalGrupo()" class="ml-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded-full text-sm"><i class="fas fa-plus mr-1"></i>Grupo</button>
@@ -64,9 +65,8 @@
         <div class="tab-btn" data-tab="exportar" onclick="App.switchTab('exportar')"><i class="fas fa-download mr-2"></i>Exportar</div>
     </div>
 
-    <!-- ===== CONTENEDOR DASHBOARD (EXACTAMENTE EL ORIGINAL) ===== -->
+    <!-- ===== CONTENEDOR DASHBOARD ===== -->
     <div id="tab-dashboard" class="tab-content">
-        <!-- Selector global de niveles (pestañas) -->
         <div class="flex flex-wrap gap-2 mb-6 justify-center md:justify-start">
             <div class="level-tab active" data-level="0°" onclick="App.selectLevel('0°')">0° Preescolar</div>
             <div class="level-tab" data-level="1°" onclick="App.selectLevel('1°')">1° Grado</div>
@@ -81,7 +81,6 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <!-- Columna izquierda: Mapa de islas + Saberes -->
             <div class="lg:col-span-7 space-y-6">
                 <div class="flex items-center gap-3 mb-2">
                     <i class="fas fa-compass text-2xl text-cyan-400"></i>
@@ -118,7 +117,6 @@
                 </div>
             </div>
 
-            <!-- Columna derecha: Baterías, Planeamiento, Perfiles, Prompt -->
             <div class="lg:col-span-5 space-y-6">
                 <div class="glass-card p-6">
                     <div class="flex items-center gap-2 mb-4">
@@ -172,7 +170,7 @@
         </div>
     </div>
 
-    <!-- ===== OTRAS PESTAÑAS (GRUPOS, EVALUACIÓN, EXPORTAR) ===== -->
+    <!-- ===== OTRAS PESTAÑAS ===== -->
     <div id="tab-grupos" class="tab-content hidden">
         <div class="glass-card p-6">
             <div class="flex justify-between items-center mb-6">
@@ -218,20 +216,21 @@
                 <button onclick="Exportar.word()" class="bg-blue-600/30 hover:bg-blue-600/50 p-6 rounded-xl"><i class="fas fa-file-word text-4xl mb-3"></i><br>Exportar a Word</button>
                 <button onclick="Exportar.json()" class="bg-emerald-600/30 hover:bg-emerald-600/50 p-6 rounded-xl"><i class="fas fa-file-code text-4xl mb-3"></i><br>Exportar JSON</button>
             </div>
+            <div class="grid md:grid-cols-2 gap-4 mt-6">
+                <button onclick="Exportar.backupCompleto()" class="bg-amber-600/30 hover:bg-amber-600/50 p-6 rounded-xl">
+                    <i class="fas fa-archive text-4xl mb-3"></i><br>Exportar Backup Completo
+                </button>
+                <button onclick="document.getElementById('input-import-backup').click()" class="bg-purple-600/30 hover:bg-purple-600/50 p-6 rounded-xl">
+                    <i class="fas fa-upload text-4xl mb-3"></i><br>Importar Backup
+                </button>
+                <input type="file" id="input-import-backup" accept=".json,application/json" style="display:none" onchange="Exportar.importarBackup(event)">
+            </div>
+            <p class="text-xs text-white/40 mt-4">Exporta o importa todos tus grupos, estudiantes, calificaciones y planificaciones.</p>
         </div>
     </div>
-    <div class="grid md:grid-cols-2 gap-4 mt-6">
-    <button onclick="Exportar.backupCompleto()" class="bg-amber-600/30 hover:bg-amber-600/50 p-6 rounded-xl">
-        <i class="fas fa-archive text-4xl mb-3"></i><br>Exportar Backup Completo
-    </button>
-    <button onclick="document.getElementById('input-import-backup').click()" class="bg-purple-600/30 hover:bg-purple-600/50 p-6 rounded-xl">
-        <i class="fas fa-upload text-4xl mb-3"></i><br>Importar Backup
-    </button>
-    <input type="file" id="input-import-backup" accept=".json,application/json" style="display:none" onchange="Exportar.importarBackup(event)">
-</div>
 </div>
 
-<!-- MODALES (Grupo, Sección, Estudiante, Cotidiano, Proyecto) -->
+<!-- MODALES -->
 <div id="modal-grupo" class="modal hidden"><div class="modal-content glass-card p-6 w-full max-w-md"><h3 class="text-xl font-bold mb-4">Nuevo Grupo</h3><input id="grupo-nombre" placeholder="Nombre del grupo" class="w-full bg-slate-800 p-3 rounded-xl mb-3"><div class="flex justify-end gap-3"><button onclick="Grupos.cerrarModal('modal-grupo')" class="bg-slate-600 px-4 py-2 rounded-full">Cancelar</button><button onclick="Grupos.guardarGrupo()" class="bg-green-600 px-6 py-2 rounded-full">Guardar</button></div></div></div>
 <div id="modal-seccion" class="modal hidden"><div class="modal-content glass-card p-6 w-full max-w-md"><h3 class="text-xl font-bold mb-4">Nueva Sección</h3><input id="seccion-nombre" placeholder="Nombre de la sección" class="w-full bg-slate-800 p-3 rounded-xl mb-3"><div class="flex justify-end gap-3"><button onclick="Grupos.cerrarModal('modal-seccion')" class="bg-slate-600 px-4 py-2 rounded-full">Cancelar</button><button onclick="Grupos.guardarSeccion()" class="bg-green-600 px-6 py-2 rounded-full">Guardar</button></div></div></div>
 <div id="modal-estudiante" class="modal hidden"><div class="modal-content glass-card p-6 w-full max-w-md"><h3 class="text-xl font-bold mb-4" id="modal-estudiante-title">Nuevo Estudiante</h3><input type="hidden" id="edit-estudiante-id"><input id="est-nombre" placeholder="Nombre" class="w-full bg-slate-800 p-3 rounded-xl mb-2"><input id="est-apellido1" placeholder="Primer Apellido" class="w-full bg-slate-800 p-3 rounded-xl mb-2"><input id="est-apellido2" placeholder="Segundo Apellido" class="w-full bg-slate-800 p-3 rounded-xl mb-3"><div class="flex justify-end gap-3"><button onclick="Grupos.cerrarModal('modal-estudiante')" class="bg-slate-600 px-4 py-2 rounded-full">Cancelar</button><button onclick="Grupos.guardarEstudiante()" class="bg-green-600 px-6 py-2 rounded-full">Guardar</button></div></div></div>
@@ -869,83 +868,70 @@ const RDA_POR_CICLO = {
 };
     const PESOS_EVALUACION = { "I Ciclo": { cotidiano:65, tareas:10, pruebas:15, proyecto:0, asistencia:10 }, "II Ciclo": { cotidiano:60, tareas:10, pruebas:20, proyecto:0, asistencia:10 }, "III Ciclo": { cotidiano:50, tareas:10, pruebas:0, proyecto:30, asistencia:10 } };
 
-   // ---------- INDEXEDDB (con respaldo a localStorage) ----------
-const DB = {
-    db: null,
-    useLocalStorage: false, // Bandera de respaldo
-    async init() {
-        if (!window.indexedDB) {
-            console.warn("IndexedDB no soportado. Usando localStorage.");
-            this.useLocalStorage = true;
-            return false;
+ // ---------- INDEXEDDB con respaldo a localStorage ----------
+    const DB = {
+        db: null,
+        useLocalStorage: false,
+        async init() {
+            if (!window.indexedDB) { console.warn("IndexedDB no soportado. Usando localStorage."); this.useLocalStorage = true; return false; }
+            return new Promise((resolve) => {
+                const request = indexedDB.open('PNFT_DB', 1);
+                request.onupgradeneeded = (e) => {
+                    const db = e.target.result;
+                    if (!db.objectStoreNames.contains('grupos')) db.createObjectStore('grupos', { keyPath: 'id', autoIncrement: true });
+                    if (!db.objectStoreNames.contains('secciones')) { const sec = db.createObjectStore('secciones', { keyPath: 'id', autoIncrement: true }); sec.createIndex('grupoId', 'grupoId'); }
+                    if (!db.objectStoreNames.contains('estudiantes')) { const est = db.createObjectStore('estudiantes', { keyPath: 'id', autoIncrement: true }); est.createIndex('seccionId', 'seccionId'); }
+                    if (!db.objectStoreNames.contains('calificaciones')) db.createObjectStore('calificaciones', { keyPath: 'id', autoIncrement: true });
+                    if (!db.objectStoreNames.contains('planificacion')) db.createObjectStore('planificacion', { keyPath: 'id' });
+                };
+                request.onsuccess = (e) => { this.db = e.target.result; this.useLocalStorage = false; resolve(true); };
+                request.onerror = (e) => { console.error("Error al abrir IndexedDB, usando localStorage.", e); this.useLocalStorage = true; resolve(false); };
+                request.onblocked = () => { console.warn("Base de datos bloqueada. Usando localStorage."); this.useLocalStorage = true; resolve(false); };
+            });
+        },
+        async getAll(store) {
+            if (this.useLocalStorage) return JSON.parse(localStorage.getItem(`pnft_${store}`) || '[]');
+            return new Promise((res, rej) => { const tx = this.db.transaction(store, 'readonly'); const req = tx.objectStore(store).getAll(); req.onsuccess = () => res(req.result); req.onerror = rej; });
+        },
+        async getByIndex(store, index, value) {
+            if (this.useLocalStorage) { const data = JSON.parse(localStorage.getItem(`pnft_${store}`) || '[]'); return data.filter(item => item[index] === value); }
+            return new Promise((res, rej) => { const tx = this.db.transaction(store, 'readonly'); const req = tx.objectStore(store).index(index).getAll(value); req.onsuccess = () => res(req.result); req.onerror = rej; });
+        },
+        async add(store, item) {
+            if (this.useLocalStorage) { const data = JSON.parse(localStorage.getItem(`pnft_${store}`) || '[]'); item.id = Date.now() + Math.floor(Math.random()*1000); data.push(item); localStorage.setItem(`pnft_${store}`, JSON.stringify(data)); return item.id; }
+            return new Promise((res, rej) => { const tx = this.db.transaction(store, 'readwrite'); const req = tx.objectStore(store).add(item); req.onsuccess = () => res(req.result); req.onerror = rej; });
+        },
+        async put(store, item) {
+            if (this.useLocalStorage) { const data = JSON.parse(localStorage.getItem(`pnft_${store}`) || '[]'); const idx = data.findIndex(i => i.id === item.id); if (idx>=0) data[idx] = item; else data.push(item); localStorage.setItem(`pnft_${store}`, JSON.stringify(data)); return; }
+            return new Promise((res, rej) => { const tx = this.db.transaction(store, 'readwrite'); const req = tx.objectStore(store).put(item); req.onsuccess = () => res(req.result); req.onerror = rej; });
+        },
+        async delete(store, id) {
+            if (this.useLocalStorage) { let data = JSON.parse(localStorage.getItem(`pnft_${store}`) || '[]'); data = data.filter(i => i.id !== id); localStorage.setItem(`pnft_${store}`, JSON.stringify(data)); return; }
+            return new Promise((res, rej) => { const tx = this.db.transaction(store, 'readwrite'); const req = tx.objectStore(store).delete(id); req.onsuccess = () => res(); req.onerror = rej; });
         }
-        return new Promise((resolve) => {
-            const request = indexedDB.open('PNFT_DB', 1);
-            request.onupgradeneeded = (e) => {
-                const db = e.target.result;
-                if (!db.objectStoreNames.contains('grupos')) db.createObjectStore('grupos', { keyPath: 'id', autoIncrement: true });
-                if (!db.objectStoreNames.contains('secciones')) { const sec = db.createObjectStore('secciones', { keyPath: 'id', autoIncrement: true }); sec.createIndex('grupoId', 'grupoId'); }
-                if (!db.objectStoreNames.contains('estudiantes')) { const est = db.createObjectStore('estudiantes', { keyPath: 'id', autoIncrement: true }); est.createIndex('seccionId', 'seccionId'); }
-                if (!db.objectStoreNames.contains('calificaciones')) db.createObjectStore('calificaciones', { keyPath: 'id', autoIncrement: true });
-                if (!db.objectStoreNames.contains('planificacion')) db.createObjectStore('planificacion', { keyPath: 'id' });
-            };
-            request.onsuccess = (e) => { this.db = e.target.result; this.useLocalStorage = false; resolve(true); };
-            request.onerror = (e) => {
-                console.error("Error al abrir IndexedDB, usando localStorage.", e);
-                this.useLocalStorage = true;
-                resolve(false);
-            };
-            request.onblocked = () => { console.warn("Base de datos bloqueada. Usando localStorage."); this.useLocalStorage = true; resolve(false); };
-        });
-    },
-    async getAll(store) {
-        if (this.useLocalStorage) return JSON.parse(localStorage.getItem(`pnft_${store}`) || '[]');
-        return new Promise((res, rej) => { const tx = this.db.transaction(store, 'readonly'); const req = tx.objectStore(store).getAll(); req.onsuccess = () => res(req.result); req.onerror = rej; });
-    },
-    async getByIndex(store, index, value) {
-        if (this.useLocalStorage) { const data = JSON.parse(localStorage.getItem(`pnft_${store}`) || '[]'); return data.filter(item => item[index] === value); }
-        return new Promise((res, rej) => { const tx = this.db.transaction(store, 'readonly'); const req = tx.objectStore(store).index(index).getAll(value); req.onsuccess = () => res(req.result); req.onerror = rej; });
-    },
-    async add(store, item) {
-        if (this.useLocalStorage) { const data = JSON.parse(localStorage.getItem(`pnft_${store}`) || '[]'); item.id = Date.now() + Math.floor(Math.random()*1000); data.push(item); localStorage.setItem(`pnft_${store}`, JSON.stringify(data)); return item.id; }
-        return new Promise((res, rej) => { const tx = this.db.transaction(store, 'readwrite'); const req = tx.objectStore(store).add(item); req.onsuccess = () => res(req.result); req.onerror = rej; });
-    },
-    async put(store, item) {
-        if (this.useLocalStorage) { const data = JSON.parse(localStorage.getItem(`pnft_${store}`) || '[]'); const idx = data.findIndex(i => i.id === item.id); if (idx>=0) data[idx] = item; else data.push(item); localStorage.setItem(`pnft_${store}`, JSON.stringify(data)); return; }
-        return new Promise((res, rej) => { const tx = this.db.transaction(store, 'readwrite'); const req = tx.objectStore(store).put(item); req.onsuccess = () => res(req.result); req.onerror = rej; });
-    },
-    async delete(store, id) {
-        if (this.useLocalStorage) { let data = JSON.parse(localStorage.getItem(`pnft_${store}`) || '[]'); data = data.filter(i => i.id !== id); localStorage.setItem(`pnft_${store}`, JSON.stringify(data)); return; }
-        return new Promise((res, rej) => { const tx = this.db.transaction(store, 'readwrite'); const req = tx.objectStore(store).delete(id); req.onsuccess = () => res(); req.onerror = rej; });
-    }
-};
-    // ---------- APP PRINCIPAL (LÓGICA ORIGINAL DEL DASHBOARD INTEGRADA) ----------
+    };
+
+    // ---------- APP PRINCIPAL ----------
     const App = {
         nivelActual: '0°', moduloActual: 'Módulo 1', grupoActualId: null, seccionActualId: null,
         saberesSeleccionados: new Set(), saberesImpartidos: new Set(), estudiantes: [], calificaciones: {},
         async init() {
             const dbOk = await DB.init();
-            if (!dbOk) {
-                alert("⚠️ IndexedDB no disponible. Se usará almacenamiento local (menor capacidad).");
-            }
+            if (!dbOk) alert("⚠️ IndexedDB no disponible. Se usará almacenamiento local (menor capacidad).");
             this.renderIslands();
             await this.cargarGrupos();
             await this.cargarStorage();
             this.renderizarTodo();
         },
         renderIslands() {
-            const container = document.getElementById('island-container');
-            container.innerHTML = `
+            document.getElementById('island-container').innerHTML = `
                 <div class="island-card rounded-3xl p-6 border-l-8 border-l-pink-400" onclick="App.selectCycle('materno')"><div class="flex items-start justify-between"><div><span class="text-xs font-black uppercase tracking-wider text-pink-300">Isla 1</span><h3 class="text-2xl font-black mt-1">🏝️ Materno · Transición</h3><p class="text-white/60 text-sm mt-1">Exploración y juego guiado</p></div><i class="fas fa-robot text-3xl text-pink-300/70"></i></div><div class="mt-4 flex items-center gap-2"><span class="bg-white/10 text-xs px-3 py-1 rounded-full"><i class="fas fa-cubes mr-1"></i>0°</span><span class="bg-white/10 text-xs px-3 py-1 rounded-full"><i class="fas fa-gamepad mr-1"></i>ABJ</span></div></div>
                 <div class="island-card rounded-3xl p-6 border-l-8 border-l-green-400" onclick="App.selectCycle('i')"><div class="flex items-start justify-between"><div><span class="text-xs font-black uppercase tracking-wider text-green-300">Isla 2</span><h3 class="text-2xl font-black mt-1">📗 I Ciclo</h3><p class="text-white/60 text-sm mt-1">Alfabetización y patrones</p></div><i class="fas fa-code text-3xl text-green-300/70"></i></div><div class="mt-4 flex items-center gap-2"><span class="bg-white/10 text-xs px-3 py-1 rounded-full">1° · 2° · 3°</span><span class="bg-white/10 text-xs px-3 py-1 rounded-full">ABJ</span></div></div>
                 <div class="island-card rounded-3xl p-6 border-l-8 border-l-orange-400" onclick="App.selectCycle('ii')"><div class="flex items-start justify-between"><div><span class="text-xs font-black uppercase tracking-wider text-orange-300">Isla 3</span><h3 class="text-2xl font-black mt-1">📙 II Ciclo</h3><p class="text-white/60 text-sm mt-1">Resolución de retos</p></div><i class="fas fa-microchip text-3xl text-orange-300/70"></i></div><div class="mt-4 flex items-center gap-2"><span class="bg-white/10 text-xs px-3 py-1 rounded-full">4° · 5° · 6°</span><span class="bg-white/10 text-xs px-3 py-1 rounded-full">ABR</span></div></div>
                 <div class="island-card rounded-3xl p-6 border-l-8 border-l-purple-400" onclick="App.selectCycle('iii')"><div class="flex items-start justify-between"><div><span class="text-xs font-black uppercase tracking-wider text-purple-300">Isla 4</span><h3 class="text-2xl font-black mt-1">📕 III Ciclo</h3><p class="text-white/60 text-sm mt-1">Innovación y prototipado</p></div><i class="fas fa-flask text-3xl text-purple-300/70"></i></div><div class="mt-4 flex items-center gap-2"><span class="bg-white/10 text-xs px-3 py-1 rounded-full">7° · 8° · 9°</span><span class="bg-white/10 text-xs px-3 py-1 rounded-full">Design Thinking</span></div></div>
             `;
         },
-        selectCycle(cycle) {
-            const levels = { materno: '0°', i: '1°', ii: '4°', iii: '7°' };
-            this.selectLevel(levels[cycle]);
-        },
+        selectCycle(cycle) { this.selectLevel({ materno: '0°', i: '1°', ii: '4°', iii: '7°' }[cycle]); },
         async cargarGrupos() {
             const grupos = await DB.getAll('grupos');
             const select = document.getElementById('select-grupo');
@@ -1027,41 +1013,21 @@ const DB = {
         toggleImpartido(id) { if (this.saberesImpartidos.has(id)) this.saberesImpartidos.delete(id); else this.saberesImpartidos.add(id); this.guardarStorage().then(() => this.renderSaberes()); },
         limpiarSeleccionModulo() { this.saberesSeleccionados.clear(); this.guardarStorage().then(() => this.renderizarTodo()); },
         renderSaberes() {
-            const data = PNFT_DATA[this.nivelActual]?.[this.moduloActual];
-            const container = document.getElementById('saberes-container');
-            if (!data) {
-                container.innerHTML = '<p class="text-white/40">Datos no disponibles.</p>';
-                document.getElementById('selected-count-badge').innerText = '0 seleccionados';
-                return;
-            }
-            let html = '';
-            let totalSeleccionados = 0;
+            const data = PNFT_DATA[this.nivelActual]?.[this.moduloActual]; const container = document.getElementById('saberes-container');
+            if (!data) { container.innerHTML = '<p class="text-white/40">Datos no disponibles.</p>'; document.getElementById('selected-count-badge').innerText = '0 seleccionados'; return; }
+            let html = ''; let totalSeleccionados = 0;
             Object.entries(data).forEach(([area, content]) => {
                 html += `<h4 class="text-lg font-bold text-blue-300 mt-4">${area}</h4>`;
                 content.saberes.forEach(s => {
-                    const id = `${area}::${s.nombre}`;
-                    const checked = this.saberesSeleccionados.has(id);
-                    const impartido = this.saberesImpartidos.has(id);
+                    const id = `${area}::${s.nombre}`; const checked = this.saberesSeleccionados.has(id); const impartido = this.saberesImpartidos.has(id);
                     if (checked) totalSeleccionados++;
-                    // Generar lista de indicadores en formato legible
                     const indicadoresHtml = s.indicadores.map(ind => `• ${ind}`).join('<br>');
-                    html += `
-                        <div class="flex items-start gap-3 p-2 border-b border-white/10 ${impartido ? 'bg-green-500/20' : ''}">
-                            <input type="checkbox" ${checked ? 'checked' : ''} onchange="App.toggleSaber('${id}', this.checked)" class="mt-1">
-                            <div class="flex-1">
-                                <span class="font-semibold text-white">${s.nombre}</span>
-                                <div class="text-[10px] text-slate-400 mt-1">${indicadoresHtml}</div>
-                            </div>
-                            <button onclick="App.toggleImpartido('${id}')" class="text-xs ${impartido ? 'text-green-400' : 'text-white/40'} self-center">
-                                <i class="fas fa-check-circle"></i> Impartido
-                            </button>
-                        </div>
-                    `;
+                    html += `<div class="flex items-start gap-3 p-2 border-b border-white/10 ${impartido ? 'bg-green-500/20' : ''}"><input type="checkbox" ${checked ? 'checked' : ''} onchange="App.toggleSaber('${id}', this.checked)" class="mt-1"><div class="flex-1"><span class="font-semibold text-white">${s.nombre}</span><div class="text-[10px] text-slate-400 mt-1">${indicadoresHtml}</div></div><button onclick="App.toggleImpartido('${id}')" class="text-xs ${impartido ? 'text-green-400' : 'text-white/40'} self-center"><i class="fas fa-check-circle"></i> Impartido</button></div>`;
                 });
             });
             container.innerHTML = html;
             document.getElementById('selected-count-badge').innerText = `${totalSeleccionados} seleccionados`;
-        }
+        },
         renderBateriasYPerfiles() {
             const areas = ['Apropiación tecnológica y Digital', 'Programación y Algoritmos', 'Computación física y Robótica', 'Ciencia de datos e Inteligencia artificial'];
             const contador = {}; areas.forEach(a => contador[a] = 0);
@@ -1082,90 +1048,40 @@ const DB = {
         },
         renderListaSeleccionados() {
             const lista = document.getElementById('selected-saberes-list');
-            if (this.saberesSeleccionados.size === 0) {
-                lista.innerHTML = '<p class="text-white/40 text-center">No hay saberes seleccionados</p>';
-                return;
-            }
+            if (this.saberesSeleccionados.size === 0) { lista.innerHTML = '<p class="text-white/40 text-center">No hay saberes seleccionados</p>'; return; }
             const data = PNFT_DATA[this.nivelActual]?.[this.moduloActual] || {};
-            let html = '';
-            const agrupados = {};
-            this.saberesSeleccionados.forEach(s => {
-                const [area, nombre] = s.split('::');
-                if (!agrupados[area]) agrupados[area] = [];
-                agrupados[area].push(nombre);
-            });
+            let html = ''; const agrupados = {};
+            this.saberesSeleccionados.forEach(s => { const [area, nombre] = s.split('::'); if (!agrupados[area]) agrupados[area] = []; agrupados[area].push(nombre); });
             for (let area in agrupados) {
                 html += `<p class="text-xs font-bold text-blue-300 mt-2">${area}</p>`;
                 agrupados[area].forEach(nombre => {
                     const saber = data[area]?.saberes?.find(s => s.nombre === nombre);
                     const indicadoresPreview = saber ? saber.indicadores[0].substring(0, 40) + '…' : '';
-                    html += `<div class="flex items-center justify-between text-sm pl-2">
-                        <span>• ${nombre} <span class="text-[10px] text-slate-400">${indicadoresPreview}</span></span>
-                        <i class="fas fa-times-circle text-red-400 cursor-pointer" onclick="App.eliminarSaber('${area}::${nombre}')"></i>
-                    </div>`;
+                    html += `<div class="flex items-center justify-between text-sm pl-2"><span>• ${nombre} <span class="text-[10px] text-slate-400">${indicadoresPreview}</span></span><i class="fas fa-times-circle text-red-400 cursor-pointer" onclick="App.eliminarSaber('${area}::${nombre}')"></i></div>`;
                 });
             }
             lista.innerHTML = html;
-        }
+        },
         eliminarSaber(id) { this.saberesSeleccionados.delete(id); this.guardarStorage().then(() => this.renderizarTodo()); },
         togglePerfiles() { const c = document.getElementById('perfiles-content'); const ch = document.getElementById('perfiles-chevron'); c.classList.toggle('hidden'); ch.classList.toggle('fa-chevron-down'); ch.classList.toggle('fa-chevron-up'); },
-generarPrompt() {
-    if (this.saberesSeleccionados.size === 0) {
-        alert('Selecciona al menos un saber.');
-        return;
-    }
-    const ciclo = this.getCiclo();
-    const rda = RDA_POR_CICLO[ciclo]?.["Apropiación tecnológica y Digital"] || "";
-    const ejes = EJES_POR_CICLO[ciclo] || {};
-    let ejesTxt = '';
-    for (let e in ejes) ejesTxt += `- ${e}: ${ejes[e]}\n`;
-
-    // Construir detalle de saberes con indicadores
-    let saberesTxt = '';
-    const data = PNFT_DATA[this.nivelActual]?.[this.moduloActual] || {};
-    for (let id of this.saberesSeleccionados) {
-        const [area, nombre] = id.split('::');
-        const saber = data[area]?.saberes?.find(s => s.nombre === nombre);
-        if (saber) {
-            saberesTxt += `📌 ${area} - ${nombre}\n`;
-            saber.indicadores.forEach(ind => saberesTxt += `   • ${ind}\n`);
-        } else {
-            saberesTxt += `- ${id} (indicadores no encontrados)\n`;
-        }
-    }
-
-    let metodologia = "ABJ";
-    if (ciclo === 'II Ciclo') metodologia = "ABR";
-    else if (ciclo === 'III Ciclo') metodologia = "Design Thinking";
-
-    const prompt = `Actúa como especialista en mediación pedagógica del MEP Costa Rica - PNFT 2026.
-        Nivel: ${this.nivelActual} | Módulo: ${this.moduloActual}
-        Ciclo: ${ciclo}
-        Metodología: ${metodologia}
-        
-        📌 SABERES SELECCIONADOS CON INDICADORES:
-        ${saberesTxt}
-        
-        🎯 RESULTADO DE APRENDIZAJE (RdA):
-        ${rda}
-        
-        ⚙️ EJES TRANSVERSALES:
-        ${ejesTxt}
-        
-        TAREA: Diseñar una Estrategia de Mediación Pedagógica completa que incluya:
-        - Título creativo.
-        - Momentos pedagógicos: Focalización, Exploración, Aplicación, Reflexión (con tiempos estimados).
-        - Rúbrica analítica (Inicial, Intermedio, Avanzado).
-        - Recomendaciones DUA (Representación, Acción/Expresión, Motivación).
-        - Justificación de alineación curricular.
-        
-        Asegúrate de que las actividades evidencien directamente los indicadores de logro listados arriba.`;
+        generarPrompt() {
+            if (this.saberesSeleccionados.size === 0) { alert('Selecciona al menos un saber.'); return; }
+            const ciclo = this.getCiclo(); const rda = RDA_POR_CICLO[ciclo]?.["Apropiación tecnológica y Digital"] || "";
+            const ejes = EJES_POR_CICLO[ciclo] || {}; let ejesTxt = ''; for (let e in ejes) ejesTxt += `- ${e}: ${ejes[e]}\n`;
+            let saberesTxt = ''; const data = PNFT_DATA[this.nivelActual]?.[this.moduloActual] || {};
+            for (let id of this.saberesSeleccionados) {
+                const [area, nombre] = id.split('::'); const saber = data[area]?.saberes?.find(s => s.nombre === nombre);
+                if (saber) { saberesTxt += `📌 ${area} - ${nombre}\n`; saber.indicadores.forEach(ind => saberesTxt += `   • ${ind}\n`); }
+                else { saberesTxt += `- ${id} (indicadores no encontrados)\n`; }
+            }
+            let metodologia = "ABJ"; if (ciclo === 'II Ciclo') metodologia = "ABR"; else if (ciclo === 'III Ciclo') metodologia = "Design Thinking";
+            const prompt = `Actúa como especialista en mediación pedagógica del MEP Costa Rica - PNFT 2026.\nNivel: ${this.nivelActual} | Módulo: ${this.moduloActual}\nCiclo: ${ciclo}\nMetodología: ${metodologia}\n\n📌 SABERES SELECCIONADOS CON INDICADORES:\n${saberesTxt}\n🎯 RESULTADO DE APRENDIZAJE (RdA):\n${rda}\n\n⚙️ EJES TRANSVERSALES:\n${ejesTxt}\nTAREA: Diseñar una Estrategia de Mediación Pedagógica completa que incluya:\n- Título creativo.\n- Momentos pedagógicos: Focalización, Exploración, Aplicación, Reflexión (con tiempos estimados).\n- Rúbrica analítica (Inicial, Intermedio, Avanzado).\n- Recomendaciones DUA (Representación, Acción/Expresión, Motivación).\n- Justificación de alineación curricular.`;
             document.getElementById('output-prompt').value = prompt;
-        }
+        },
         copiarPrompt() { const ta = document.getElementById('output-prompt'); ta.select(); document.execCommand('copy'); alert('✅ Prompt copiado.'); }
     };
 
-    // Grupos, Evaluación, Exportar (mantienen lógica anterior)
+    // Grupos, Evaluación, Exportar
     const Grupos = {
         async abrirModalGrupo() { document.getElementById('grupo-nombre').value = ''; document.getElementById('modal-grupo').classList.remove('hidden'); },
         async guardarGrupo() { const nombre = document.getElementById('grupo-nombre').value; if (!nombre) return; await DB.add('grupos', { nombre }); this.cerrarModal('modal-grupo'); App.cargarGrupos(); },
@@ -1209,102 +1125,50 @@ generarPrompt() {
         cerrarModal(id) { document.getElementById(id).classList.add('hidden'); }
     };
 
-        const Exportar = {
-            // ... (pdf, word, json existentes)
-        
-            async backupCompleto() {
+    const Exportar = {
+        pdf() { window.print(); },
+        word() { const contenido = document.getElementById('tab-dashboard').innerHTML; const blob = new Blob([contenido], { type: 'application/msword' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'dashboard.doc'; a.click(); },
+        async json() { const data = { grupo: App.grupoActualId, seccion: App.seccionActualId, nivel: App.nivelActual, modulo: App.moduloActual, calificaciones: App.calificaciones, estudiantes: App.estudiantes }; const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'datos_pnft.json'; a.click(); },
+        async backupCompleto() {
+            try {
+                const grupos = await DB.getAll('grupos'); const secciones = await DB.getAll('secciones'); const estudiantes = await DB.getAll('estudiantes');
+                const planificaciones = await DB.getAll('planificacion'); const calificaciones = await DB.getAll('calificaciones');
+                const backup = { version: "1.0", fecha: new Date().toISOString(), grupos, secciones, estudiantes, planificaciones, calificaciones };
+                const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' }); const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob); a.download = `backup_pnft_${new Date().toISOString().slice(0,10)}.json`; a.click();
+                URL.revokeObjectURL(a.href); alert('✅ Backup completo exportado correctamente.');
+            } catch (e) { console.error(e); alert('❌ Error al exportar backup.'); }
+        },
+        async importarBackup(event) {
+            const file = event.target.files[0]; if (!file) return;
+            const reader = new FileReader();
+            reader.onload = async (e) => {
                 try {
-                    // Recopilar todos los datos de IndexedDB (o localStorage)
-                    const grupos = await DB.getAll('grupos');
-                    const secciones = await DB.getAll('secciones');
-                    const estudiantes = await DB.getAll('estudiantes');
-                    const planificaciones = await DB.getAll('planificacion');
-                    const calificaciones = await DB.getAll('calificaciones');
-        
-                    const backup = {
-                        version: "1.0",
-                        fecha: new Date().toISOString(),
-                        grupos,
-                        secciones,
-                        estudiantes,
-                        planificaciones,
-                        calificaciones
-                    };
-        
-                    const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
-                    const a = document.createElement('a');
-                    a.href = URL.createObjectURL(blob);
-                    a.download = `backup_pnft_${new Date().toISOString().slice(0,10)}.json`;
-                    a.click();
-                    URL.revokeObjectURL(a.href);
-                    alert('✅ Backup completo exportado correctamente.');
-                } catch (e) {
-                    console.error(e);
-                    alert('❌ Error al exportar backup.');
-                }
-            },
-        
-            async importarBackup(event) {
-                const file = event.target.files[0];
-                if (!file) return;
-        
-                const reader = new FileReader();
-                reader.onload = async (e) => {
-                    try {
-                        const backup = JSON.parse(e.target.result);
-                        // Validación básica
-                        if (!backup.version || !backup.grupos || !backup.secciones) {
-                            throw new Error('Formato de backup no válido');
-                        }
-        
-                        if (!confirm('⚠️ Esto reemplazará TODOS los datos actuales. ¿Estás seguro?')) {
-                            return;
-                        }
-        
-                        // Limpiar almacenes existentes (si usas IndexedDB, hay que hacer clear)
-                        await this._clearAllStores();
-        
-                        // Insertar los datos importados
-                        for (let g of backup.grupos) await DB.add('grupos', g);
-                        for (let s of backup.secciones) await DB.add('secciones', s);
-                        for (let e of backup.estudiantes) await DB.add('estudiantes', e);
-                        for (let p of backup.planificaciones) await DB.put('planificacion', p);
-                        for (let c of backup.calificaciones) await DB.put('calificaciones', c);
-        
-                        alert('✅ Backup importado correctamente. La aplicación se reiniciará.');
-                        window.location.reload();
-                    } catch (err) {
-                        console.error(err);
-                        alert('❌ Error al importar el archivo. Asegúrate de que sea un backup válido.');
-                    }
-                };
-                reader.readAsText(file);
-            },
-        
-            async _clearAllStores() {
-                const stores = ['grupos', 'secciones', 'estudiantes', 'planificacion', 'calificaciones'];
-                for (let store of stores) {
-                    if (DB.useLocalStorage) {
-                        localStorage.removeItem(`pnft_${store}`);
-                    } else {
-                        await new Promise((res, rej) => {
-                            const tx = DB.db.transaction(store, 'readwrite');
-                            const req = tx.objectStore(store).clear();
-                            req.onsuccess = res;
-                            req.onerror = rej;
-                        });
-                    }
-                }
+                    const backup = JSON.parse(e.target.result);
+                    if (!backup.version || !backup.grupos || !backup.secciones) throw new Error('Formato de backup no válido');
+                    if (!confirm('⚠️ Esto reemplazará TODOS los datos actuales. ¿Estás seguro?')) return;
+                    await this._clearAllStores();
+                    for (let g of backup.grupos) await DB.add('grupos', g);
+                    for (let s of backup.secciones) await DB.add('secciones', s);
+                    for (let e of backup.estudiantes) await DB.add('estudiantes', e);
+                    for (let p of backup.planificaciones) await DB.put('planificacion', p);
+                    for (let c of backup.calificaciones) await DB.put('calificaciones', c);
+                    alert('✅ Backup importado correctamente. La aplicación se reiniciará.'); window.location.reload();
+                } catch (err) { console.error(err); alert('❌ Error al importar el archivo.'); }
+            };
+            reader.readAsText(file);
+        },
+        async _clearAllStores() {
+            const stores = ['grupos', 'secciones', 'estudiantes', 'planificacion', 'calificaciones'];
+            for (let store of stores) {
+                if (DB.useLocalStorage) { localStorage.removeItem(`pnft_${store}`); }
+                else { await new Promise((res, rej) => { const tx = DB.db.transaction(store, 'readwrite'); const req = tx.objectStore(store).clear(); req.onsuccess = res; req.onerror = rej; }); }
             }
-        };
+        }
+    };
 
     window.App = App; window.Grupos = Grupos; window.Eval = Eval; window.Exportar = Exportar;
-    window.onload = () => {
-    App.init().catch(e => {
-        console.error("Error crítico al iniciar la aplicación:", e);
-        alert("Ocurrió un error al iniciar. Intenta recargar la página.");
-    });
-};
+    window.onload = () => App.init().catch(e => { console.error("Error crítico al iniciar:", e); alert("Ocurrió un error al iniciar. Intenta recargar la página."); });
 </script>
 </body>
 </html>
