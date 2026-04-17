@@ -935,12 +935,11 @@ const RDA_POR_CICLO = {
                 <div class="island-card rounded-3xl p-6 border-l-8 border-l-purple-400" onclick="App.selectCycle('iii')"><h3 class="text-2xl font-black">🏝️ III Ciclo</h3><p class="text-white/60 text-sm">7° · 8° · 9° · Design Thinking</p></div>
             `;
         },
-        selectCycle(c) { const m = { materno: '0°', i: '1°', ii: '4°', iii: '7°' }; if (m[c]) this.selectLevel(m[c]); },
+         selectCycle(c) { const m = { materno: '0°', i: '1°', ii: '4°', iii: '7°' }; if (m[c]) this.selectLevel(m[c]); },
         selectLevel(l) {
             this.nivelActual = l;
             document.getElementById('current-level-display').innerText = l;
             document.querySelectorAll('.level-tab').forEach(t => t.classList.toggle('active', t.dataset.level === l));
-            // Al cambiar de nivel, forzamos visibilidad del panel de saberes del Módulo 1
             this.moduloActual = 'Módulo 1';
             document.getElementById('select-modulo').value = 'Módulo 1';
             this.cargarStorage();
@@ -1038,7 +1037,7 @@ const RDA_POR_CICLO = {
             document.getElementById('perfiles-content').innerHTML = phtml || '<p style="font-size:0.9rem; color:#e5e7eb;">No hay perfiles definidos para este ciclo.</p>';
             this.actualizarPanelRdA();
         },
-        // 🔥 NUEVA FUNCIÓN AUXILIAR: Progreso de un grado específico
+        // Función auxiliar: progreso de un grado específico
         obtenerProgresoGrado(grado, area) {
             let totalGrado = 0, selGrado = 0;
             ['Módulo 1', 'Módulo 2'].forEach(modulo => {
@@ -1060,22 +1059,29 @@ const RDA_POR_CICLO = {
                            ciclo === 'I Ciclo' ? ['1°','2°','3°'] :
                            ciclo === 'II Ciclo' ? ['4°','5°','6°'] : ['7°','8°','9°'];
             const areas = ['Apropiación tecnológica y Digital', 'Programación y Algoritmos', 'Computación física y Robótica', 'Ciencia de datos e Inteligencia artificial'];
+            
+            // Contadores numéricos (no Sets)
             const totales = {}, seleccionados = {};
-            areas.forEach(a => { totales[a] = 0; seleccionados[a] = new Set(); });
+            areas.forEach(a => { totales[a] = 0; seleccionados[a] = 0; });
 
             grados.forEach(grado => {
                 ['Módulo 1', 'Módulo 2'].forEach(modulo => {
                     const gradoNorm = Storage._normalizarGrado(grado);
                     const key = `${gradoNorm}_${modulo}`;
                     const data = Storage.cargar(key) || {};
-                    const ids = data.seleccionados || [];
+                    const idsSeleccionados = data.seleccionados || [];
                     const modData = PNFT_DATA[grado]?.[modulo];
+                    
                     if (modData) {
                         areas.forEach(area => {
                             const areaData = modData[area];
                             if (areaData && areaData.saberes) {
                                 totales[area] += areaData.saberes.length;
-                                ids.forEach(id => { if (id.startsWith(area + '::')) seleccionados[area].add(id); });
+                                idsSeleccionados.forEach(id => {
+                                    if (id.startsWith(area + '::')) {
+                                        seleccionados[area]++; // Incremento directo
+                                    }
+                                });
                             }
                         });
                     }
@@ -1085,7 +1091,7 @@ const RDA_POR_CICLO = {
             const res = {};
             areas.forEach(area => {
                 const tot = totales[area] || 1;
-                const sel = seleccionados[area].size;
+                const sel = seleccionados[area] || 0;
                 res[area] = {
                     total: tot,
                     seleccionados: sel,
@@ -1110,7 +1116,6 @@ const RDA_POR_CICLO = {
                 return;
             }
             let html = '';
-            // Determinamos el último grado del ciclo para la verificación de cierre
             let ultimoGrado = '3°';
             if (ciclo === 'II Ciclo') ultimoGrado = '6°';
             if (ciclo === 'III Ciclo') ultimoGrado = '9°';
@@ -1127,7 +1132,6 @@ const RDA_POR_CICLO = {
                           pct < 70 ? '📈 Progresando hacia el RdA del ciclo' :
                           pct < 100 ? '🔥 Muy cerca del RdA del ciclo' : '🏆 ¡RdA del ciclo completamente planificado!';
 
-                // 🔥 VERIFICACIÓN DE CIERRE DE CICLO 🔥
                 let mostrarBarra = true;
                 let mensajeCierre = '';
                 if (esCicloCompleto) {
@@ -1211,7 +1215,6 @@ const RDA_POR_CICLO = {
                 - En caso de que el docente elija una metodología el sistema le debe solicitar seleccionar la totalidad de los saberes conceptuales del área o las áreas de conocimiento para que no se vea fraccionada la metodología como columna vertebral del aprendizaje.
                 Redacción profesional, inspiradora, coherente con el enfoque por competencias. Asegúrese de que cada indicador se evidencie en las actividades.
                 `;
-
             document.getElementById('output-prompt').value = prompt;
         },
         copiarPrompt() { const ta = document.getElementById('output-prompt'); ta.select(); document.execCommand('copy'); alert('Prompt copiado.'); }
