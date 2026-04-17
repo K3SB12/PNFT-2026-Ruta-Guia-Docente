@@ -943,12 +943,25 @@ const RDA_POR_CICLO = {
             `;
         },
 
-      selectCycle(c) { const m = { materno: '0°', i: '1°', ii: '4°', iii: '7°' }; this.selectLevel(m[c]); },
+     selectCycle(c) { const m = { materno: '0°', i: '1°', ii: '4°', iii: '7°' }; this.selectLevel(m[c]); },
         selectLevel(l) { this.nivelActual = l; document.getElementById('current-level-display').innerText = l; document.querySelectorAll('.level-tab').forEach(t => t.classList.toggle('active', t.dataset.level === l)); this.cargarStorage(); this.renderizarTodo(); },
         cargarSaberesDelNivel() { this.moduloActual = document.getElementById('select-modulo').value; this.cargarStorage(); document.getElementById('saberes-section').classList.remove('hidden'); this.renderSaberes(); this.renderBateriasYPerfiles(); this.renderListaSeleccionados(); },
         switchTab(t) { document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden')); document.getElementById(`tab-${t}`).classList.remove('hidden'); document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); document.querySelector(`[data-tab="${t}"]`).classList.add('active'); },
-        cargarStorage() { const gradoNorm = Storage._normalizarGrado(this.nivelActual); const key = `${gradoNorm}_${this.moduloActual}`; const data = Storage.cargar(key) || {}; this.saberesSeleccionados = new Set(data.seleccionados || []); this.saberesImpartidos = new Set(data.impartidos || []); },
-        guardarStorage() { const gradoNorm = Storage._normalizarGrado(this.nivelActual); const key = `${gradoNorm}_${this.moduloActual}`; Storage.guardar(key, { seleccionados: [...this.saberesSeleccionados], impartidos: [...this.saberesImpartidos] }); },
+        cargarStorage() {
+            const gradoNorm = Storage._normalizarGrado(this.nivelActual);
+            const key = `${gradoNorm}_${this.moduloActual}`;
+            const data = Storage.cargar(key) || {};
+            this.saberesSeleccionados = new Set(data.seleccionados || []);
+            this.saberesImpartidos = new Set(data.impartidos || []);
+        },
+        guardarStorage() {
+            const gradoNorm = Storage._normalizarGrado(this.nivelActual);
+            const key = `${gradoNorm}_${this.moduloActual}`;
+            Storage.guardar(key, {
+                seleccionados: [...this.saberesSeleccionados],
+                impartidos: [...this.saberesImpartidos]
+            });
+        },
         getCiclo() { const n = parseInt(this.nivelActual); if (isNaN(n)) return 'Materno Infantil/Transición'; if (n <= 3) return 'I Ciclo'; if (n <= 6) return 'II Ciclo'; return 'III Ciclo'; },
         renderizarTodo() { this.renderSaberes(); this.renderBateriasYPerfiles(); this.renderListaSeleccionados(); this.renderEjesCheckboxes(); },
         renderEjesCheckboxes() { const ejes = EJES_POR_CICLO[this.getCiclo()] || {}; document.getElementById('ejes-checkboxes').innerHTML = Object.keys(ejes).map(e => `<label class="flex items-center gap-2"><input type="checkbox" value="${e}" checked> ${e}</label>`).join(''); },
@@ -1000,37 +1013,50 @@ const RDA_POR_CICLO = {
             document.getElementById('perfiles-content').innerHTML = phtml || '<p style="font-size:0.9rem; color:#e5e7eb;">No hay perfiles definidos para este ciclo.</p>';
             this.actualizarPanelRdA();
         },
-        obtenerProgresoCiclo() {
+       obtenerProgresoCiclo() {
             const ciclo = this.getCiclo();
-            let grados = ciclo === 'Materno Infantil/Transición' ? ['0°'] : ciclo === 'I Ciclo' ? ['1°','2°','3°'] : ciclo === 'II Ciclo' ? ['4°','5°','6°'] : ['7°','8°','9°'];
+            let grados = ciclo === 'Materno Infantil/Transición' ? ['0°'] :
+                         ciclo === 'I Ciclo' ? ['1°','2°','3°'] :
+                         ciclo === 'II Ciclo' ? ['4°','5°','6°'] :
+                         ['7°','8°','9°'];
             const areas = ['Apropiación tecnológica y Digital', 'Programación y Algoritmos', 'Computación física y Robótica', 'Ciencia de datos e Inteligencia artificial'];
             const totales = {}, seleccionados = {};
             areas.forEach(a => { totales[a] = 0; seleccionados[a] = new Set(); });
-
+        
             grados.forEach(grado => {
                 ['Módulo 1', 'Módulo 2'].forEach(modulo => {
                     const gradoNorm = Storage._normalizarGrado(grado);
                     const key = `${gradoNorm}_${modulo}`;
                     const data = Storage.cargar(key) || {};
                     const ids = data.seleccionados || [];
-                    const modData = PNFT_DATA[grado]?.[modulo];
+                    const modData = PNFT_DATA[grado]?.[modulo];  // aquí usamos el grado original
                     if (modData) {
                         areas.forEach(area => {
                             const areaData = modData[area];
                             if (areaData && areaData.saberes) {
                                 totales[area] += areaData.saberes.length;
-                                ids.forEach(id => { if (id.startsWith(area + '::')) seleccionados[area].add(id); });
+                                ids.forEach(id => {
+                                    if (id.startsWith(area + '::')) {
+                                        seleccionados[area].add(id);
+                                    }
+                                });
                             }
                         });
                     }
                 });
             });
-
+        
             const res = {};
             areas.forEach(area => {
                 const tot = totales[area] || 1;
                 const sel = seleccionados[area].size;
-                res[area] = { total: tot, seleccionados: sel, porcentaje: Math.round((sel/tot)*100), rda: RDA_POR_CICLO[ciclo]?.[area] || '' };
+                const pct = Math.round((sel / tot) * 100);
+                res[area] = {
+                    total: tot,
+                    seleccionados: sel,
+                    porcentaje: pct,
+                    rda: RDA_POR_CICLO[ciclo]?.[area] || ''
+                };
             });
             return res;
         },
@@ -1050,7 +1076,7 @@ const RDA_POR_CICLO = {
                 const d = progreso[area];
                 const pct = d.porcentaje;
                 let barColor = area.includes('Programación') ? 'from-emerald-500' : area.includes('Robótica') ? 'from-amber-500' : area.includes('Ciencia') ? 'from-purple-500' : 'from-blue-500';
-                let msg = pct === 0 ? '🌱 Sin saberes' : pct < 40 ? '📌 Iniciando el camino en el ciclo' : pct < 70 ? '📈 Progresando hacia el RdA del ciclo' : pct < 100 ? '🔥 Muy cerca del RdA del ciclo' : '🏆 ¡RdA del ciclo completamente planificado!';
+                let msg = pct === 0 ? '🌱 Sin saberes planificados en el ciclo' : pct < 40 ? '📌 Iniciando el camino en el ciclo' : pct < 70 ? '📈 Progresando hacia el RdA del ciclo' : pct < 100 ? '🔥 ¡Muy cerca del RdA del ciclo!' : '🏆 ¡RdA del ciclo completamente planificado!';
                 html += `<div><div class="flex justify-between"><span class="font-semibold">${area}</span><span>${pct}% (${d.seleccionados}/${d.total})</span></div><p class="text-xs text-white/70 italic">${d.rda.substring(0,80)}…</p><div class="w-full h-4 bg-slate-700/50 rounded-full"><div class="battery-fill h-full rounded-full bg-gradient-to-r ${barColor}" style="width:${pct}%"></div></div><p class="text-xs text-white/60">${msg}</p></div>`;
             });
             container.innerHTML = html;
