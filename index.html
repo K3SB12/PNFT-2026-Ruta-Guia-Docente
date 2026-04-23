@@ -1274,7 +1274,7 @@ const App = {
 };
 
 // ======================================================================
-// 4. FUNCIONES DE GESTIÓN DE GRUPOS (SIN LÍMITE, CON OPCIONES COMPLETAS)
+// 4. FUNCIONES DE GESTIÓN DE GRUPOS (SIN LÍMITE)
 // ======================================================================
 function renderizarGestionGrupos() {
     const container = document.getElementById('instituciones-container');
@@ -1430,139 +1430,207 @@ function generarReportePDF(grupoId) {
 }
 
 // ======================================================================
-// 5. CALENDARIO REDISEÑADO (GRID MENSUAL + SELECCIÓN RANGO + GESTIÓN FECHAS ESPECIALES)
+// 5. CALENDARIO SIMPLE, ESTABLE Y SIN RANGOS
 // ======================================================================
-let modoRango = { activo: false, tipo: null, inicio: null };
 
-function actualizarSelectorGruposCalendario() {
-    const container = document.getElementById('calendario-grupo-selector');
-    if (!container) return;
-    container.innerHTML = `
-        <select id="cal-grupo-select" class="bg-slate-800 p-2 rounded-xl text-sm border border-white/20">
-            <option value="">-- Grupo para calendario --</option>
-            ${grupos.map(g => `<option value="${g.id}">${instituciones.find(i=>i.id===g.institucionId)?.nombre || ''} - ${g.nivel} ${g.nombre}</option>`).join('')}
-        </select>
-        <button onclick="renderizarCalendario()" class="bg-blue-600 px-3 py-2 rounded-xl text-sm">Cargar</button>
-        <button onclick="gestionarFechasEspeciales()" class="bg-amber-600 px-3 py-2 rounded-xl text-sm"><i class="fas fa-cog"></i> Gestionar fechas especiales</button>
-    `;
+// Obtener el mes en español
+function nombreMes(mesIndex) {
+    const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    return meses[mesIndex];
 }
 
+// Días no laborables por defecto: solo fines de semana (sábado y domingo)
+function esFinDeSemana(fechaStr) {
+    const fecha = new Date(fechaStr);
+    const dia = fecha.getDay();
+    return dia === 0 || dia === 6; // 0 domingo, 6 sábado
+}
+
+// Verificar si una fecha tiene alguna restricción especial (marcada por el docente)
+function getFechaEspecialInfo(grupoId, fechaStr) {
+    const especiales = getFechasEspecialesGrupo(grupoId);
+    if (especiales[fechaStr]) return especiales[fechaStr];
+    return null;
+}
+
+// Renderizado principal del calendario
 function renderizarCalendario() {
     const select = document.getElementById('cal-grupo-select');
-    if (!select || !select.value) { document.getElementById('calendario-meses').innerHTML = '<p class="text-center">Selecciona un grupo</p>'; return; }
+    if (!select || !select.value) {
+        document.getElementById('calendario-meses').innerHTML = '<p class="text-center text-white/70">Selecciona un grupo</p>';
+        return;
+    }
     const grupoId = select.value;
     const lecciones = getLeccionesGrupo(grupoId);
-    const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-    let html = '';
-    for (let i=0; i<12; i++) {
-        const fecha = new Date(2026, i, 1);
-        const primerDiaSemana = fecha.getDay();
-        const diasEnMes = new Date(2026, i+1, 0).getDate();
-        const inicioOffset = primerDiaSemana === 0 ? 6 : primerDiaSemana-1;
-        html += `<div class="glass-card p-3"><h3 class="font-bold text-center mb-2">${meses[i]} 2026</h3><div class="grid grid-cols-7 gap-1 text-center text-xs text-white/60"><div>L</div><div>M</div><div>M</div><div>J</div><div>V</div><div>S</div><div>D</div>`;
-        for (let j=0; j<inicioOffset; j++) html += `<div></div>`;
-        for (let d=1; d<=diasEnMes; d++) {
-            const fechaStr = `2026-${String(i+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-            const noLaborable = esDiaNoLaborable(grupoId, fechaStr);
-            const descripcion = obtenerDescripcionFecha(grupoId, fechaStr);
+
+    const anyo = 2026;
+    let html = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">';
+
+    for (let mes = 0; mes < 12; mes++) {
+        const primerDia = new Date(anyo, mes, 1);
+        const primerDiaSemana = primerDia.getDay(); // 0 domingo -> 6
+        const diasEnMes = new Date(anyo, mes + 1, 0).getDate();
+
+        // Ajuste: primera columna es lunes (1), si empieza en domingo (0) desplazamos 6
+        let inicioOffset = primerDiaSemana === 0 ? 6 : primerDiaSemana - 1;
+
+        html += `<div class="glass-card p-3">
+            <h3 class="font-bold text-center text-lg mb-2">${nombreMes(mes)} ${anyo}</h3>
+            <div class="grid grid-cols-7 gap-1 text-center text-xs text-white/60 mb-1">
+                <div>L</div><div>M</div><div>M</div><div>J</div><div>V</div><div>S</div><div>D</div>
+            </div>
+            <div class="grid grid-cols-7 gap-1">`;
+
+        // Celdas vacías antes del día 1
+        for (let i = 0; i < inicioOffset; i++) {
+            html += `<div class="p-1 h-24 bg-transparent"></div>`;
+        }
+
+        // Días del mes
+        for (let d = 1; d <= diasEnMes; d++) {
+            const fechaStr = `${anyo}-${String(mes+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+            const esNoLaborable = esFinDeSemana(fechaStr); // solo fines de semana por defecto
+            const infoEspecial = getFechaEspecialInfo(grupoId, fechaStr);
+            const esDiaEspecial = infoEspecial !== null;
+            const esFeriado = esDiaEspecial && infoEspecial.noLaborable === true;
+            const esBloqueado = esNoLaborable || esFeriado;
+
             const lec = lecciones[fechaStr] || { l1: { marcado: false, texto: "L1" }, l2: { marcado: false, texto: "L2" } };
-            const esInicioRango = (modoRango.activo && modoRango.inicio === fechaStr);
-            let clases = "calendario-dia p-1 border rounded transition-all ";
-            if (noLaborable) clases += "bg-slate-900 border-red-800/50 opacity-70";
-            else if (esInicioRango) clases += "bg-blue-700 border-blue-400 shadow-md";
-            else clases += "bg-slate-800/40 border-white/10";
-            html += `<div class="${clases}" data-fecha="${fechaStr}">
-                        <div class="text-sm font-bold flex justify-between items-center">
-                            <span>${d}</span>
-                            ${descripcion ? `<span class="text-[10px] text-amber-400" title="${descripcion}">📌</span>` : ''}
-                        </div>
-                        <div class="flex gap-1 justify-center mt-1">`;
-            if (!noLaborable) {
-                html += `<button class="text-xs ${lec.l1.marcado ? 'bg-green-600' : 'bg-slate-600'} px-1 rounded hover:bg-opacity-80" data-tipo="l1" data-fecha="${fechaStr}" title="Marcar/desmarcar L1"><span class="editable-text inline-block min-w-[24px]" data-tipo="l1" data-fecha="${fechaStr}">${lec.l1.texto}</span></button>
-                         <button class="text-xs ${lec.l2.marcado ? 'bg-green-600' : 'bg-slate-600'} px-1 rounded hover:bg-opacity-80" data-tipo="l2" data-fecha="${fechaStr}" title="Marcar/desmarcar L2"><span class="editable-text inline-block min-w-[24px]" data-tipo="l2" data-fecha="${fechaStr}">${lec.l2.texto}</span></button>`;
+
+            // Clase para el día
+            let claseDia = "p-1 border border-white/10 rounded-lg min-h-[5rem] flex flex-col";
+            if (esBloqueado) claseDia += " bg-slate-900/60 opacity-70";
+            else claseDia += " bg-slate-800/30";
+
+            html += `<div class="${claseDia}" data-fecha="${fechaStr}">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm font-bold">${d}</span>
+                            ${esDiaEspecial ? `<i class="fas fa-info-circle text-amber-400 text-xs" title="${infoEspecial.descripcion || 'Evento especial'}"></i>` : ''}
+                        </div>`;
+
+            if (!esBloqueado) {
+                // Botón L1
+                const l1Class = lec.l1.marcado ? "bg-green-600" : "bg-slate-600";
+                html += `<button class="text-xs ${l1Class} px-1 py-0.5 rounded mt-1 w-full flex justify-between items-center" data-tipo="l1" data-fecha="${fechaStr}">
+                            <span class="editable-text flex-1 text-left pl-1" data-tipo="l1" data-fecha="${fechaStr}">${lec.l1.texto}</span>
+                            <i class="fas fa-check-circle text-white/50 text-[10px] mr-1"></i>
+                        </button>`;
+                // Botón L2
+                const l2Class = lec.l2.marcado ? "bg-green-600" : "bg-slate-600";
+                html += `<button class="text-xs ${l2Class} px-1 py-0.5 rounded mt-1 w-full flex justify-between items-center" data-tipo="l2" data-fecha="${fechaStr}">
+                            <span class="editable-text flex-1 text-left pl-1" data-tipo="l2" data-fecha="${fechaStr}">${lec.l2.texto}</span>
+                            <i class="fas fa-check-circle text-white/50 text-[10px] mr-1"></i>
+                        </button>`;
             } else {
-                html += `<span class="text-xs text-red-400" title="Día no laborable">⛔</span><span class="text-xs text-red-400">⛔</span>`;
+                html += `<div class="text-xs text-red-400 text-center mt-2">⛔ Sin clase</div>`;
+                if (esFeriado) html += `<div class="text-[10px] text-amber-400 text-center">${infoEspecial.descripcion?.substring(0,15)}</div>`;
             }
-            html += `</div></div>`;
+            html += `</div>`;
         }
         html += `</div></div>`;
     }
+    html += `</div>`;
     document.getElementById('calendario-meses').innerHTML = html;
     actualizarContadorLecciones(grupoId);
-    attachCalendarEvents();
+    attachCalendarEventsSimple();
 }
 
-function attachCalendarEvents() {
+// Eventos para marcar/desmarcar y editar texto (sin rangos)
+function attachCalendarEventsSimple() {
+    // Marcar/desmarcar al hacer clic en el botón (pero no en el span editable)
     document.querySelectorAll('.calendario-dia button[data-tipo]').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const tipo = btn.dataset.tipo;
-            const fecha = btn.dataset.fecha;
-            const grupoIdSel = document.getElementById('cal-grupo-select').value;
-            if (!grupoIdSel) return;
-            if (modoRango.activo && modoRango.tipo === tipo) {
-                if (!modoRango.inicio) {
-                    modoRango.inicio = fecha;
-                    renderizarCalendario();
-                } else {
-                    setRangoLecciones(grupoIdSel, modoRango.inicio, fecha, tipo, true);
-                    modoRango = { activo: false, tipo: null, inicio: null };
-                    document.getElementById('btn-cancelar-rango').classList.add('hidden');
-                    renderizarCalendario();
-                }
-                return;
-            }
-            const lecActual = getLeccionesGrupo(grupoIdSel)[fecha] || { l1: { marcado: false, texto: "L1" }, l2: { marcado: false, texto: "L2" } };
-            const nuevoEstado = !lecActual[tipo].marcado;
-            setLeccionGrupo(grupoIdSel, fecha, tipo, nuevoEstado);
-        });
+        // Removemos eventos previos para evitar duplicados
+        btn.removeEventListener('click', handleButtonClick);
+        btn.addEventListener('click', handleButtonClick);
     });
+
+    // Edición de texto: al hacer clic en el span, reemplazar por input
     document.querySelectorAll('.editable-text').forEach(span => {
-        span.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const tipo = span.dataset.tipo;
-            const fecha = span.dataset.fecha;
-            const grupoIdSel = document.getElementById('cal-grupo-select').value;
-            if (!grupoIdSel) return;
-            const nuevoTexto = prompt('Editar nombre de la actividad:', span.innerText);
-            if (nuevoTexto && nuevoTexto.trim() !== '') {
-                setLeccionGrupo(grupoIdSel, fecha, tipo, null, nuevoTexto);
-            }
-        });
+        span.removeEventListener('click', handleEditableClick);
+        span.addEventListener('click', handleEditableClick);
     });
 }
 
-function setRangoLecciones(grupoId, fechaInicio, fechaFin, tipo, marcado) {
-    let inicio = new Date(fechaInicio);
-    let fin = new Date(fechaFin);
-    if (inicio > fin) { [inicio, fin] = [fin, inicio]; }
-    for (let d = new Date(inicio); d <= fin; d.setDate(d.getDate() + 1)) {
-        const fechaStr = d.toISOString().slice(0,10);
-        if (!esDiaNoLaborable(grupoId, fechaStr)) {
-            setLeccionGrupo(grupoId, fechaStr, tipo, marcado);
+function handleButtonClick(e) {
+    e.stopPropagation();
+    const btn = e.currentTarget;
+    const tipo = btn.dataset.tipo;
+    const fecha = btn.dataset.fecha;
+    const grupoId = document.getElementById('cal-grupo-select').value;
+    if (!grupoId) return;
+
+    const lecciones = getLeccionesGrupo(grupoId);
+    const estadoActual = lecciones[fecha]?.[tipo]?.marcado || false;
+    setLeccionGrupo(grupoId, fecha, tipo, !estadoActual);
+}
+
+function handleEditableClick(e) {
+    e.stopPropagation();
+    const span = e.currentTarget;
+    const tipo = span.dataset.tipo;
+    const fecha = span.dataset.fecha;
+    const grupoId = document.getElementById('cal-grupo-select').value;
+    if (!grupoId) return;
+
+    const textoActual = span.innerText;
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = textoActual;
+    input.className = 'bg-slate-700 text-white text-xs p-0 rounded w-full';
+    input.style.fontSize = '0.7rem';
+    span.style.display = 'none';
+    span.parentNode.insertBefore(input, span);
+    input.focus();
+
+    input.addEventListener('blur', () => {
+        const nuevoTexto = input.value.trim();
+        if (nuevoTexto && nuevoTexto !== textoActual) {
+            setLeccionGrupo(grupoId, fecha, tipo, null, nuevoTexto);
+        } else {
+            // Si no hay cambio o está vacío, restaurar el span
+            span.style.display = '';
+            input.remove();
         }
+    });
+    input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            input.blur();
+        }
+    });
+}
+
+// Contador de lecciones impartidas (L1 + L2 marcadas)
+function actualizarContadorLecciones(grupoId) {
+    const lecciones = getLeccionesGrupo(grupoId);
+    let totalL1 = 0, totalL2 = 0;
+    for (const fecha in lecciones) {
+        if (!esFinDeSemana(fecha) && !getFechaEspecialInfo(grupoId, fecha)?.noLaborable) {
+            if (lecciones[fecha].l1?.marcado) totalL1++;
+            if (lecciones[fecha].l2?.marcado) totalL2++;
+        }
+    }
+    const totalImpartidas = totalL1 + totalL2;
+    const restantes = Math.max(0, 96 - totalImpartidas);
+    const contadorDiv = document.getElementById('contador-lecciones');
+    if (contadorDiv) {
+        contadorDiv.innerHTML = `<div class="bg-slate-800 p-3 rounded-xl text-center">
+            <i class="fas fa-chalkboard-user"></i> Lecciones impartidas: <strong>${totalImpartidas}</strong> (L1: ${totalL1}, L2: ${totalL2})<br>
+            <span class="text-sm text-white/60">Restantes aprox: ${restantes}</span>
+        </div>`;
     }
 }
 
-function initRangos() {
-    const btnRangoL1 = document.getElementById('btn-rango-l1');
-    const btnRangoL2 = document.getElementById('btn-rango-l2');
-    const btnCancelar = document.getElementById('btn-cancelar-rango');
-    if (btnRangoL1) btnRangoL1.onclick = () => { modoRango = { activo: true, tipo: 'l1', inicio: null }; btnCancelar.classList.remove('hidden'); alert('Modo rango L1 activado. Haz clic en fecha inicio y luego en fecha fin.'); };
-    if (btnRangoL2) btnRangoL2.onclick = () => { modoRango = { activo: true, tipo: 'l2', inicio: null }; btnCancelar.classList.remove('hidden'); alert('Modo rango L2 activado. Haz clic en fecha inicio y luego en fecha fin.'); };
-    if (btnCancelar) btnCancelar.onclick = () => { modoRango = { activo: false, tipo: null, inicio: null }; btnCancelar.classList.add('hidden'); renderizarCalendario(); alert('Modo rango cancelado.'); };
-}
-
+// Gestión de fechas especiales (sin rangos)
 function gestionarFechasEspeciales() {
     const grupoId = document.getElementById('cal-grupo-select')?.value;
     if (!grupoId) { alert('Primero selecciona un grupo.'); return; }
     const fechasActuales = getFechasEspecialesGrupo(grupoId);
     let lista = Object.entries(fechasActuales).map(([fecha, info]) => `${fecha}: ${info.descripcion} (${info.noLaborable ? 'No laborable' : 'Laborable'})`).join('\n');
-    const opcion = prompt(`Gestionar fechas especiales para este grupo:\n1. Agregar/editar\n2. Eliminar\n3. Ver actuales\n\nActuales:\n${lista || 'Ninguna'}`, '1');
+    const opcion = prompt(`Gestionar fechas especiales (feriados, suspensión de clases, etc.):\n1. Agregar/editar\n2. Eliminar\n3. Ver actuales\n\nActuales:\n${lista || 'Ninguna'}`, '1');
     if (opcion === '1') {
         const fecha = prompt('Fecha (YYYY-MM-DD):');
         if (!fecha) return;
-        const noLaborable = confirm('¿Es día no laborable? (Aceptar = Sí, Cancelar = No)');
+        const noLaborable = confirm('¿Es día NO laborable? (Aceptar = Sí, Cancelar = No)');
         const descripcion = prompt('Descripción (ej: Día del árbol, suspensión de clases):');
         setFechaEspecialGrupo(grupoId, fecha, noLaborable, descripcion);
         alert('Fecha especial guardada.');
@@ -1577,6 +1645,20 @@ function gestionarFechasEspeciales() {
     } else {
         alert(lista || 'No hay fechas especiales configuradas.');
     }
+}
+
+function actualizarSelectorGruposCalendario() {
+    const container = document.getElementById('calendario-grupo-selector');
+    if (!container) return;
+    container.innerHTML = `
+        <select id="cal-grupo-select" class="bg-slate-800 p-2 rounded-xl text-sm border border-white/20">
+            <option value="">-- Grupo para calendario --</option>
+            ${grupos.map(g => `<option value="${g.id}">${instituciones.find(i=>i.id===g.institucionId)?.nombre || ''} - ${g.nivel} ${g.nombre}</option>`).join('')}
+        </select>
+        <button onclick="renderizarCalendario()" class="bg-blue-600 px-3 py-2 rounded-xl text-sm"><i class="fas fa-sync-alt"></i> Cargar</button>
+        <button onclick="gestionarFechasEspeciales()" class="bg-amber-600 px-3 py-2 rounded-xl text-sm"><i class="fas fa-cog"></i> Fechas especiales</button>
+        <div id="contador-lecciones" class="mt-2 w-full"></div>
+    `;
 }
 
 // ======================================================================
@@ -1620,7 +1702,7 @@ const Exportar = {
 };
 
 // ======================================================================
-// 7. INICIALIZACIÓN GLOBAL
+// 7. INICIALIZACIÓN GLOBAL (asegurar que las nuevas funciones sean accesibles)
 // ======================================================================
 window.App = App;
 window.Exportar = Exportar;
