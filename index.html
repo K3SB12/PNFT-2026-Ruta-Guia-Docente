@@ -1737,20 +1737,70 @@ const Exportar = {
         reader.readAsText(file);
     },
     descargarHTML() {
-    // Obtener el HTML actual de la página (incluyendo la estructura completa)
-    const htmlCompleto = document.documentElement.outerHTML;
-    const blob = new Blob([htmlCompleto], { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `planificador_pnft_2026_${new Date().toISOString().slice(0,19).replace(/:/g, '-')}.html`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    alert('✅ Planificador descargado. Guárdalo en tu computadora.');
-}
-};
+        // 1. Recopilar todos los datos actuales
+        const backupDatos = {
+            instituciones: instituciones,
+            grupos: grupos,
+            localStorage: {}
+        };
+        // Guardar todas las claves pnft_* del localStorage
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key.startsWith('pnft_')) {
+                backupDatos.localStorage[key] = localStorage.getItem(key);
+            }
+        }
+    
+        // 2. Generar un script que restaurará los datos al cargar la página
+        const scriptRestauracion = `
+    <script>
+    (function() {
+        // Datos respaldados al momento de la descarga
+        const datosRespaldo = ${JSON.stringify(backupDatos, null, 2)};
+        
+        // Función para restaurar los datos si no existen o si se desea
+        function restaurarDatos() {
+            // Restaurar instituciones y grupos
+            if (!localStorage.getItem('pnft_instituciones') || confirm('¿Cargar los datos guardados previamente? (Esto sobrescribirá los actuales si los hay)')) {
+                localStorage.setItem('pnft_instituciones', JSON.stringify(datosRespaldo.instituciones));
+                localStorage.setItem('pnft_grupos', JSON.stringify(datosRespaldo.grupos));
+                for (const [key, value] of Object.entries(datosRespaldo.localStorage)) {
+                    localStorage.setItem(key, value);
+                }
+                alert('✅ Datos restaurados correctamente. La página se recargará.');
+                window.location.reload();
+            }
+        }
+        
+        // Si no hay datos previos, restaurar automáticamente. Si hay, preguntar.
+        const hayDatosPrevios = localStorage.getItem('pnft_instituciones') !== null;
+        if (!hayDatosPrevios) {
+            restaurarDatos();
+        } else {
+            console.log('Ya existen datos en este navegador. Usa "Importar Backup" si quieres cargar estos datos.');
+        }
+    })();
+    </script>
+        `;
+    
+        // 3. Obtener el HTML actual y añadir el script justo antes de </body>
+        let htmlCompleto = document.documentElement.outerHTML;
+        // Insertar el script antes del cierre de </body>
+        htmlCompleto = htmlCompleto.replace('</body>', scriptRestauracion + '\n</body>');
+    
+        // 4. Descargar el archivo
+        const blob = new Blob([htmlCompleto], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `planificador_pnft_2026_${new Date().toISOString().slice(0,19).replace(/:/g, '-')}_con_datos.html`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        alert('✅ Planificador descargado con todos tus datos actuales. Al abrirlo, los datos se restaurarán automáticamente si es necesario.');
+    }
+    };
 
 // ======================================================================
 // 7. INICIALIZACIÓN GLOBAL (Exportar funciones necesarias)
